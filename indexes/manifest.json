@@ -1,6 +1,6 @@
 {
-  "generated_at": "2025-08-17T09:17:16.622272",
-  "total_workflows": 9,
+  "generated_at": "2025-08-17T09:39:18.045586",
+  "total_workflows": 10,
   "workflows": [
     {
       "filename": "AI Content Generation.json",
@@ -161,6 +161,30 @@
       "connection_count": 5,
       "scraped_at": "2025-08-17T09:17:16.615846",
       "source_url": "https://n8n.io/workflows/sample-file-management-system"
+    },
+    {
+      "filename": "Untitled Workflow.json",
+      "name": "Untitled Workflow",
+      "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
+      "categories": [
+        "file-management",
+        "scheduling",
+        "api-integration",
+        "web-scraping",
+        "email-automation",
+        "ai-automation"
+      ],
+      "integrations": [
+        "groq",
+        "gmail",
+        "google-sheets"
+      ],
+      "complexity": "advanced",
+      "quality_score": 65,
+      "node_count": 14,
+      "connection_count": 5,
+      "scraped_at": "2025-08-17T09:39:18.039830",
+      "source_url": "https://n8n.io/workflows/5678-automate-email-filtering-and-ai-summarization-100percent-free-and-effective-works-724/"
     },
     {
       "filename": "Unknown.json",

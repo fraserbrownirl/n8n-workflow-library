@@ -1,6 +1,6 @@
 {
-  "generated_at": "2025-08-17T09:17:16.622930",
-  "total_categories": 12,
+  "generated_at": "2025-08-17T09:39:18.046551",
+  "total_categories": 13,
   "categories": {
     "ai-automation": [
       {
@@ -18,6 +18,14 @@
         "quality_score": 85,
         "complexity": "intermediate",
         "node_count": 12
+      },
+      {
+        "filename": "Untitled Workflow.json",
+        "name": "Untitled Workflow",
+        "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
+        "quality_score": 65,
+        "complexity": "advanced",
+        "node_count": 14
       }
     ],
     "email-automation": [
@@ -28,6 +36,14 @@
         "quality_score": 85,
         "complexity": "intermediate",
         "node_count": 12
+      },
+      {
+        "filename": "Untitled Workflow.json",
+        "name": "Untitled Workflow",
+        "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
+        "quality_score": 65,
+        "complexity": "advanced",
+        "node_count": 14
       }
     ],
     "data-processing": [
@@ -64,6 +80,14 @@
         "quality_score": 88,
         "complexity": "intermediate",
         "node_count": 10
+      },
+      {
+        "filename": "Untitled Workflow.json",
+        "name": "Untitled Workflow",
+        "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
+        "quality_score": 65,
+        "complexity": "advanced",
+        "node_count": 14
       }
     ],
     "content-creation": [
@@ -84,6 +108,14 @@
         "quality_score": 90,
         "complexity": "advanced",
         "node_count": 16
+      },
+      {
+        "filename": "Untitled Workflow.json",
+        "name": "Untitled Workflow",
+        "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
+        "quality_score": 65,
+        "complexity": "advanced",
+        "node_count": 14
       }
     ],
     "payment-processing": [
@@ -150,6 +182,14 @@
         "quality_score": 70,
         "complexity": "beginner",
         "node_count": 6
+      },
+      {
+        "filename": "Untitled Workflow.json",
+        "name": "Untitled Workflow",
+        "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
+        "quality_score": 65,
+        "complexity": "advanced",
+        "node_count": 14
       }
     ],
     "general": [
@@ -160,6 +200,16 @@
         "quality_score": 0,
         "complexity": "unknown",
         "node_count": 0
+      }
+    ],
+    "scheduling": [
+      {
+        "filename": "Untitled Workflow.json",
+        "name": "Untitled Workflow",
+        "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
+        "quality_score": 65,
+        "complexity": "advanced",
+        "node_count": 14
       }
     ]
   }

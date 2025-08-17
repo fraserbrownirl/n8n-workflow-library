@@ -1,10 +1,10 @@
 {
-  "generated_at": "2025-08-17T09:17:16.623609",
-  "total_integrations": 19,
+  "generated_at": "2025-08-17T09:39:18.047807",
+  "total_integrations": 20,
   "integration_stats": {
-    "gmail": 1,
+    "gmail": 2,
     "openai": 2,
-    "google-sheets": 1,
+    "google-sheets": 2,
     "mysql": 1,
     "postgres": 1,
     "http": 3,
@@ -20,7 +20,8 @@
     "zendesk": 1,
     "gdrive": 1,
     "dropbox": 1,
-    "s3": 1
+    "s3": 1,
+    "groq": 1
   },
   "integrations": {
     "gmail": [
@@ -34,6 +35,21 @@
         ],
         "quality_score": 85,
         "complexity": "intermediate"
+      },
+      {
+        "filename": "Untitled Workflow.json",
+        "name": "Untitled Workflow",
+        "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
+        "categories": [
+          "file-management",
+          "scheduling",
+          "api-integration",
+          "web-scraping",
+          "email-automation",
+          "ai-automation"
+        ],
+        "quality_score": 65,
+        "complexity": "advanced"
       }
     ],
     "openai": [
@@ -71,6 +87,21 @@
         ],
         "quality_score": 85,
         "complexity": "intermediate"
+      },
+      {
+        "filename": "Untitled Workflow.json",
+        "name": "Untitled Workflow",
+        "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
+        "categories": [
+          "file-management",
+          "scheduling",
+          "api-integration",
+          "web-scraping",
+          "email-automation",
+          "ai-automation"
+        ],
+        "quality_score": 65,
+        "complexity": "advanced"
       }
     ],
     "mysql": [
@@ -323,6 +354,23 @@
         ],
         "quality_score": 70,
         "complexity": "beginner"
+      }
+    ],
+    "groq": [
+      {
+        "filename": "Untitled Workflow.json",
+        "name": "Untitled Workflow",
+        "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
+        "categories": [
+          "file-management",
+          "scheduling",
+          "api-integration",
+          "web-scraping",
+          "email-automation",
+          "ai-automation"
+        ],
+        "quality_score": 65,
+        "complexity": "advanced"
       }
     ]
   }
