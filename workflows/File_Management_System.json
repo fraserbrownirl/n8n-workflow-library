@@ -1,0 +1,152 @@
+{
+  "_metadata": {
+    "workflow_name": "File Management System",
+    "scraped_at": "2025-08-17T09:17:16.615846",
+    "source_url": "https://n8n.io/workflows/sample-file-management-system",
+    "node_count": 6,
+    "connection_count": 5,
+    "has_trigger": true,
+    "has_credentials": true,
+    "integrations": [
+      "gdrive",
+      "dropbox",
+      "s3"
+    ],
+    "categories": [
+      "file-management",
+      "automation"
+    ],
+    "complexity": "beginner",
+    "quality_score": 70,
+    "description": "Automated file management with Google Drive and Dropbox integration"
+  },
+  "name": "File Management System",
+  "nodes": [
+    {
+      "id": "node-0",
+      "name": "Documentation",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "content": "# File Management System\n\nAutomated file management with Google Drive and Dropbox integration\n\nThis workflow demonstrates file-management, automation functionality."
+      }
+    },
+    {
+      "id": "node-1",
+      "name": "Node 2",
+      "type": "n8n-nodes-base.gdrive",
+      "position": [
+        200,
+        100
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "node-2",
+      "name": "Node 3",
+      "type": "n8n-nodes-base.gdrive",
+      "position": [
+        400,
+        200
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "node-3",
+      "name": "Node 4",
+      "type": "n8n-nodes-base.gdrive",
+      "position": [
+        600,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "node-4",
+      "name": "Node 5",
+      "type": "n8n-nodes-base.gdrive",
+      "position": [
+        800,
+        400
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "node-5",
+      "name": "Node 6",
+      "type": "n8n-nodes-base.gdrive",
+      "position": [
+        1000,
+        500
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "node-0": {
+      "main": [
+        [
+          {
+            "node": "node-1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "node-1": {
+      "main": [
+        [
+          {
+            "node": "node-2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "node-2": {
+      "main": [
+        [
+          {
+            "node": "node-3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "node-3": {
+      "main": [
+        [
+          {
+            "node": "node-4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "node-4": {
+      "main": [
+        [
+          {
+            "node": "node-5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {},
+  "staticData": {},
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-08-17T09:17:16.615844",
+  "versionId": "1"
+}

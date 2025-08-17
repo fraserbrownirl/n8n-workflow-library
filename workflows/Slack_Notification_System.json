@@ -1,0 +1,194 @@
+{
+  "_metadata": {
+    "workflow_name": "Slack Notification System",
+    "scraped_at": "2025-08-17T09:17:16.614804",
+    "source_url": "https://n8n.io/workflows/sample-slack-notification-system",
+    "node_count": 8,
+    "connection_count": 7,
+    "has_trigger": true,
+    "has_credentials": true,
+    "integrations": [
+      "slack",
+      "http",
+      "cron"
+    ],
+    "categories": [
+      "communication",
+      "notifications"
+    ],
+    "complexity": "beginner",
+    "quality_score": 75,
+    "description": "Comprehensive Slack notification system with filtering and scheduling"
+  },
+  "name": "Slack Notification System",
+  "nodes": [
+    {
+      "id": "node-0",
+      "name": "Documentation",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "content": "# Slack Notification System\n\nComprehensive Slack notification system with filtering and scheduling\n\nThis workflow demonstrates communication, notifications functionality."
+      }
+    },
+    {
+      "id": "node-1",
+      "name": "Node 2",
+      "type": "n8n-nodes-base.slack",
+      "position": [
+        200,
+        100
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "node-2",
+      "name": "Node 3",
+      "type": "n8n-nodes-base.slack",
+      "position": [
+        400,
+        200
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "node-3",
+      "name": "Node 4",
+      "type": "n8n-nodes-base.slack",
+      "position": [
+        600,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "node-4",
+      "name": "Node 5",
+      "type": "n8n-nodes-base.slack",
+      "position": [
+        800,
+        400
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "node-5",
+      "name": "Node 6",
+      "type": "n8n-nodes-base.slack",
+      "position": [
+        1000,
+        500
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "node-6",
+      "name": "Node 7",
+      "type": "n8n-nodes-base.slack",
+      "position": [
+        1200,
+        600
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "node-7",
+      "name": "Node 8",
+      "type": "n8n-nodes-base.slack",
+      "position": [
+        1400,
+        700
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "node-0": {
+      "main": [
+        [
+          {
+            "node": "node-1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "node-1": {
+      "main": [
+        [
+          {
+            "node": "node-2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "node-2": {
+      "main": [
+        [
+          {
+            "node": "node-3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "node-3": {
+      "main": [
+        [
+          {
+            "node": "node-4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "node-4": {
+      "main": [
+        [
+          {
+            "node": "node-5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "node-5": {
+      "main": [
+        [
+          {
+            "node": "node-6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "node-6": {
+      "main": [
+        [
+          {
+            "node": "node-7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {},
+  "staticData": {},
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-08-17T09:17:16.614802",
+  "versionId": "1"
+}

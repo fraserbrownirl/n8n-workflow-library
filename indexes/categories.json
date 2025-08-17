@@ -1,7 +1,157 @@
 {
-  "generated_at": "2025-08-17T08:55:42.460705",
-  "total_categories": 1,
+  "generated_at": "2025-08-17T09:17:16.622930",
+  "total_categories": 12,
   "categories": {
+    "ai-automation": [
+      {
+        "filename": "AI Content Generation.json",
+        "name": "AI Content Generation",
+        "description": "AI-powered content generation workflow using OpenAI and Claude",
+        "quality_score": 95,
+        "complexity": "advanced",
+        "node_count": 18
+      },
+      {
+        "filename": "Email Automation with AI.json",
+        "name": "Email Automation with AI",
+        "description": "Automate email processing with AI-powered content analysis and response generation",
+        "quality_score": 85,
+        "complexity": "intermediate",
+        "node_count": 12
+      }
+    ],
+    "email-automation": [
+      {
+        "filename": "Email Automation with AI.json",
+        "name": "Email Automation with AI",
+        "description": "Automate email processing with AI-powered content analysis and response generation",
+        "quality_score": 85,
+        "complexity": "intermediate",
+        "node_count": 12
+      }
+    ],
+    "data-processing": [
+      {
+        "filename": "Data Processing Pipeline.json",
+        "name": "Data Processing Pipeline",
+        "description": "Advanced data processing pipeline with error handling and validation",
+        "quality_score": 92,
+        "complexity": "advanced",
+        "node_count": 15
+      },
+      {
+        "filename": "Web Scraping Pipeline.json",
+        "name": "Web Scraping Pipeline",
+        "description": "Advanced web scraping pipeline with data extraction and processing",
+        "quality_score": 90,
+        "complexity": "advanced",
+        "node_count": 16
+      }
+    ],
+    "api-integration": [
+      {
+        "filename": "Data Processing Pipeline.json",
+        "name": "Data Processing Pipeline",
+        "description": "Advanced data processing pipeline with error handling and validation",
+        "quality_score": 92,
+        "complexity": "advanced",
+        "node_count": 15
+      },
+      {
+        "filename": "Payment Processing Automation.json",
+        "name": "Payment Processing Automation",
+        "description": "Automated payment processing with Stripe integration and webhook handling",
+        "quality_score": 88,
+        "complexity": "intermediate",
+        "node_count": 10
+      }
+    ],
+    "content-creation": [
+      {
+        "filename": "AI Content Generation.json",
+        "name": "AI Content Generation",
+        "description": "AI-powered content generation workflow using OpenAI and Claude",
+        "quality_score": 95,
+        "complexity": "advanced",
+        "node_count": 18
+      }
+    ],
+    "web-scraping": [
+      {
+        "filename": "Web Scraping Pipeline.json",
+        "name": "Web Scraping Pipeline",
+        "description": "Advanced web scraping pipeline with data extraction and processing",
+        "quality_score": 90,
+        "complexity": "advanced",
+        "node_count": 16
+      }
+    ],
+    "payment-processing": [
+      {
+        "filename": "Payment Processing Automation.json",
+        "name": "Payment Processing Automation",
+        "description": "Automated payment processing with Stripe integration and webhook handling",
+        "quality_score": 88,
+        "complexity": "intermediate",
+        "node_count": 10
+      }
+    ],
+    "communication": [
+      {
+        "filename": "Customer Support Automation.json",
+        "name": "Customer Support Automation",
+        "description": "Automated customer support system with ticket management and responses",
+        "quality_score": 82,
+        "complexity": "intermediate",
+        "node_count": 14
+      },
+      {
+        "filename": "Slack Notification System.json",
+        "name": "Slack Notification System",
+        "description": "Comprehensive Slack notification system with filtering and scheduling",
+        "quality_score": 75,
+        "complexity": "beginner",
+        "node_count": 8
+      }
+    ],
+    "notifications": [
+      {
+        "filename": "Slack Notification System.json",
+        "name": "Slack Notification System",
+        "description": "Comprehensive Slack notification system with filtering and scheduling",
+        "quality_score": 75,
+        "complexity": "beginner",
+        "node_count": 8
+      }
+    ],
+    "automation": [
+      {
+        "filename": "Customer Support Automation.json",
+        "name": "Customer Support Automation",
+        "description": "Automated customer support system with ticket management and responses",
+        "quality_score": 82,
+        "complexity": "intermediate",
+        "node_count": 14
+      },
+      {
+        "filename": "File Management System.json",
+        "name": "File Management System",
+        "description": "Automated file management with Google Drive and Dropbox integration",
+        "quality_score": 70,
+        "complexity": "beginner",
+        "node_count": 6
+      }
+    ],
+    "file-management": [
+      {
+        "filename": "File Management System.json",
+        "name": "File Management System",
+        "description": "Automated file management with Google Drive and Dropbox integration",
+        "quality_score": 70,
+        "complexity": "beginner",
+        "node_count": 6
+      }
+    ],
     "general": [
       {
         "filename": "Unknown.json",
