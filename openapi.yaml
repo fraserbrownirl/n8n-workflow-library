@@ -1,0 +1,756 @@
+openapi: 3.1.0
+info:
+  title: n8n Workflow Search API
+  description: |
+    A comprehensive API for searching and browsing n8n workflows with rich metadata.
+    
+    This API provides:
+    - Full-text search across workflow names, descriptions, categories, and integrations
+    - Filtering by category, integration, complexity, quality score, and node count
+    - Browse workflows by categories, integrations, and quality tiers
+    - Access to complete workflow JSON with metadata
+    - Statistics and health monitoring
+    
+    Perfect for AI assistants, workflow discovery tools, and automation platforms.
+  version: 1.0.0
+  contact:
+    name: n8n Workflow Library
+    url: https://github.com/your-username/n8n-workflow-library
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+  - url: https://api.n8n-workflows.com
+    description: Production API server
+
+paths:
+  /:
+    get:
+      summary: API Information
+      description: Get basic information about the API and available endpoints
+      operationId: getApiInfo
+      responses:
+        '200':
+          description: API information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "n8n Workflow Search API"
+                  version:
+                    type: string
+                    example: "1.0.0"
+                  endpoints:
+                    type: object
+                    properties:
+                      search:
+                        type: string
+                        example: "/api/search"
+                      categories:
+                        type: string
+                        example: "/api/categories"
+                      integrations:
+                        type: string
+                        example: "/api/integrations"
+                      quality:
+                        type: string
+                        example: "/api/quality"
+                      workflow:
+                        type: string
+                        example: "/api/workflow/{filename}"
+                      manifest:
+                        type: string
+                        example: "/api/manifest"
+                  docs:
+                    type: string
+                    example: "/docs"
+
+  /api/search:
+    get:
+      summary: Search Workflows
+      description: |
+        Search workflows with various filters and criteria.
+        
+        Supports:
+        - Full-text search in names, descriptions, categories, and integrations
+        - Filtering by category, integration, complexity, quality score, and node count
+        - Result limiting and pagination
+      operationId: searchWorkflows
+      parameters:
+        - name: q
+          in: query
+          description: Search query for full-text search
+          required: false
+          schema:
+            type: string
+            example: "email automation"
+        - name: category
+          in: query
+          description: Filter by category
+          required: false
+          schema:
+            type: string
+            example: "ai-automation"
+        - name: integration
+          in: query
+          description: Filter by integration
+          required: false
+          schema:
+            type: string
+            example: "gmail"
+        - name: complexity
+          in: query
+          description: Filter by complexity level
+          required: false
+          schema:
+            type: string
+            enum: [beginner, intermediate, advanced]
+            example: "intermediate"
+        - name: min_quality
+          in: query
+          description: Minimum quality score (0-100)
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 100
+            example: 70
+        - name: max_nodes
+          in: query
+          description: Maximum number of nodes
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            example: 20
+        - name: limit
+          in: query
+          description: Maximum number of results
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+            example: 25
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  query:
+                    type: object
+                    properties:
+                      search:
+                        type: string
+                      category:
+                        type: string
+                      integration:
+                        type: string
+                      complexity:
+                        type: string
+                      min_quality:
+                        type: integer
+                      max_nodes:
+                        type: integer
+                      limit:
+                        type: integer
+                  total_results:
+                    type: integer
+                    example: 15
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkflowSummary'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/categories:
+    get:
+      summary: Get All Categories
+      description: Get all available categories with workflow counts
+      operationId: getCategories
+      responses:
+        '200':
+          description: Categories with workflow counts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  generated_at:
+                    type: string
+                    format: date-time
+                  total_categories:
+                    type: integer
+                    example: 8
+                  categories:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/WorkflowSummary'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/categories/{category}:
+    get:
+      summary: Get Workflows by Category
+      description: Get all workflows for a specific category
+      operationId: getCategoryWorkflows
+      parameters:
+        - name: category
+          in: path
+          description: Category name
+          required: true
+          schema:
+            type: string
+            example: "ai-automation"
+      responses:
+        '200':
+          description: Workflows in the category
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  category:
+                    type: string
+                  workflow_count:
+                    type: integer
+                    example: 12
+                  workflows:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkflowSummary'
+        '404':
+          description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/integrations:
+    get:
+      summary: Get All Integrations
+      description: Get all available integrations with workflow counts
+      operationId: getIntegrations
+      responses:
+        '200':
+          description: Integrations with workflow counts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  generated_at:
+                    type: string
+                    format: date-time
+                  total_integrations:
+                    type: integer
+                    example: 15
+                  integration_stats:
+                    type: object
+                    additionalProperties:
+                      type: integer
+                  integrations:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/WorkflowSummary'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/integrations/{integration}:
+    get:
+      summary: Get Workflows by Integration
+      description: Get all workflows for a specific integration
+      operationId: getIntegrationWorkflows
+      parameters:
+        - name: integration
+          in: path
+          description: Integration name
+          required: true
+          schema:
+            type: string
+            example: "gmail"
+      responses:
+        '200':
+          description: Workflows using the integration
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  integration:
+                    type: string
+                  workflow_count:
+                    type: integer
+                    example: 8
+                  workflows:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkflowSummary'
+        '404':
+          description: Integration not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/quality:
+    get:
+      summary: Get Quality Tiers
+      description: Get workflows grouped by quality tiers (excellent, good, fair, basic)
+      operationId: getQualityTiers
+      responses:
+        '200':
+          description: Quality tiers with workflows
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  generated_at:
+                    type: string
+                    format: date-time
+                  quality_tiers:
+                    type: object
+                    properties:
+                      excellent:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/WorkflowSummary'
+                      good:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/WorkflowSummary'
+                      fair:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/WorkflowSummary'
+                      basic:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/WorkflowSummary'
+                  summary:
+                    type: object
+                    properties:
+                      excellent:
+                        type: integer
+                      good:
+                        type: integer
+                      fair:
+                        type: integer
+                      basic:
+                        type: integer
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/quality/{tier}:
+    get:
+      summary: Get Workflows by Quality Tier
+      description: Get all workflows for a specific quality tier
+      operationId: getQualityTierWorkflows
+      parameters:
+        - name: tier
+          in: path
+          description: Quality tier
+          required: true
+          schema:
+            type: string
+            enum: [excellent, good, fair, basic]
+            example: "excellent"
+      responses:
+        '200':
+          description: Workflows in the quality tier
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tier:
+                    type: string
+                  workflow_count:
+                    type: integer
+                    example: 5
+                  workflows:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkflowSummary'
+        '404':
+          description: Quality tier not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/workflow/{filename}:
+    get:
+      summary: Get Workflow by Filename
+      description: Get the complete workflow JSON with metadata
+      operationId: getWorkflow
+      parameters:
+        - name: filename
+          in: path
+          description: Workflow filename
+          required: true
+          schema:
+            type: string
+            example: "Email_Filtering_AI_Summarization.json"
+      responses:
+        '200':
+          description: Complete workflow with metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+        '404':
+          description: Workflow not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/manifest:
+    get:
+      summary: Get Complete Manifest
+      description: Get the complete manifest of all workflows
+      operationId: getManifest
+      responses:
+        '200':
+          description: Complete workflow manifest
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  generated_at:
+                    type: string
+                    format: date-time
+                  total_workflows:
+                    type: integer
+                    example: 50
+                  workflows:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkflowSummary'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/stats:
+    get:
+      summary: Get Library Statistics
+      description: Get overall statistics about the workflow library
+      operationId: getStats
+      responses:
+        '200':
+          description: Library statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_workflows:
+                    type: integer
+                    example: 50
+                  total_categories:
+                    type: integer
+                    example: 8
+                  total_integrations:
+                    type: integer
+                    example: 15
+                  quality_distribution:
+                    type: object
+                    properties:
+                      excellent:
+                        type: integer
+                      good:
+                        type: integer
+                      fair:
+                        type: integer
+                      basic:
+                        type: integer
+                  complexity_distribution:
+                    type: object
+                    additionalProperties:
+                      type: integer
+                  average_quality_score:
+                    type: number
+                    format: float
+                    example: 72.5
+                  average_node_count:
+                    type: number
+                    format: float
+                    example: 12.3
+                  last_updated:
+                    type: string
+                    format: date-time
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/health:
+    get:
+      summary: Health Check
+      description: Check the health status of the API
+      operationId: healthCheck
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  timestamp:
+                    type: string
+                    format: date-time
+                  workflows_available:
+                    type: integer
+                    example: 50
+                  indexes_available:
+                    type: integer
+                    example: 4
+        '503':
+          description: API is unhealthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "unhealthy"
+                  error:
+                    type: string
+                  timestamp:
+                    type: string
+                    format: date-time
+
+components:
+  schemas:
+    WorkflowSummary:
+      type: object
+      properties:
+        filename:
+          type: string
+          description: Workflow filename
+          example: "Email_Filtering_AI_Summarization.json"
+        name:
+          type: string
+          description: Workflow name
+          example: "Email Filtering AI Summarization"
+        description:
+          type: string
+          description: Workflow description
+          example: "Automate email filtering and AI summarization"
+        categories:
+          type: array
+          items:
+            type: string
+          description: Workflow categories
+          example: ["ai-automation", "email-automation"]
+        integrations:
+          type: array
+          items:
+            type: string
+          description: Integrations used
+          example: ["gmail", "openai", "google-sheets"]
+        complexity:
+          type: string
+          enum: [beginner, intermediate, advanced]
+          description: Workflow complexity level
+          example: "intermediate"
+        quality_score:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Quality score (0-100)
+          example: 85
+        node_count:
+          type: integer
+          description: Number of nodes in the workflow
+          example: 12
+        connection_count:
+          type: integer
+          description: Number of connections in the workflow
+          example: 15
+        scraped_at:
+          type: string
+          format: date-time
+          description: When the workflow was scraped
+        source_url:
+          type: string
+          format: uri
+          description: Original source URL
+          example: "https://n8n.io/workflows/5678-email-filtering-ai-summarization"
+
+    Workflow:
+      type: object
+      description: Complete workflow with metadata and nodes
+      properties:
+        _metadata:
+          $ref: '#/components/schemas/WorkflowMetadata'
+        name:
+          type: string
+          description: Workflow name
+        nodes:
+          type: array
+          description: Workflow nodes
+          items:
+            type: object
+        connections:
+          type: object
+          description: Node connections
+        pinData:
+          type: object
+          description: Pinned data
+        settings:
+          type: object
+          description: Workflow settings
+        staticData:
+          type: object
+          description: Static data
+        tags:
+          type: array
+          items:
+            type: object
+          description: Workflow tags
+        triggerCount:
+          type: integer
+          description: Number of triggers
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update time
+        versionId:
+          type: string
+          description: Version ID
+
+    WorkflowMetadata:
+      type: object
+      properties:
+        workflow_name:
+          type: string
+          description: Workflow name
+        scraped_at:
+          type: string
+          format: date-time
+          description: When scraped
+        source_url:
+          type: string
+          format: uri
+          description: Source URL
+        node_count:
+          type: integer
+          description: Number of nodes
+        connection_count:
+          type: integer
+          description: Number of connections
+        has_trigger:
+          type: boolean
+          description: Has trigger nodes
+        has_credentials:
+          type: boolean
+          description: Uses credentials
+        integrations:
+          type: array
+          items:
+            type: string
+          description: Integrations used
+        categories:
+          type: array
+          items:
+            type: string
+          description: Workflow categories
+        complexity:
+          type: string
+          enum: [beginner, intermediate, advanced]
+          description: Complexity level
+        quality_score:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Quality score
+        description:
+          type: string
+          description: Workflow description
+
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Error message
+          example: "Workflow not found"
+
+tags:
+  - name: Search
+    description: Search and filter workflows
+  - name: Browse
+    description: Browse workflows by categories, integrations, and quality
+  - name: Workflows
+    description: Access individual workflow data
+  - name: System
+    description: System endpoints for health and statistics

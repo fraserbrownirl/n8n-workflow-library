@@ -1,0 +1,19 @@
+{
+  "generated_at": "2025-08-17T08:55:42.460397",
+  "total_workflows": 1,
+  "workflows": [
+    {
+      "filename": "Unknown.json",
+      "name": "Unknown",
+      "description": "",
+      "categories": [],
+      "integrations": [],
+      "complexity": "unknown",
+      "quality_score": 0,
+      "node_count": 0,
+      "connection_count": 0,
+      "scraped_at": "",
+      "source_url": ""
+    }
+  ]
+}

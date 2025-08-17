@@ -1,0 +1,16 @@
+{
+  "generated_at": "2025-08-17T08:55:42.460705",
+  "total_categories": 1,
+  "categories": {
+    "general": [
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      }
+    ]
+  }
+}
