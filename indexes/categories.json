@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-08-17T11:58:50.494854",
+  "generated_at": "2025-08-17T12:41:36.663712",
   "total_categories": 13,
   "categories": {
     "general": [
@@ -65,7 +65,23 @@
         "description": "",
         "quality_score": 0,
         "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
         "node_count": 57
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
       },
       {
         "filename": "Unknown.json",

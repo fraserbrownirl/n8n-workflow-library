@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-08-17T11:58:50.495374",
+  "generated_at": "2025-08-17T12:41:36.664157",
   "quality_tiers": {
     "excellent": [
       {
@@ -172,7 +172,23 @@
         "description": "",
         "categories": [],
         "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
         "node_count": 57
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
       },
       {
         "filename": "Unknown.json",
@@ -268,6 +284,6 @@
     "excellent": 6,
     "good": 3,
     "fair": 0,
-    "basic": 19
+    "basic": 21
   }
 }

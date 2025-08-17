@@ -1,6 +1,6 @@
 {
-  "generated_at": "2025-08-17T11:58:50.493534",
-  "total_workflows": 28,
+  "generated_at": "2025-08-17T12:41:36.662855",
+  "total_workflows": 30,
   "workflows": [
     {
       "filename": "AI Content Generation.json",
@@ -209,6 +209,19 @@
       "quality_score": 0,
       "node_count": 0,
       "connection_count": 0,
+      "scraped_at": "2025-08-17 12:22:30",
+      "source_url": "https://n8n.io/workflows/2006"
+    },
+    {
+      "filename": "Unknown.json",
+      "name": "Unknown",
+      "description": "",
+      "categories": [],
+      "integrations": [],
+      "complexity": "unknown",
+      "quality_score": 0,
+      "node_count": 0,
+      "connection_count": 0,
       "scraped_at": "",
       "source_url": ""
     },
@@ -406,6 +419,19 @@
       "connection_count": 0,
       "scraped_at": "",
       "source_url": ""
+    },
+    {
+      "filename": "Unknown.json",
+      "name": "Unknown",
+      "description": "",
+      "categories": [],
+      "integrations": [],
+      "complexity": "unknown",
+      "quality_score": 0,
+      "node_count": 0,
+      "connection_count": 0,
+      "scraped_at": "2025-08-17 12:25:38",
+      "source_url": "https://n8n.io/workflows/1748"
     },
     {
       "filename": "Unknown.json",

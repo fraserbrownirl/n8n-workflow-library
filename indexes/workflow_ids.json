@@ -4,6 +4,11 @@
     "name": "Unknown",
     "search_text": "Webhook n8n-nodes-base.webhook Edit Image n8n-nodes-base.editImage Read File URL n8n-nodes-base.httpRequest"
   },
+  "d086f703-f2db-5d0c-9781-8145f865bd99": {
+    "filename": "AI_agent_that_can_scrape_webpages.json",
+    "name": "Unknown",
+    "search_text": "Sticky Note n8n-nodes-base.stickyNote Sticky Note1 n8n-nodes-base.stickyNote Sticky Note2 n8n-nodes-base.stickyNote Sticky Note3 n8n-nodes-base.stickyNote When chat message received @n8n/n8n-nodes-langchain.chatTrigger AI Agent @n8n/n8n-nodes-langchain.agent OpenAI Chat Model1 @n8n/n8n-nodes-langchain.lmChatOpenAi When Executed by Another Workflow n8n-nodes-base.executeWorkflowTrigger QUERY_PARAMS n8n-nodes-base.set CONFIG n8n-nodes-base.set HTTP Request n8n-nodes-base.httpRequest Is error? n8n-nodes-base.if Stringify error message n8n-nodes-base.set Exctract HTML Body n8n-nodes-base.set Remove extra tags n8n-nodes-base.set Simplify? n8n-nodes-base.if Simplify output n8n-nodes-base.set Convert to Markdown n8n-nodes-base.markdown Send Page Content n8n-nodes-base.set HTTP_Request_Tool @n8n/n8n-nodes-langchain.toolWorkflow"
+  },
   "36e4b2e7-69be-5905-9c75-b6681b453e74": {
     "filename": "Email_Automation_with_AI.json",
     "name": "Email Automation with AI",
@@ -128,6 +133,11 @@
     "filename": "Email_Filtering_AI_Summarization_Real.json",
     "name": "Unknown",
     "search_text": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47 Test Note n8n-nodes-base.stickyNote Log to Google Sheets1 n8n-nodes-base.googleSheets AI Agent1 @n8n/n8n-nodes-langchain.agent Gmail Trigger n8n-nodes-base.gmailTrigger Check Valid Email n8n-nodes-base.if Groq Chat Model1 @n8n/n8n-nodes-langchain.lmChatGroq info1 n8n-nodes-base.code Sticky Note7 n8n-nodes-base.stickyNote Sticky Note8 n8n-nodes-base.stickyNote Sticky Note9 n8n-nodes-base.stickyNote Sticky Note10 n8n-nodes-base.stickyNote Sticky Note11 n8n-nodes-base.stickyNote Sticky Note12 n8n-nodes-base.stickyNote Sticky Note13 n8n-nodes-base.stickyNote groq gmail google-sheets file-management scheduling api-integration web-scraping email-automation ai-automation"
+  },
+  "1fb733b0-91c4-526b-b381-6b0d30ecf69e": {
+    "filename": "Pulling_data_from_services_that_n8n_doesnt_have_a_pre_built_integration_for.json",
+    "name": "Unknown",
+    "search_text": "On clicking 'execute' n8n-nodes-base.manualTrigger Note n8n-nodes-base.stickyNote Note2 n8n-nodes-base.stickyNote Set n8n-nodes-base.set Note6 n8n-nodes-base.stickyNote Note1 n8n-nodes-base.stickyNote Item Lists - Create Items from Body n8n-nodes-base.itemLists HTML Extract - Extract Article Title n8n-nodes-base.htmlExtract Item Lists - Fetch Body n8n-nodes-base.itemLists If - Are we finished? n8n-nodes-base.if Set - Increment Page n8n-nodes-base.set HTTP Request - Get Mock Albums n8n-nodes-base.httpRequest HTTP Request - Get Wikipedia Page n8n-nodes-base.httpRequest HTTP Request - Get my Stars n8n-nodes-base.httpRequest"
   },
   "900759e9-21b0-5224-ab7a-39e95e7f7ba7": {
     "filename": "Workflow_3.json",
