@@ -90,10 +90,7 @@ def scrape_workflow_from_url(driver, url, workflow_name, used_count):
             'name': workflow_name,
             'used_count': int(used_count),
             'popularity_score': calculate_popularity_score(int(used_count)),
-            'source_url': driver.current_url,  # Use final URL after redirects
-            'csv_source': 'final_consolidated.csv',
-            'node_count': len(workflow_data.get('nodes', [])),
-            'connection_count': len(workflow_data.get('connections', {})),
+            'source_url': url,
             'scraped_at': time.strftime('%Y-%m-%d %H:%M:%S')
         })
         

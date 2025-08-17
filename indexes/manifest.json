@@ -1,6 +1,6 @@
 {
-  "generated_at": "2025-08-17T11:42:40.832519",
-  "total_workflows": 27,
+  "generated_at": "2025-08-17T11:58:50.493534",
+  "total_workflows": 28,
   "workflows": [
     {
       "filename": "AI Content Generation.json",
@@ -276,6 +276,19 @@
       "connection_count": 0,
       "scraped_at": "",
       "source_url": ""
+    },
+    {
+      "filename": "Unknown.json",
+      "name": "Unknown",
+      "description": "",
+      "categories": [],
+      "integrations": [],
+      "complexity": "unknown",
+      "quality_score": 0,
+      "node_count": 57,
+      "connection_count": 35,
+      "scraped_at": "2025-08-17 11:58:37",
+      "source_url": "https://n8n.io/workflows/3066-automate-multi-platform-social-media-content-creation-with-ai/"
     },
     {
       "filename": "Unknown.json",
