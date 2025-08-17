@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-08-17T09:39:18.047807",
+  "generated_at": "2025-08-17T09:41:09.538978",
   "total_integrations": 20,
   "integration_stats": {
     "gmail": 2,
@@ -37,8 +37,8 @@
         "complexity": "intermediate"
       },
       {
-        "filename": "Untitled Workflow.json",
-        "name": "Untitled Workflow",
+        "filename": "Email Filtering AI Summarization.json",
+        "name": "Email Filtering AI Summarization",
         "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
         "categories": [
           "file-management",
@@ -89,8 +89,8 @@
         "complexity": "intermediate"
       },
       {
-        "filename": "Untitled Workflow.json",
-        "name": "Untitled Workflow",
+        "filename": "Email Filtering AI Summarization.json",
+        "name": "Email Filtering AI Summarization",
         "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
         "categories": [
           "file-management",
@@ -358,8 +358,8 @@
     ],
     "groq": [
       {
-        "filename": "Untitled Workflow.json",
-        "name": "Untitled Workflow",
+        "filename": "Email Filtering AI Summarization.json",
+        "name": "Email Filtering AI Summarization",
         "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
         "categories": [
           "file-management",

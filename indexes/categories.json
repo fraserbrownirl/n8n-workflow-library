@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-08-17T09:39:18.046551",
+  "generated_at": "2025-08-17T09:41:09.538269",
   "total_categories": 13,
   "categories": {
     "ai-automation": [
@@ -20,8 +20,8 @@
         "node_count": 12
       },
       {
-        "filename": "Untitled Workflow.json",
-        "name": "Untitled Workflow",
+        "filename": "Email Filtering AI Summarization.json",
+        "name": "Email Filtering AI Summarization",
         "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
         "quality_score": 65,
         "complexity": "advanced",
@@ -38,8 +38,8 @@
         "node_count": 12
       },
       {
-        "filename": "Untitled Workflow.json",
-        "name": "Untitled Workflow",
+        "filename": "Email Filtering AI Summarization.json",
+        "name": "Email Filtering AI Summarization",
         "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
         "quality_score": 65,
         "complexity": "advanced",
@@ -82,8 +82,8 @@
         "node_count": 10
       },
       {
-        "filename": "Untitled Workflow.json",
-        "name": "Untitled Workflow",
+        "filename": "Email Filtering AI Summarization.json",
+        "name": "Email Filtering AI Summarization",
         "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
         "quality_score": 65,
         "complexity": "advanced",
@@ -110,8 +110,8 @@
         "node_count": 16
       },
       {
-        "filename": "Untitled Workflow.json",
-        "name": "Untitled Workflow",
+        "filename": "Email Filtering AI Summarization.json",
+        "name": "Email Filtering AI Summarization",
         "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
         "quality_score": 65,
         "complexity": "advanced",
@@ -184,8 +184,8 @@
         "node_count": 6
       },
       {
-        "filename": "Untitled Workflow.json",
-        "name": "Untitled Workflow",
+        "filename": "Email Filtering AI Summarization.json",
+        "name": "Email Filtering AI Summarization",
         "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
         "quality_score": 65,
         "complexity": "advanced",
@@ -204,8 +204,8 @@
     ],
     "scheduling": [
       {
-        "filename": "Untitled Workflow.json",
-        "name": "Untitled Workflow",
+        "filename": "Email Filtering AI Summarization.json",
+        "name": "Email Filtering AI Summarization",
         "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
         "quality_score": 65,
         "complexity": "advanced",

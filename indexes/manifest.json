@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-08-17T09:39:18.045586",
+  "generated_at": "2025-08-17T09:41:09.537645",
   "total_workflows": 10,
   "workflows": [
     {
@@ -163,8 +163,8 @@
       "source_url": "https://n8n.io/workflows/sample-file-management-system"
     },
     {
-      "filename": "Untitled Workflow.json",
-      "name": "Untitled Workflow",
+      "filename": "Email Filtering AI Summarization.json",
+      "name": "Email Filtering AI Summarization",
       "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
       "categories": [
         "file-management",

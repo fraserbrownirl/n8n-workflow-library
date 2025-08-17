@@ -128,10 +128,67 @@ def extract_workflow_json_from_page(driver):
         print(f"❌ Error extracting workflow JSON: {e}")
         return None
 
-def extract_metadata_from_workflow(workflow_data, source_url):
+def extract_workflow_name_from_page(driver):
+    """Extract the actual workflow name from the page."""
+    try:
+        # Try to find the workflow name in the page title or headings
+        page_title = driver.title
+        if page_title and "n8n.io" in page_title:
+            # Extract name from title like "Email Filtering AI Summarization - n8n.io"
+            name = page_title.replace(" - n8n.io", "").strip()
+            if name and name != "n8n.io":
+                return name
+        
+        # Try to find h1 or main heading
+        try:
+            h1_elements = driver.find_elements(By.TAG_NAME, "h1")
+            if h1_elements:
+                name = h1_elements[0].text.strip()
+                if name and len(name) > 3:
+                    return name
+        except:
+            pass
+        
+        # Try to find workflow name in meta tags
+        try:
+            meta_title = driver.find_element(By.CSS_SELECTOR, 'meta[property="og:title"]')
+            if meta_title:
+                name = meta_title.get_attribute('content')
+                if name and len(name) > 3:
+                    return name
+        except:
+            pass
+        
+        # Try to extract from URL path
+        current_url = driver.current_url
+        if "workflows/" in current_url:
+            # Extract the last part of the URL path
+            url_parts = current_url.split("/")
+            if len(url_parts) > 2:
+                last_part = url_parts[-2] if url_parts[-1] == "" else url_parts[-1]
+                # Convert URL format to readable name
+                name = last_part.replace("-", " ").replace("_", " ").title()
+                # Remove numbers at the beginning
+                name = re.sub(r'^\d+\s*', '', name)
+                if name and len(name) > 3:
+                    return name
+        
+        return "Untitled Workflow"
+        
+    except Exception as e:
+        print(f"  ⚠️  Error extracting workflow name: {e}")
+        return "Untitled Workflow"
+
+def extract_metadata_from_workflow(workflow_data, source_url, driver=None):
     """Extract metadata from workflow without altering core data."""
+    # Extract the actual workflow name from the page
+    if driver:
+        workflow_name = extract_workflow_name_from_page(driver)
+    else:
+        workflow_name = workflow_data.get('name', 'Untitled Workflow')
+    
     metadata = {
-        "workflow_name": workflow_data.get('name', 'Untitled Workflow'),
+        "workflow_name": workflow_name,
         "scraped_at": datetime.now().isoformat(),
         "source_url": source_url,
         "node_count": len(workflow_data.get('nodes', [])),
@@ -452,7 +509,7 @@ def scrape_single_workflow(workflow_url, min_delay=8, max_delay=15):
         
         if workflow_data:
             # Extract metadata
-            metadata = extract_metadata_from_workflow(workflow_data, workflow_url)
+            metadata = extract_metadata_from_workflow(workflow_data, workflow_url, driver)
             
             # Create enhanced workflow with metadata
             enhanced_workflow = {
