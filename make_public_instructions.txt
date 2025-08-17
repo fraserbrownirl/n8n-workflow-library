@@ -1,0 +1,4 @@
+To make the repository public, please:
+1. Go to: https://github.com/fraserbrownirl/n8n-workflow-library/settings
+2. Scroll to 'Danger Zone'
+3. Click 'Change visibility' and select 'Make public'
