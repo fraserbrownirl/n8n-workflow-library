@@ -18,7 +18,8 @@
     ],
     "complexity": "intermediate",
     "quality_score": 88,
-    "description": "Automated payment processing with Stripe integration and webhook handling"
+    "description": "Automated payment processing with Stripe integration and webhook handling",
+    "workflow_id": "27c5e037-3aeb-52b0-95d9-744dc7538429"
   },
   "name": "Payment Processing Automation",
   "nodes": [
@@ -232,5 +233,6 @@
   "tags": [],
   "triggerCount": 1,
   "updatedAt": "2025-08-17T09:17:16.615500",
-  "versionId": "1"
+  "versionId": "1",
+  "_filename": "Payment_Processing_Automation.json"
 }

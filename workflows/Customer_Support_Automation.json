@@ -18,7 +18,8 @@
     ],
     "complexity": "intermediate",
     "quality_score": 82,
-    "description": "Automated customer support system with ticket management and responses"
+    "description": "Automated customer support system with ticket management and responses",
+    "workflow_id": "22c55572-bee2-59d9-9bff-52ca52f3056e"
   },
   "name": "Customer Support Automation",
   "nodes": [
@@ -316,5 +317,6 @@
   "tags": [],
   "triggerCount": 1,
   "updatedAt": "2025-08-17T09:17:16.616610",
-  "versionId": "1"
+  "versionId": "1",
+  "_filename": "Customer_Support_Automation.json"
 }

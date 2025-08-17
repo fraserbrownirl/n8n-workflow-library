@@ -18,7 +18,8 @@
     ],
     "complexity": "advanced",
     "quality_score": 92,
-    "description": "Advanced data processing pipeline with error handling and validation"
+    "description": "Advanced data processing pipeline with error handling and validation",
+    "workflow_id": "dff7a3fb-af1f-5317-ba0c-fde44719c056"
   },
   "name": "Data Processing Pipeline",
   "nodes": [
@@ -337,5 +338,6 @@
   "tags": [],
   "triggerCount": 1,
   "updatedAt": "2025-08-17T09:17:16.615076",
-  "versionId": "1"
+  "versionId": "1",
+  "_filename": "Data_Processing_Pipeline.json"
 }

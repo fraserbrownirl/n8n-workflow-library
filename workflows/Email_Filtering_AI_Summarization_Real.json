@@ -22,7 +22,8 @@
     ],
     "complexity": "advanced",
     "quality_score": 65,
-    "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47"
+    "description": "\ud83e\uddea TEST BEFORE DEPLOYING | \ud83d\udd11 Step 1: Add Gmail Credentials \ud83d\udc47",
+    "workflow_id": "0a300373-2c55-5f4d-95f6-72f7ae231fd5"
   },
   "meta": {
     "instanceId": "a62a87f42cfae9ad2ff7f238a8854ab1946946f1bd38cb9d8b7442e62435a1d5"
@@ -411,5 +412,6 @@
         ]
       ]
     }
-  }
+  },
+  "_filename": "Email_Filtering_AI_Summarization_Real.json"
 }

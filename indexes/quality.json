@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-08-17T09:41:09.538619",
+  "generated_at": "2025-08-17T11:42:40.834032",
   "quality_tiers": {
     "excellent": [
       {
@@ -117,6 +117,142 @@
         "categories": [],
         "complexity": "unknown",
         "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "categories": [],
+        "complexity": "unknown",
+        "node_count": 0
       }
     ]
   },
@@ -124,6 +260,6 @@
     "excellent": 6,
     "good": 3,
     "fair": 0,
-    "basic": 1
+    "basic": 18
   }
 }

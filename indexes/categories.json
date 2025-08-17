@@ -1,7 +1,153 @@
 {
-  "generated_at": "2025-08-17T09:41:09.538269",
+  "generated_at": "2025-08-17T11:42:40.833538",
   "total_categories": 13,
   "categories": {
+    "general": [
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      },
+      {
+        "filename": "Unknown.json",
+        "name": "Unknown",
+        "description": "",
+        "quality_score": 0,
+        "complexity": "unknown",
+        "node_count": 0
+      }
+    ],
     "ai-automation": [
       {
         "filename": "AI Content Generation.json",
@@ -190,16 +336,6 @@
         "quality_score": 65,
         "complexity": "advanced",
         "node_count": 14
-      }
-    ],
-    "general": [
-      {
-        "filename": "Unknown.json",
-        "name": "Unknown",
-        "description": "",
-        "quality_score": 0,
-        "complexity": "unknown",
-        "node_count": 0
       }
     ],
     "scheduling": [

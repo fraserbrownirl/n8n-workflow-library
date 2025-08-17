@@ -62,5 +62,9 @@
         ]
       ]
     }
+  },
+  "_filename": "Insert_Excel_data_to_Postgres.json",
+  "_metadata": {
+    "workflow_id": "758d75e7-4ea1-5404-8a23-0762f2a5a126"
   }
 }

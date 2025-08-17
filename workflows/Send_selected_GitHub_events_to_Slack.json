@@ -119,5 +119,9 @@
         ]
       ]
     }
+  },
+  "_filename": "Send_selected_GitHub_events_to_Slack.json",
+  "_metadata": {
+    "workflow_id": "8cd54944-4295-50f9-8759-c4dff41ccc82"
   }
 }

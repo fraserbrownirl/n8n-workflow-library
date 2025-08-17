@@ -386,5 +386,9 @@
         ]
       ]
     }
+  },
+  "_filename": "Email_Filtering_AI_Summarization.json",
+  "_metadata": {
+    "workflow_id": "37d0f5c4-3a48-5205-ae12-55a3062a2803"
   }
 }

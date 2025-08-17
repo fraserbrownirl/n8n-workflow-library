@@ -18,7 +18,8 @@
     ],
     "complexity": "advanced",
     "quality_score": 95,
-    "description": "AI-powered content generation workflow using OpenAI and Claude"
+    "description": "AI-powered content generation workflow using OpenAI and Claude",
+    "workflow_id": "819ebdd4-afdd-573b-b339-78f1390f2380"
   },
   "name": "AI Content Generation",
   "nodes": [
@@ -400,5 +401,6 @@
   "tags": [],
   "triggerCount": 1,
   "updatedAt": "2025-08-17T09:17:16.616068",
-  "versionId": "1"
+  "versionId": "1",
+  "_filename": "AI_Content_Generation.json"
 }

@@ -68,5 +68,9 @@
         ]
       ]
     }
+  },
+  "_filename": "Write_HTTP_query_string_on_image.json",
+  "_metadata": {
+    "workflow_id": "cb259b2d-acfa-5a1e-b16d-bf04dbe0fe47"
   }
 }

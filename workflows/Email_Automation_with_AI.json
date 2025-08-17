@@ -18,7 +18,8 @@
     ],
     "complexity": "intermediate",
     "quality_score": 85,
-    "description": "Automate email processing with AI-powered content analysis and response generation"
+    "description": "Automate email processing with AI-powered content analysis and response generation",
+    "workflow_id": "36e4b2e7-69be-5905-9c75-b6681b453e74"
   },
   "name": "Email Automation with AI",
   "nodes": [
@@ -274,5 +275,6 @@
   "tags": [],
   "triggerCount": 1,
   "updatedAt": "2025-08-17T09:17:16.614272",
-  "versionId": "1"
+  "versionId": "1",
+  "_filename": "Email_Automation_with_AI.json"
 }

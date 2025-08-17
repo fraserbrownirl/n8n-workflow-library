@@ -18,7 +18,8 @@
     ],
     "complexity": "beginner",
     "quality_score": 75,
-    "description": "Comprehensive Slack notification system with filtering and scheduling"
+    "description": "Comprehensive Slack notification system with filtering and scheduling",
+    "workflow_id": "4c9ca62f-f74f-588a-a863-8f56fee0e42a"
   },
   "name": "Slack Notification System",
   "nodes": [
@@ -190,5 +191,6 @@
   "tags": [],
   "triggerCount": 1,
   "updatedAt": "2025-08-17T09:17:16.614802",
-  "versionId": "1"
+  "versionId": "1",
+  "_filename": "Slack_Notification_System.json"
 }

@@ -18,7 +18,8 @@
     ],
     "complexity": "advanced",
     "quality_score": 90,
-    "description": "Advanced web scraping pipeline with data extraction and processing"
+    "description": "Advanced web scraping pipeline with data extraction and processing",
+    "workflow_id": "1d13680c-fa64-5618-ad7f-cc4045015d77"
   },
   "name": "Web Scraping Pipeline",
   "nodes": [
@@ -358,5 +359,6 @@
   "tags": [],
   "triggerCount": 1,
   "updatedAt": "2025-08-17T09:17:16.617105",
-  "versionId": "1"
+  "versionId": "1",
+  "_filename": "Web_Scraping_Pipeline.json"
 }
