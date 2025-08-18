@@ -1,0 +1,32 @@
+{
+  "id": "78",
+  "name": "Receive updates when a form is submitted in Wufoo",
+  "nodes": [
+    {
+      "name": "Wufoo Trigger",
+      "type": "n8n-nodes-base.wufooTrigger",
+      "position": [
+        1290,
+        140
+      ],
+      "webhookId": "106376c5-b49c-412f-8463-4db23a23c057",
+      "parameters": {
+        "form": "n8n"
+      },
+      "credentials": {
+        "wufooApi": "wufoo"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates when a form is submitted in Wufoo",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/703",
+    "scraped_at": "2025-08-18 01:10:38"
+  }
+}

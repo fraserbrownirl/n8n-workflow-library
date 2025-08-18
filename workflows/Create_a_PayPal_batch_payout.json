@@ -1,0 +1,53 @@
+{
+  "name": "",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        540,
+        240
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "PayPal",
+      "type": "n8n-nodes-base.payPal",
+      "position": [
+        730,
+        240
+      ],
+      "parameters": {
+        "senderBatchId": "123",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "payPalApi": "paypal-credentials"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "PayPal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create a PayPal batch payout",
+    "used_count": 48,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/438",
+    "scraped_at": "2025-08-17 16:08:38"
+  }
+}

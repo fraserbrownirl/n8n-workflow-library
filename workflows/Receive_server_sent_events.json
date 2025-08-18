@@ -1,0 +1,27 @@
+{
+  "name": "",
+  "nodes": [
+    {
+      "name": "SSE Trigger",
+      "type": "n8n-nodes-base.sseTrigger",
+      "position": [
+        850,
+        420
+      ],
+      "parameters": {
+        "url": "https://n8n.io"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Receive server-sent events",
+    "used_count": 71,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/639",
+    "scraped_at": "2025-08-17 15:36:34"
+  }
+}

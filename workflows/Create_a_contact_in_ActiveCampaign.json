@@ -1,0 +1,57 @@
+{
+  "name": "",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        600,
+        250
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "ActiveCampaign",
+      "type": "n8n-nodes-base.activeCampaign",
+      "position": [
+        800,
+        250
+      ],
+      "parameters": {
+        "email": "",
+        "updateIfExists": true,
+        "additionalFields": {
+          "lastName": "",
+          "firstName": ""
+        }
+      },
+      "credentials": {
+        "activeCampaignApi": "ActiveCampaign"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "ActiveCampaign",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create a contact in ActiveCampaign",
+    "used_count": 51,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/412",
+    "scraped_at": "2025-08-17 16:04:17"
+  }
+}

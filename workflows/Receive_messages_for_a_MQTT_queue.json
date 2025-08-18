@@ -1,0 +1,31 @@
+{
+  "id": "51",
+  "name": "Receive messages for a MQTT queue",
+  "nodes": [
+    {
+      "name": "MQTT Trigger",
+      "type": "n8n-nodes-base.mqttTrigger",
+      "position": [
+        690,
+        260
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "credentials": {
+        "mqtt": "mqtt"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Receive messages for a MQTT queue",
+    "used_count": 199,
+    "popularity_score": 40,
+    "source_url": "https://n8n.io/workflows/657",
+    "scraped_at": "2025-08-17 14:44:29"
+  }
+}

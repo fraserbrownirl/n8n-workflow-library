@@ -1,0 +1,54 @@
+{
+  "nodes": [
+    {
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        510,
+        320
+      ],
+      "parameters": {
+        "url": "https://www.thecocktaildb.com/api/json/v1/1/random.php",
+        "options": {}
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "DeepL",
+      "type": "n8n-nodes-base.deepL",
+      "position": [
+        710,
+        320
+      ],
+      "parameters": {
+        "text": "={{$json[\"drinks\"][0][\"strInstructions\"]}}",
+        "translateTo": "FR",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "deepLApi": "DeepL API Credentials"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "DeepL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Translate cocktail instructions using DeepL",
+    "used_count": 55,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/998",
+    "scraped_at": "2025-08-17 15:58:20"
+  }
+}

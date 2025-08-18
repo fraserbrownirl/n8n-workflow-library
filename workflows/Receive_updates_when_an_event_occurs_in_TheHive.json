@@ -1,0 +1,31 @@
+{
+  "id": "161",
+  "name": "Receive updates when an event occurs in TheHive",
+  "nodes": [
+    {
+      "name": "TheHive Trigger",
+      "type": "n8n-nodes-base.theHiveTrigger",
+      "position": [
+        690,
+        220
+      ],
+      "webhookId": "bef3fea8-2d68-43e8-9061-6c17c1059c86",
+      "parameters": {
+        "events": [
+          "*"
+        ]
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates when an event occurs in TheHive",
+    "used_count": 65,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/810",
+    "scraped_at": "2025-08-17 15:43:47"
+  }
+}

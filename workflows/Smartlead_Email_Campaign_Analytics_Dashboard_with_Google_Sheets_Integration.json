@@ -1,0 +1,1101 @@
+{
+  "id": "VZkddNG4TSPdUova",
+  "meta": {
+    "instanceId": "807c58b937f3c75f8b242bc4ac5f455a51832cabd7bcdbecd9fdc3ba6179a8c9"
+  },
+  "name": "n8nSmartlead",
+  "tags": [],
+  "nodes": [
+    {
+      "id": "5502d514-0df8-4a43-b7ee-3d2b339359f3",
+      "name": "HTTP Request5",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        520,
+        -120
+      ],
+      "parameters": {
+        "url": "https://server.smartlead.ai/api/v1/analytics/mailbox/domain-wise-health-metrics",
+        "options": {},
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "api_key",
+              "value": "your_API_KEY"
+            },
+            {
+              "name": "start_date",
+              "value": "2025-07-04"
+            },
+            {
+              "name": "end_date",
+              "value": "=2025-08-{{ $json['Day of month'] }}"
+            },
+            {
+              "name": "full_data",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "typeVersion": 4.2
+    },
+    {
+      "id": "4080a374-16cf-4c2c-8aa5-0127015a6184",
+      "name": "Append or update row in sheet5",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        920,
+        -120
+      ],
+      "parameters": {
+        "columns": {
+          "value": {
+            "sent": "={{ $json.sent }}",
+            "domain": "={{ $json.domain }}",
+            "opened": "={{ $json.opened }}",
+            "bounced": "={{ $json.bounced }}",
+            "replied": "={{ $json.replied }}",
+            "open_rate": "={{ $json.open_rate }}",
+            "reply_rate": "={{ $json.reply_rate }}",
+            "Last_update": "={{ $('Schedule Trigger1').item.json[\"Day of month\"] }}-{{ $('Schedule Trigger1').item.json.Month }} ",
+            "bounce_rate": "={{ $json.bounce_rate }}",
+            "positive_replied": "={{ $json.positive_reply_rate }}",
+            "unique_lead_count": "={{ $json.unique_lead_count }}",
+            "unique_open_count": "={{ $json.unique_open_count }}",
+            "positive_reply_rate": "={{ $json.bounce_rate }}"
+          },
+          "schema": [
+            {
+              "id": "Last_update",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "Last_update",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "domain",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "domain",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sent",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "sent",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "opened",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "opened",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "replied",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "replied",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "positive_replied",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "positive_replied",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bounced",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "bounced",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "unique_lead_count",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "unique_lead_count",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "unique_open_count",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "unique_open_count",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "open_rate",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "open_rate",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reply_rate",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "reply_rate",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "positive_reply_rate",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "positive_reply_rate",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bounce_rate",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "bounce_rate",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "domain"
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {},
+        "operation": "appendOrUpdate",
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": 1430156318,
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1U8CC_vlv80vZeeDJc41YTEiWA-efikXBur6XDurtQoQ/edit#gid=1430156318",
+          "cachedResultName": "DomainHealth"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "1U8CC_vlv80vZeeDJc41YTEiWA-efikXBur6XDurtQoQ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1U8CC_vlv80vZeeDJc41YTEiWA-efikXBur6XDurtQoQ/edit?usp=drivesdk",
+          "cachedResultName": "Email Analytics"
+        }
+      },
+      "typeVersion": 4.6
+    },
+    {
+      "id": "a3d52977-01f7-4edf-8e9a-9729519cbfa4",
+      "name": "Split Out5",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        740,
+        -120
+      ],
+      "parameters": {
+        "options": {},
+        "fieldToSplitOut": "data.domain_health_metrics"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "ce8aadb2-4bef-4b98-b5b1-e50aa8a07803",
+      "name": "HTTP Request6",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        520,
+        140
+      ],
+      "parameters": {
+        "url": "https://server.smartlead.ai/api/v1/analytics/mailbox/name-wise-health-metrics",
+        "options": {},
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "api_key",
+              "value": "your_API_KEY"
+            },
+            {
+              "name": "start_date",
+              "value": "2025-07-04"
+            },
+            {
+              "name": "end_date",
+              "value": "=2025-08-{{ $json['Day of month'] }}"
+            },
+            {
+              "name": "full_data",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "typeVersion": 4.2
+    },
+    {
+      "id": "c4aa2293-424c-4865-9f89-26e5fd77052f",
+      "name": "Append or update row in sheet6",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        920,
+        140
+      ],
+      "parameters": {
+        "columns": {
+          "value": {
+            "sent": "={{ $json.sent }}",
+            "opened": "={{ $json.opened }}",
+            "bounced": "={{ $json.bounced }}",
+            "replied": "={{ $json.replied }}",
+            "open_rate": "={{ $json.open_rate }}",
+            "from_email": "={{ $json.from_email }}",
+            "reply_rate": "={{ $json.reply_rate }}",
+            "Last_update": "={{ $('Schedule Trigger1').item.json[\"Day of month\"] }}-{{ $('Schedule Trigger1').item.json.Month }} ",
+            "bounce_rate": "={{ $json.bounce_rate }}",
+            "positive_replied": "={{ $json.positive_reply_rate }}",
+            "unique_lead_count": "={{ $json.unique_lead_count }}",
+            "unique_open_count": "={{ $json.unique_open_count }}",
+            "positive_reply_rate": "={{ $json.positive_reply_rate }}"
+          },
+          "schema": [
+            {
+              "id": "Last_update",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "Last_update",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "from_email",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "from_email",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sent",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "sent",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "opened",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "opened",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "replied",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "replied",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "positive_replied",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "positive_replied",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bounced",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "bounced",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "unique_lead_count",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "unique_lead_count",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "unique_open_count",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "unique_open_count",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "open_rate",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "open_rate",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reply_rate",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "reply_rate",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "positive_reply_rate",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "positive_reply_rate",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bounce_rate",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "bounce_rate",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "from_email"
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "useAppend": true
+        },
+        "operation": "appendOrUpdate",
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": 1649535361,
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1U8CC_vlv80vZeeDJc41YTEiWA-efikXBur6XDurtQoQ/edit#gid=1649535361",
+          "cachedResultName": "EmailHealth"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "1U8CC_vlv80vZeeDJc41YTEiWA-efikXBur6XDurtQoQ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1U8CC_vlv80vZeeDJc41YTEiWA-efikXBur6XDurtQoQ/edit?usp=drivesdk",
+          "cachedResultName": "Email Analytics"
+        }
+      },
+      "typeVersion": 4.6
+    },
+    {
+      "id": "6515197c-0bb9-463e-837c-ff8e399ecc42",
+      "name": "Split Out6",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        740,
+        140
+      ],
+      "parameters": {
+        "options": {},
+        "fieldToSplitOut": "data.email_health_metrics"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "271bd281-f8f7-4358-ba81-2269ae9c10a7",
+      "name": "Schedule Trigger1",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        120,
+        40
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 5
+            }
+          ]
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "0385032a-7bd4-47bd-a105-5f51ef54d90b",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        20,
+        -220
+      ],
+      "parameters": {
+        "width": 1248,
+        "height": 608,
+        "content": "For Getting data about email and domain health"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "9d5dde4b-cfe8-4448-b039-2ed8dcdbdc5c",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1760,
+        -120
+      ],
+      "parameters": {
+        "url": "https://server.smartlead.ai/api/v1/analytics/day-wise-overall-stats-by-sent-time?",
+        "options": {},
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "api_key",
+              "value": "your_API_KEY"
+            },
+            {
+              "name": "start_date",
+              "value": "=2025-08-7"
+            },
+            {
+              "name": "end_date",
+              "value": "=2025-08-{{ $json['Day of month'] }}"
+            },
+            {
+              "name": "timezone",
+              "value": "5:30"
+            }
+          ]
+        }
+      },
+      "typeVersion": 4.2
+    },
+    {
+      "id": "02e0141f-2eca-44f3-9188-dc1c00759378",
+      "name": "Append or update row in sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        2160,
+        -120
+      ],
+      "parameters": {
+        "columns": {
+          "value": {
+            "day": "={{ $json.day_name }}",
+            "date": "={{ $json.date }}",
+            "sent": "={{ $json.email_engagement_metrics.sent }}",
+            "opened": "={{ $json.email_engagement_metrics.opened }}",
+            "bounced": "={{ $json.email_engagement_metrics.bounced }}",
+            "replied": "={{ $json.email_engagement_metrics.replied }}",
+            "unsubscribed": "={{ $json.email_engagement_metrics.unsubscribed }}",
+            "unique_lead_reached": "={{ $json.email_engagement_metrics.unique_lead_reached }}"
+          },
+          "schema": [
+            {
+              "id": "date",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "date",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "day",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "day",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sent",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "sent",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "opened",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "opened",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "replied",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "replied",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bounced",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "bounced",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "unsubscribed",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "unsubscribed",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "unique_lead_reached",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "unique_lead_reached",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "date"
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {},
+        "operation": "appendOrUpdate",
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gid=0",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1U8CC_vlv80vZeeDJc41YTEiWA-efikXBur6XDurtQoQ/edit#gid=0",
+          "cachedResultName": "Sheet1"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "1U8CC_vlv80vZeeDJc41YTEiWA-efikXBur6XDurtQoQ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1U8CC_vlv80vZeeDJc41YTEiWA-efikXBur6XDurtQoQ/edit?usp=drivesdk",
+          "cachedResultName": "Email Analytics"
+        }
+      },
+      "typeVersion": 4.6
+    },
+    {
+      "id": "18058bee-4a57-4bfc-9bd8-e9531517d223",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        1980,
+        -120
+      ],
+      "parameters": {
+        "options": {},
+        "fieldToSplitOut": "data.day_wise_stats"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "5b14d983-d3f4-4731-8383-bd77180b3a48",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        1520,
+        20
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 2
+            }
+          ]
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "b3b9f28c-2e8a-495c-b5aa-55069f8acd39",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1760,
+        160
+      ],
+      "parameters": {
+        "url": "https://server.smartlead.ai/api/v1/analytics/campaign/overall-stats",
+        "options": {},
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "api_key",
+              "value": "your_API_KEY"
+            },
+            {
+              "name": "start_date",
+              "value": "2025-07-24"
+            },
+            {
+              "name": "end_date",
+              "value": "=2025-08-{{ $json['Day of month'] }}"
+            },
+            {
+              "name": "full_data",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "typeVersion": 4.2
+    },
+    {
+      "id": "d42a8ab0-799d-41d8-a613-7d62fdb71a38",
+      "name": "Append or update row in sheet1",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        2160,
+        160
+      ],
+      "parameters": {
+        "columns": {
+          "value": {
+            "id": "={{ $json.id }}",
+            "sent": "={{ $json.sent }}",
+            "opened": "={{ $json.opened }}",
+            "bounced": "={{ $json.bounced }}",
+            "replied": "={{ $json.replied }}",
+            "open_rate": "={{ $json.open_rate }}",
+            "reply_rate": "={{ $json.reply_rate }}",
+            "Updated at ": "={{ $('Schedule Trigger').item.json['Readable date'] }}",
+            "bounce_rate": "={{ $json.bounce_rate }}",
+            "campaign_name": "={{ $json.campaign_name }}",
+            "positive_replied": "={{ $json.positive_reply_rate }}",
+            "unique_lead_count": "={{ $json.unique_lead_count }}",
+            "unique_open_count": "={{ $json.unique_open_count }}",
+            "positive_reply_rate": "={{ $json.bounce_rate }}"
+          },
+          "schema": [
+            {
+              "id": "Updated at ",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "Updated at ",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "id",
+              "defaultMatch": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "campaign_name",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "campaign_name",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sent",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "sent",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "opened",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "opened",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "replied",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "replied",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bounced",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "bounced",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "open_rate",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "open_rate",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reply_rate",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "reply_rate",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bounce_rate",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "bounce_rate",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "positive_reply_rate",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "positive_reply_rate",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "positive_replied",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "positive_replied",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "unique_lead_count",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "unique_lead_count",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "unique_open_count",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "unique_open_count",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "id"
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {},
+        "operation": "appendOrUpdate",
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": 476539810,
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1U8CC_vlv80vZeeDJc41YTEiWA-efikXBur6XDurtQoQ/edit#gid=476539810",
+          "cachedResultName": "CampaignWise"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "1U8CC_vlv80vZeeDJc41YTEiWA-efikXBur6XDurtQoQ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1U8CC_vlv80vZeeDJc41YTEiWA-efikXBur6XDurtQoQ/edit?usp=drivesdk",
+          "cachedResultName": "Email Analytics"
+        }
+      },
+      "typeVersion": 4.6
+    },
+    {
+      "id": "32907a08-92ea-47f0-942d-3b1adcc3ce1d",
+      "name": "Split Out1",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        1980,
+        160
+      ],
+      "parameters": {
+        "options": {},
+        "fieldToSplitOut": "data.campaign_wise_performance"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "3317b109-2406-46f0-a3c3-66c95542cf79",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1400,
+        -220
+      ],
+      "parameters": {
+        "width": 1248,
+        "height": 608,
+        "content": "Smartlead Campaignwise & Global analytics day wise"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "02ea928f-b467-4370-9db3-158ec5681745",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1200,
+        -420
+      ],
+      "parameters": {
+        "color": 5,
+        "content": "For help in setting up these workflows, connect me at https://www.linkedin.com/in/rahiuppal/"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5624155b-c5ff-44a5-a0b0-793f3468c6ae",
+  "connections": {
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out5": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out6": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request5": {
+      "main": [
+        [
+          {
+            "node": "Split Out5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request6": {
+      "main": [
+        [
+          {
+            "node": "Split Out6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Smartlead Email Campaign Analytics Dashboard with Google Sheets Integration",
+    "used_count": 1,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/7210",
+    "scraped_at": "2025-08-17 19:10:46"
+  }
+}

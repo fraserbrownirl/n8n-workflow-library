@@ -1,0 +1,401 @@
+{
+  "meta": {
+    "instanceId": "393ca9e36a1f81b0f643c72792946a5fe5e49eb4864181ba4032e5a408278263",
+    "templateCredsSetupCompleted": true
+  },
+  "nodes": [
+    {
+      "id": "b17a526e-3245-4255-9308-644d1a8b8a56",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        480,
+        -80
+      ],
+      "parameters": {
+        "options": {},
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "9bc90f3e-9c5d-4cbc-b899-93fa5e2de9a5",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.scraped }}",
+              "rightValue": ""
+            }
+          ]
+        }
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "d573c093-b0fe-46dd-803a-f4f5407ef071",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        768,
+        -96
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "40bd3620-f640-4a09-8fc7-a074b56ca447",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        1120,
+        -240
+      ],
+      "parameters": {
+        "options": {},
+        "respondWith": "json",
+        "responseBody": "{\n    \"text\": \"Fin du scraping rendez vous dans le dossier [Contenu scrap\u00e9](https://drive.google.com/drive/folders/1ry3xvQ9UqM2Rf9C4-AoJdg1lfB9inh_5) pour retrouver vos pages, d\u00e9placez les docs vers votre document RAG si vous souhaitez les ajouter \u00e0 la base de donn\u00e9es de votre client\"\n } "
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "b6c0bf60-c7fe-4cf0-b6df-5cd10adc59d9",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        -160,
+        -80
+      ],
+      "webhookId": "60fcb296-7be1-4d65-a3b0-59a6fe4c43c0",
+      "parameters": {
+        "mode": "webhook",
+        "public": true,
+        "options": {
+          "responseMode": "responseNode"
+        }
+      },
+      "typeVersion": 1.1
+    },
+    {
+      "id": "a171ef02-49d0-407a-a690-1c0a33ac9960",
+      "name": "Scraping",
+      "type": "@mendable/n8n-nodes-firecrawl.firecrawl",
+      "position": [
+        1136,
+        -80
+      ],
+      "parameters": {
+        "operation": "scrape",
+        "requestOptions": {}
+      },
+      "credentials": {
+        "firecrawlApi": {
+          "id": "E34WDB80ik5VHjiI",
+          "name": "Firecrawl account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "e5ef4981-bad1-438e-ae51-64c81271fdac",
+      "name": "Get URL",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        48,
+        -80
+      ],
+      "parameters": {
+        "options": {},
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Page to doc"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "={{ $json.chatInput }}"
+        }
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wBRLUCktxqXE6DVJ",
+          "name": "Google Sheets account"
+        }
+      },
+      "typeVersion": 4.5
+    },
+    {
+      "id": "840557d7-7d60-4e2b-8a77-d28bd729005e",
+      "name": "Row not empty",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        272,
+        -80
+      ],
+      "parameters": {
+        "options": {},
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "48acd975-5041-455b-8e47-3b7eef32b483",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              },
+              "leftValue": "={{ $json.URL }}",
+              "rightValue": ""
+            }
+          ]
+        }
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "ad30c0c6-a5ba-460e-826a-ab329410c0b1",
+      "name": "Create file markdown scraping",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        1440,
+        -80
+      ],
+      "parameters": {
+        "name": "={{ $('Scraping').item.json.data.metadata.url }}",
+        "content": "={{ $('Scraping').item.json.data.markdown }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "options": {},
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "1ry3xvQ9UqM2Rf9C4-AoJdg1lfB9inh_5",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1ry3xvQ9UqM2Rf9C4-AoJdg1lfB9inh_5",
+          "cachedResultName": "Contenu scrap\u00e9"
+        },
+        "operation": "createFromText"
+      },
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "3TalAPza9NdMx3yx",
+          "name": "Google Drive account"
+        }
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "f218e0e1-4262-4077-a8b9-284c7d2ec268",
+      "name": "Scraped : OK",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1712,
+        -80
+      ],
+      "parameters": {
+        "columns": {
+          "value": {
+            "URL": "={{ $('Loop Over Items').item.json.URL }}",
+            "Scrap\u00e9": "OK"
+          },
+          "schema": [
+            {
+              "id": "URL",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "URL",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Scrap\u00e9",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "Scrap\u00e9",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "type": "string",
+              "display": true,
+              "removed": true,
+              "readOnly": true,
+              "required": false,
+              "displayName": "row_number",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "URL"
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {},
+        "operation": "update",
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Page to doc"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "={{ $('When chat message received').item.json.chatInput }}"
+        }
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wBRLUCktxqXE6DVJ",
+          "name": "Google Sheets account"
+        }
+      },
+      "typeVersion": 4.6,
+      "alwaysOutputData": true
+    },
+    {
+      "id": "25212a05-db4a-4d6f-a579-778ae04342ef",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1056,
+        -1008
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 720,
+        "height": 3536,
+        "content": "# Firecrawl batch scraping to Google Docs\n## Who's it for\nAI chatbot developers, content managers, and data analysts who need to extract and organize content from multiple web pages for knowledge base creation, competitive analysis, or content migration projects.\n## What it does\nThis workflow automatically scrapes content from a list of URLs and converts each page into a structured Google Doc in markdown format. It's designed for batch processing multiple pages efficiently, making it ideal for building AI knowledge bases, analyzing competitor content, or migrating website content to documentation systems.\n## How it works\nThe workflow follows a systematic scraping process:\n\nURL Input: Reads a list of URLs from a Google Sheets template\nData Validation: Filters out empty rows and already-processed URLs\nBatch Processing: Loops through each URL sequentially\nContent Extraction: Uses Firecrawl to scrape and convert content to markdown\nDocument Creation: Creates individual Google Docs for each scraped page\nProgress Tracking: Updates the spreadsheet to mark completed URLs\nFinal Notification: Provides completion summary with access to scraped content\n\n## Requirements\n\nFirecrawl API key (for web scraping)\nGoogle Sheets access\nGoogle Drive access (for document creation)\nGoogle Sheets template (provided)\n\n## How to set up\n### Step 1: Prepare your template\n\nCopy the Google Sheets template\nCreate your own version for personal use\nEnsure the sheet has a tab named \"Page to doc\"\nList all URLs you want to scrape in the \"URL\" column\n\n### Step 2: Configure API credentials\nSet up the following credentials in n8n:\n\nFirecrawl API: For web content scraping and markdown conversion\nGoogle Sheets OAuth2: For reading URLs and updating progress\nGoogle Drive OAuth2: For creating content documents\n\n### Step 3: Set up your Google Drive folder\n\nThe workflow saves scraped content to a specific Drive folder\nDefault folder: \"Contenu scrap\u00e9\" (Content Scraped)\nFolder ID: 1ry3xvQ9UqM2Rf9C4-AoJdg1lfB9inh_5 (customize this to your own folder)\nCreate your own folder and update the folder ID in the \"Create file markdown scraping\" node\n\n### Step 4: Choose your trigger method\nOption A: Chat interface\n\nUse the default chat trigger\nSend your Google Sheets URL through the chat interface\n\nOption B: Manual trigger\n\nReplace chat trigger with manual trigger\nSet the Google Sheets URL as a variable in the \"Get URL\" node\n\n## How to customize the workflow\n### URL source customization\n\nSheet name: Change \"Page to doc\" to your preferred tab name\nColumn structure: Modify field mappings if using different column names\nURL validation: Adjust filtering criteria for URL format requirements\nBatch size: The workflow processes all URLs sequentially (no batch size limit)\n\n### Scraping configuration\n\nFirecrawl options: Add specific scraping parameters (wait times, JavaScript rendering)\nContent format: Currently outputs markdown (can be modified for other formats)\nError handling: The workflow continues processing even if individual URLs fail\nRetry logic: Add retry mechanisms for failed scraping attempts\n\n### Output customization\n\nDocument naming: Currently uses the URL as document name (customizable)\nFolder organization: Create subfolders for different content types\nFile format: Switch from Google Docs to other formats (PDF, TXT, etc.)\nContent structure: Add headers, metadata, or formatting to scraped content\n\n### Progress tracking enhancements\n\nStatus columns: Add more detailed status tracking (failed, retrying, etc.)\nMetadata capture: Store scraping timestamps, content length, etc.\nError logging: Track which URLs failed and why\nCompletion statistics: Generate summary reports of scraping results\n\n## Use cases\n### AI knowledge base creation\n\nE-commerce product pages: Scrape product descriptions and specifications for chatbot training\nDocumentation sites: Convert help articles into structured knowledge base content\nFAQ pages: Extract customer service information for automated support systems\nCompany information: Gather about pages, services, and team information\n\n### Content analysis and migration\n\nCompetitor research: Analyze competitor website content and structure\nContent audits: Extract existing content for analysis and optimization\nWebsite migrations: Backup content before site redesigns or platform changes\nSEO analysis: Gather content for keyword and structure analysis\n\n### Research and documentation\n\nMarket research: Collect information from multiple industry sources\nAcademic research: Gather content from relevant web sources\nLegal compliance: Document website terms, policies, and disclaimers\nBrand monitoring: Track content changes across multiple sites\n\n## Workflow features\n### Smart processing logic\n\nDuplicate prevention: Skips URLs already marked as \"Scrap\u00e9\" (scraped)\nEmpty row filtering: Automatically ignores rows without URLs\nSequential processing: Handles one URL at a time to avoid rate limiting\nProgress updates: Real-time status updates in the source spreadsheet\n\n### Error handling and resilience\n\nGraceful failures: Continues processing remaining URLs if individual scrapes fail\nStatus tracking: Clear indication of completed vs. pending URLs\nCompletion notification: Summary message with link to scraped content folder\nManual restart capability: Can resume processing from where it left off\n\n## Results interpretation\n### Organized content output\nEach scraped page creates:\n\nIndividual Google Doc: Named with the source URL\nMarkdown formatting: Clean, structured content extraction\nMetadata preservation: Original URL and scraping timestamp\nOrganized storage: All documents in designated Google Drive folder\n\n### Progress tracking\nThe source spreadsheet shows:\n\nURL list: Original URLs to be processed\nStatus column: \"OK\" for completed, empty for pending\nReal-time updates: Progress visible during workflow execution\nCompletion summary: Final notification with access instructions\n\n## Workflow limitations\n\nSequential processing: Processes URLs one at a time (prevents rate limiting but slower for large lists)\nGoogle Drive dependency: Requires Google Drive for document storage\nFirecrawl rate limits: Subject to Firecrawl API limitations and quotas\nSingle format output: Currently outputs only Google Docs (easily customizable)\nManual setup: Requires Google Sheets template preparation before use\nNo content deduplication: Creates separate documents even for similar content"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get URL": {
+      "main": [
+        [
+          {
+            "node": "Row not empty",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scraping": {
+      "main": [
+        [
+          {
+            "node": "Create file markdown scraping",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scraped : OK": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Row not empty": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Scraping",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Get URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create file markdown scraping": {
+      "main": [
+        [
+          {
+            "node": "Scraped : OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Batch Scrape Website URLs from Google Sheets to Google Docs with Firecrawl",
+    "used_count": 1,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/7384",
+    "scraped_at": "2025-08-17 19:06:45"
+  }
+}

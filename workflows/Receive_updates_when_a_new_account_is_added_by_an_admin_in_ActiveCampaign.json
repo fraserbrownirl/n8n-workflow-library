@@ -1,0 +1,36 @@
+{
+  "id": "112",
+  "name": "Receive updates when a new account is added by an admin in ActiveCampaign",
+  "nodes": [
+    {
+      "name": "ActiveCampaign Trigger",
+      "type": "n8n-nodes-base.activeCampaignTrigger",
+      "position": [
+        700,
+        250
+      ],
+      "parameters": {
+        "events": [
+          "account_add"
+        ],
+        "sources": [
+          "admin"
+        ]
+      },
+      "credentials": {
+        "activeCampaignApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates when a new account is added by an admin in ActiveCampaign",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/488",
+    "scraped_at": "2025-08-18 01:13:51"
+  }
+}

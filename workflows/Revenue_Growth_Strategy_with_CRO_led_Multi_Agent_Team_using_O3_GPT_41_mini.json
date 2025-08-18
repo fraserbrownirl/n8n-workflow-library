@@ -1,0 +1,481 @@
+{
+  "meta": {
+    "instanceId": "12e6f290a974a1eee154f8d915aade185e90e826260e6aeab8a087ba7386a1bc",
+    "templateCredsSetupCompleted": true
+  },
+  "nodes": [
+    {
+      "id": "revops-chat-trigger",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        -2864,
+        -576
+      ],
+      "webhookId": "revops-webhook-id",
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 1.1
+    },
+    {
+      "id": "cro-agent",
+      "name": "CRO Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -2640,
+        -816
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 2.1
+    },
+    {
+      "id": "revops-think",
+      "name": "Think",
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "position": [
+        -2512,
+        -496
+      ],
+      "parameters": {},
+      "typeVersion": 1.1
+    },
+    {
+      "id": "pipeline-agent",
+      "name": "Sales Pipeline Analyst",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -2240,
+        -96
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in sales pipeline analysis, funnel optimization, conversion tracking, and sales process improvement"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "attribution-agent",
+      "name": "Revenue Attribution Specialist",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1280,
+        -704
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in revenue attribution modeling, multi-touch attribution, and marketing ROI analysis"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "forecasting-agent",
+      "name": "Revenue Forecasting Analyst",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1840,
+        -304
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in revenue forecasting, predictive modeling, scenario planning, and growth projections"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "ops-agent",
+      "name": "Revenue Operations Manager",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1328,
+        -80
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in CRM optimization, sales automation, territory planning, and revenue operations processes"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "pricing-agent",
+      "name": "Pricing & Packaging Strategist",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1744,
+        -1024
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in pricing strategy, product packaging, competitive pricing analysis, and revenue optimization"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "intelligence-agent",
+      "name": "Revenue Intelligence Analyst",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1344,
+        -1264
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in revenue analytics, business intelligence, performance tracking, and data-driven insights"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "cro-model",
+      "name": "OpenAI Chat Model CRO",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -2672,
+        -496
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "o3",
+          "cachedResultName": "o3"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "pipeline-model",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -2208,
+        368
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "attribution-model",
+      "name": "OpenAI Chat Model2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1312,
+        -496
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "forecasting-model",
+      "name": "OpenAI Chat Model3",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1824,
+        -144
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "ops-model",
+      "name": "OpenAI Chat Model4",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1328,
+        96
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "pricing-model",
+      "name": "OpenAI Chat Model5",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1776,
+        -768
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "intelligence-model",
+      "name": "OpenAI Chat Model6",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1312,
+        -944
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "revops-header-sticky",
+      "name": "Sticky Note Header",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3808,
+        -880
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 580,
+        "height": 320,
+        "content": "=======================================\n        CRO AGENT WITH REVENUE OPS TEAM\n=======================================\nFor any questions or support, please contact:\n    Yaron@nofluff.online\n\nExplore more tips and tutorials here:\n   - YouTube: https://www.youtube.com/@YaronBeen/videos\n   - LinkedIn: https://www.linkedin.com/in/yaronbeen/\n======================================="
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "revops-main-sticky",
+      "name": "Sticky Note Main",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3808,
+        -544
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 740,
+        "height": 2500,
+        "content": "## \ud83d\udcc8 **CRO AGENT WITH REVENUE OPS TEAM - AI WORKFLOW**\n\n**\ud83d\udd25 Powered by OpenAI O3 & GPT-4.1-mini Multi-Agent System**\n\n#RevenueOps #RevOps #n8nWorkflows #OpenAI #RevenueGrowth\n\n---\n\n### \ud83d\udcdd **Overview**\n\nThis multi-agent n8n automation creates a comprehensive revenue operations team. A strategic CRO agent receives your revenue questions, analyzes growth opportunities, and coordinates specialized agents for pipeline analysis, attribution modeling, forecasting, operations, pricing, and intelligence\u2014delivering end-to-end revenue optimization with data-driven insights.\n\n---\n\n### \u2699\ufe0f **How It Works**\n\n1. **Chat trigger** receives revenue requests (e.g., \"Analyze our sales funnel and optimize conversion rates\")\n2. **CRO Agent** (O3) analyzes revenue strategy and determines optimization approach\n3. Delegates to specialist agents:\n   - Sales Pipeline Analyst\n   - Revenue Attribution Specialist\n   - Revenue Forecasting Analyst\n   - Revenue Operations Manager\n   - Pricing & Packaging Strategist\n   - Revenue Intelligence Analyst\n4. Each agent uses **GPT-4.1-mini** for specialized execution\n5. Results compiled into comprehensive revenue strategy\n\n---\n\n### \ud83d\udc65 **Meet Your AI Revenue Ops Team**\n\n| Agent | Purpose | Model | Output |\n|-------|---------|-------|--------|\n| \ud83d\udcc8 **CRO Agent** | Revenue strategy & growth leadership | O3 | Strategic revenue direction |\n| \ud83d\udd04 **Pipeline Analyst** | Funnel optimization, conversion tracking | GPT-4.1-mini | Pipeline insights |\n| \ud83c\udfaf **Attribution Specialist** | Multi-touch attribution, ROI analysis | GPT-4.1-mini | Attribution models |\n| \ud83d\udcca **Forecasting Analyst** | Revenue forecasts, predictive models | GPT-4.1-mini | Growth projections |\n| \u2699\ufe0f **Operations Manager** | CRM optimization, process automation | GPT-4.1-mini | Operational efficiency |\n| \ud83d\udcb0 **Pricing Strategist** | Pricing optimization, packaging | GPT-4.1-mini | Pricing strategies |\n| \ud83e\udde0 **Intelligence Analyst** | Revenue analytics, performance tracking | GPT-4.1-mini | Data insights |\n\n---\n\n### \ud83d\udca1 **Use Cases**\n\n- **Pipeline Optimization**: Funnel analysis \u2192 Bottleneck identification \u2192 Conversion improvement\n- **Attribution Modeling**: Touch point tracking \u2192 ROI calculation \u2192 Marketing optimization\n- **Revenue Forecasting**: Historical analysis \u2192 Predictive modeling \u2192 Growth planning\n- **Operations Excellence**: CRM optimization \u2192 Process automation \u2192 Territory planning\n- **Pricing Strategy**: Competitive analysis \u2192 Value-based pricing \u2192 Package optimization\n- **Performance Intelligence**: KPI tracking \u2192 Trend analysis \u2192 Strategic insights\n\n---\n\n### \ud83d\udcb8 **Cost Optimization**\n\n- **O3 for CRO**: Strategic revenue decisions only\n- **GPT-4.1-mini for specialists**: 90% cost reduction\n- **Parallel processing**: All specialists work simultaneously\n- **Data integration**: Leverage existing revenue data\n\n---\n\n### \ud83c\udff7\ufe0f **Tags**\n\n#RevenueOperations #SalesAnalytics #PipelineOptimization #RevenueAttribution #RevenueForecasting\n#PricingStrategy #RevenueIntelligence #SalesOps #GrowthHacking #RevenueOptimization\n#n8n #OpenAI #MultiAgentSystem #RevenueTech #SalesAutomation #GrowthStrategy"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Think": {
+      "ai_tool": [
+        [
+          "CRO Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          "Sales Pipeline Analyst",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          "Revenue Attribution Specialist",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          "Revenue Forecasting Analyst",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          "Revenue Operations Manager",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model5": {
+      "ai_languageModel": [
+        [
+          "Pricing & Packaging Strategist",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model6": {
+      "ai_languageModel": [
+        [
+          "Revenue Intelligence Analyst",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model CRO": {
+      "ai_languageModel": [
+        [
+          "CRO Agent",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "Sales Pipeline Analyst": {
+      "ai_tool": [
+        [
+          "CRO Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Revenue Operations Manager": {
+      "ai_tool": [
+        [
+          "CRO Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          "CRO Agent",
+          "main",
+          0
+        ]
+      ]
+    },
+    "Revenue Forecasting Analyst": {
+      "ai_tool": [
+        [
+          "CRO Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Revenue Intelligence Analyst": {
+      "ai_tool": [
+        [
+          "CRO Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Pricing & Packaging Strategist": {
+      "ai_tool": [
+        [
+          "CRO Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Revenue Attribution Specialist": {
+      "ai_tool": [
+        [
+          "CRO Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Revenue Growth Strategy with CRO-led Multi-Agent Team using O3 & GPT-4.1-mini",
+    "used_count": 7,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/6907",
+    "scraped_at": "2025-08-17 18:18:10"
+  }
+}

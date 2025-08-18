@@ -1,0 +1,32 @@
+{
+  "id": "34",
+  "name": "Receive updates when a sale is made in Gumroad",
+  "nodes": [
+    {
+      "name": "Gumroad Trigger",
+      "type": "n8n-nodes-base.gumroadTrigger",
+      "position": [
+        1310,
+        700
+      ],
+      "webhookId": "d72f9547-0530-4733-9e8b-3e3b1beec2eb",
+      "parameters": {
+        "resource": "sale"
+      },
+      "credentials": {
+        "gumroadApi": "gumroad"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates when a sale is made in Gumroad",
+    "used_count": 21,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/650",
+    "scraped_at": "2025-08-17 17:16:11"
+  }
+}

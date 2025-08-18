@@ -1,0 +1,33 @@
+{
+  "nodes": [
+    {
+      "name": "SurveyMonkey Trigger",
+      "type": "n8n-nodes-base.surveyMonkeyTrigger",
+      "position": [
+        880,
+        390
+      ],
+      "webhookId": "52754661-725a-49e0-88fc-a8e5dbbea5a5",
+      "parameters": {
+        "event": "response_created",
+        "surveyIds": [
+          "288506979"
+        ],
+        "objectType": "survey",
+        "authentication": "oAuth2"
+      },
+      "credentials": {
+        "surveyMonkeyOAuth2Api": "surveymonkey_oauth"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {},
+  "_metadata": {
+    "name": "Get updates when a response is created in SurveyMonkey",
+    "used_count": 28,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/551",
+    "scraped_at": "2025-08-17 16:54:24"
+  }
+}

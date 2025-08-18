@@ -1,0 +1,56 @@
+{
+  "id": "120",
+  "name": "Create a client in Harvest",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Harvest",
+      "type": "n8n-nodes-base.harvest",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "name": "",
+        "resource": "client",
+        "operation": "create",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "harvestApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Harvest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create a client in Harvest",
+    "used_count": 9,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/494",
+    "scraped_at": "2025-08-17 18:11:40"
+  }
+}

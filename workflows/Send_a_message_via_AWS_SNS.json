@@ -1,0 +1,51 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "AWS SNS",
+      "type": "n8n-nodes-base.awsSns",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "topic": "n8n-rocks",
+        "message": "This is a test message",
+        "subject": "This is a test subject"
+      },
+      "credentials": {
+        "aws": "aws"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "AWS SNS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Send a message via AWS SNS",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/501",
+    "scraped_at": "2025-08-18 01:14:17"
+  }
+}

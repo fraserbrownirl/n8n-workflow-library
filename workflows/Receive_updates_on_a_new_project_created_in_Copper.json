@@ -1,0 +1,29 @@
+{
+  "nodes": [
+    {
+      "name": "Copper Trigger",
+      "type": "n8n-nodes-base.copperTrigger",
+      "position": [
+        890,
+        400
+      ],
+      "webhookId": "493ce79a-6a08-4062-86d9-7f4618b6c1ea",
+      "parameters": {
+        "event": "new",
+        "resource": "project"
+      },
+      "credentials": {
+        "copperApi": "copper_creds"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates on a new project created in Copper",
+    "used_count": 12,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/537",
+    "scraped_at": "2025-08-17 17:58:45"
+  }
+}

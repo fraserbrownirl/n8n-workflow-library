@@ -1,0 +1,35 @@
+{
+  "id": "110",
+  "name": "Receive updates for events in ClickUp",
+  "nodes": [
+    {
+      "name": "ClickUp Trigger",
+      "type": "n8n-nodes-base.clickUpTrigger",
+      "position": [
+        700,
+        250
+      ],
+      "parameters": {
+        "team": "",
+        "events": [
+          "*"
+        ],
+        "filters": {}
+      },
+      "credentials": {
+        "clickUpApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates for events in ClickUp",
+    "used_count": 111,
+    "popularity_score": 40,
+    "source_url": "https://n8n.io/workflows/487",
+    "scraped_at": "2025-08-17 15:08:26"
+  }
+}

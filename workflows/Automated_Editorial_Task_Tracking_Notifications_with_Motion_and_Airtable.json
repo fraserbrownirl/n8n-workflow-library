@@ -1,0 +1,1102 @@
+{
+  "meta": {
+    "instanceId": "393ca9e36a1f81b0f643c72792946a5fe5e49eb4864181ba4032e5a408278263"
+  },
+  "nodes": [
+    {
+      "id": "404dea4e-a4da-43f1-b9cd-ab6bbfbe4266",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 10-31 * *"
+            }
+          ]
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "79a4bd70-fe9b-4ead-91aa-b22d8f620b4e",
+      "name": "R\u00e9cup\u00e9ration infos airtable",
+      "type": "n8n-nodes-base.airtable",
+      "position": [
+        208,
+        0
+      ],
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "mode": "list",
+          "value": "appk6h4dLarLUXKpR",
+          "cachedResultUrl": "https://airtable.com/appk6h4dLarLUXKpR",
+          "cachedResultName": "Base clients"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": "tblTrvdyaIcsSgOWR",
+          "cachedResultUrl": "https://airtable.com/appk6h4dLarLUXKpR/tblTrvdyaIcsSgOWR",
+          "cachedResultName": "Projets"
+        },
+        "options": {},
+        "operation": "search"
+      },
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "9mTR7mhD0VA7GbZP",
+          "name": "Airtable Personal Access Token account"
+        }
+      },
+      "typeVersion": 2.1
+    },
+    {
+      "id": "ed68d3fa-5835-4499-9550-f07bf1d3deec",
+      "name": "Actif",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        448,
+        0
+      ],
+      "parameters": {
+        "options": {},
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "f1a41893-c6cd-4824-8b74-c0d52b2ac842",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json['Status - Calendrier \u00e9ditorial'] }}",
+              "rightValue": "Actif"
+            },
+            {
+              "id": "79f0320a-0d4e-4fa0-9adc-f9f11ace8efb",
+              "operator": {
+                "type": "dateTime",
+                "operation": "before"
+              },
+              "leftValue": "={{ $json['Last sent - Calendrier \u00e9ditorial'] }}",
+              "rightValue": "={{ (function() { const now = new Date(); const year = now.getFullYear(); const month = String(now.getMonth() + 1).padStart(2, '0'); return `${year}-${month}-01`; })() }}"
+            }
+          ]
+        }
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "cb0b775e-7871-4a65-a8e6-cf33596b323b",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        688,
+        -16
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "d23bc2b5-3479-49a4-9910-6a86e202997a",
+      "name": "R\u00e9cup\u00e9ration des projets",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        944,
+        0
+      ],
+      "parameters": {
+        "url": "https://api.usemotion.com/v1/projects",
+        "options": {},
+        "sendQuery": true,
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "workspaceId",
+              "value": "={{ $json['Motion Workspace ID'] }}"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "binrCBMqjqNEJXmX",
+          "name": "Motion"
+        }
+      },
+      "executeOnce": true,
+      "typeVersion": 4.2
+    },
+    {
+      "id": "76113108-e532-4309-a48d-2b3032bde4cf",
+      "name": "Tri des projets",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1184,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// On r\u00e9cup\u00e8re le tableau de projets depuis la r\u00e9ponse de la requ\u00eate HTTP\nconst responseData = items[0].json;\n\n// V\u00e9rifie si la structure attendue existe\nif (!responseData || !responseData.projects || !Array.isArray(responseData.projects)) {\n  // Retourne un tableau vide si la structure n'est pas celle attendue\n  return [];\n}\n\n// Cr\u00e9e un nouvel \u00e9l\u00e9ment pour chaque projet\nconst newItems = responseData.projects.map(project => {\n  return {\n    json: {\n      // On copie toutes les propri\u00e9t\u00e9s du projet\n      ...project,\n      // Ajout optionnel de m\u00e9tadonn\u00e9es de la r\u00e9ponse originale si n\u00e9cessaire\n      _meta: responseData.meta\n    }\n  };\n});\n\n// Retourne le tableau des nouveaux \u00e9l\u00e9ments\nreturn newItems;\n"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "c78fbb0b-4a5a-4528-bb85-acf5372111bf",
+      "name": "Todo",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        1408,
+        0
+      ],
+      "parameters": {
+        "options": {},
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "7f5baee8-dc14-4f12-a9fe-1cdfaaf88792",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.status.name }}",
+              "rightValue": "Todo"
+            },
+            {
+              "id": "9e4044d3-039a-48d7-b5d2-fc60084fbff9",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              },
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "SEO"
+            }
+          ]
+        }
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "e11fedb7-b55d-4549-9e3f-9d84790b9d31",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1600,
+        0
+      ],
+      "parameters": {
+        "url": "https://api.usemotion.com/v1/tasks",
+        "options": {},
+        "sendQuery": true,
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "projectId",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "name",
+              "value": "Int\u00e9grer les articles de blog"
+            },
+            {
+              "name": "status",
+              "value": "completed"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "binrCBMqjqNEJXmX",
+          "name": "Motion"
+        }
+      },
+      "typeVersion": 4.2
+    },
+    {
+      "id": "47bd408f-272b-4837-9682-1e2b0e474aac",
+      "name": "If1",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1840,
+        0
+      ],
+      "parameters": {
+        "options": {},
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "f53cacf4-8628-4203-8ea6-c7272ee891a4",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.tasks[0].status.name }}",
+              "rightValue": "Completed"
+            }
+          ]
+        }
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "56165205-4be8-41c6-b718-877e765ea374",
+      "name": "Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "position": [
+        2304,
+        0
+      ],
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "mode": "list",
+          "value": "appk6h4dLarLUXKpR",
+          "cachedResultUrl": "https://airtable.com/appk6h4dLarLUXKpR",
+          "cachedResultName": "Base clients"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": "tblTrvdyaIcsSgOWR",
+          "cachedResultUrl": "https://airtable.com/appk6h4dLarLUXKpR/tblTrvdyaIcsSgOWR",
+          "cachedResultName": "Projets"
+        },
+        "columns": {
+          "value": {
+            "id": "={{ $('Loop Over Items').item.json.id }}",
+            "Budget - Acc\u00e8s": 0,
+            "Last sent - Calendrier \u00e9ditorial": "={{ $now.format(\"M/d/yyyy\") }}"
+          },
+          "schema": [
+            {
+              "id": "id",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": true,
+              "required": false,
+              "displayName": "id",
+              "defaultMatch": true
+            },
+            {
+              "id": "Projets",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Projets",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Chef de projet",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Chef de projet",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Collaborateurs",
+              "type": "array",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Collaborateurs",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Contacts",
+              "type": "array",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Contacts",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Mails",
+              "type": "string",
+              "display": true,
+              "removed": true,
+              "readOnly": true,
+              "required": false,
+              "displayName": "Mails",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Pr\u00e9nom",
+              "type": "string",
+              "display": true,
+              "removed": true,
+              "readOnly": true,
+              "required": false,
+              "displayName": "Pr\u00e9nom",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Date de cr\u00e9ation",
+              "type": "string",
+              "display": true,
+              "removed": true,
+              "readOnly": true,
+              "required": false,
+              "displayName": "Date de cr\u00e9ation",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Optimiseur de contenu",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Optimiseur de contenu",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "R\u00e9dacteur d'articles",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "R\u00e9dacteur d'articles",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CMS",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "CMS",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Plan d'optimisation",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Plan d'optimisation",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Backlinks tracking",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Backlinks tracking",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Looker",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Looker",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Calendrier \u00e9ditorial",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Calendrier \u00e9ditorial",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Rapports",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Rapports",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status - Rapport mensuel",
+              "type": "options",
+              "display": true,
+              "options": [
+                {
+                  "name": "Inactif",
+                  "value": "Inactif"
+                },
+                {
+                  "name": "Actif",
+                  "value": "Actif"
+                }
+              ],
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Status - Rapport mensuel",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status - Backlinks tracking",
+              "type": "options",
+              "display": true,
+              "options": [
+                {
+                  "name": "Inactif",
+                  "value": "Inactif"
+                },
+                {
+                  "name": "Actif",
+                  "value": "Actif"
+                }
+              ],
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Status - Backlinks tracking",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status - Optimisation de contenu",
+              "type": "options",
+              "display": true,
+              "options": [
+                {
+                  "name": "Inactif",
+                  "value": "Inactif"
+                },
+                {
+                  "name": "Actif",
+                  "value": "Actif"
+                }
+              ],
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Status - Optimisation de contenu",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status - Calendrier \u00e9ditorial",
+              "type": "options",
+              "display": true,
+              "options": [
+                {
+                  "name": "Actif",
+                  "value": "Actif"
+                },
+                {
+                  "name": "Inactif",
+                  "value": "Inactif"
+                }
+              ],
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Status - Calendrier \u00e9ditorial",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Last sent - Rapport mensuel",
+              "type": "dateTime",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Last sent - Rapport mensuel",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Last sent - Backlinks tracking",
+              "type": "dateTime",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Last sent - Backlinks tracking",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Last sent - Calendrier \u00e9ditorial",
+              "type": "dateTime",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Last sent - Calendrier \u00e9ditorial",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Last sent - Optimisation de contenu",
+              "type": "dateTime",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Last sent - Optimisation de contenu",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Derni\u00e8re modification",
+              "type": "string",
+              "display": true,
+              "removed": true,
+              "readOnly": true,
+              "required": false,
+              "displayName": "Derni\u00e8re modification",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Acc\u00e8s - URL",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Acc\u00e8s - URL",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Acc\u00e8s - Login",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Acc\u00e8s - Login",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Acc\u00e8s - Password",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Acc\u00e8s - Password",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Budget - Acc\u00e8s",
+              "type": "number",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Budget - Acc\u00e8s",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Acc\u00e8s - Consultant",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Acc\u00e8s - Consultant",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Pr\u00e9visionnel budg\u00e9taire",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Pr\u00e9visionnel budg\u00e9taire",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Date mail rdv",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Date mail rdv",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Calendly",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Calendly",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Last sent - RDV consultant",
+              "type": "dateTime",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Last sent - RDV consultant",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Motion Workspace ID",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Motion Workspace ID",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Missions",
+              "type": "array",
+              "display": true,
+              "options": [
+                {
+                  "name": "SEO",
+                  "value": "SEO"
+                },
+                {
+                  "name": "SEA",
+                  "value": "SEA"
+                },
+                {
+                  "name": "SMA",
+                  "value": "SMA"
+                }
+              ],
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Missions",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Adresse mail 1",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Adresse mail 1",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Adresse mail 2",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Adresse mail 2",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Adresse mail 3",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Adresse mail 3",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Adresse mail 4",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Adresse mail 4",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Statut",
+              "type": "options",
+              "display": true,
+              "options": [
+                {
+                  "name": "Actif",
+                  "value": "Actif"
+                },
+                {
+                  "name": "Inactif",
+                  "value": "Inactif"
+                }
+              ],
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Statut",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Mail collaborateur 1",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Mail collaborateur 1",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Mail collaborateur 2",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Mail collaborateur 2",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Mail collaborateur 3",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Mail collaborateur 3",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Mail collaborateur 4",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Mail collaborateur 4",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Make SEO rapport",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Make SEO rapport",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Make SEA rapport",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Make SEA rapport",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "id"
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {},
+        "operation": "update"
+      },
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "9mTR7mhD0VA7GbZP",
+          "name": "Airtable Personal Access Token account"
+        }
+      },
+      "typeVersion": 2.1
+    },
+    {
+      "id": "fc9bd435-5ead-4940-a388-5636c7585b26",
+      "name": "Send a message",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        2128,
+        0
+      ],
+      "webhookId": "8ee7592a-0b31-4661-901d-dd50a7e59723",
+      "parameters": {
+        "sendTo": "={{ $('Loop Over Items').item.json['Chef de projet'].email }}, {{ $('Loop Over Items').item.json.Mails }}, {{ $('Loop Over Items').item.json['Mails collaborateurs'] }}",
+        "message": "=Bonjour {{ $('Loop Over Items').item.json['Pr\u00e9nom'] }},<br>\n<p></p>\nDe nouveaux articles ont vu le jour dans votre calendrier \u00e9ditorial pour le mois de <strong>{{ [\"Janvier\", \"F\u00e9vrier\", \"Mars\", \"Avril\", \"Mai\", \"Juin\", \"Juillet\", \"Ao\u00fbt\", \"Septembre\", \"Octobre\", \"Novembre\", \"D\u00e9cembre\"][new Date().getMonth() === 0 ? 11 : new Date().getMonth() ] }}</strong> ! Il est l'heure de les consulter depuis le blog de <strong> {{ $('Loop Over Items').item.json.Projets }}  </strong>.<br>\n<p></p>\nVous retrouverez les d\u00e9tails et les liens vers les articles dans le livrable pr\u00e9vu \u00e0 cet effet :\u00a0<a href=\"{{ $('Loop Over Items').item.json['Calendrier \u00e9ditorial'] }}\">consulter le calendrier \u00e9ditorial</a><br>\n<p></p>\nNous sommes disponibles pour r\u00e9pondre \u00e0 vos questions et en cas de modifications \u00e0 apporter \ud83e\udd13.<br>\n<p></p>\nA bient\u00f4t,<br>\n<p></p>\n--\n",
+        "options": {
+          "senderName": "Institut du R\u00e9f\u00e9rencement"
+        },
+        "subject": "={{ $('Loop Over Items').item.json.Projets }} - \ud83d\udcdd Nouvel article de blog - {{ [\"Janvier\", \"F\u00e9vrier\", \"Mars\", \"Avril\", \"Mai\", \"Juin\", \"Juillet\", \"Ao\u00fbt\", \"Septembre\", \"Octobre\", \"Novembre\", \"D\u00e9cembre\"][new Date().getMonth() === 0 ? 11 : new Date().getMonth() ] }}"
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "F6YsSmraPe7v98FF",
+          "name": "Gmail account"
+        }
+      },
+      "typeVersion": 2.1
+    },
+    {
+      "id": "d07e24e0-d222-49b7-880e-ab7fb151e5f0",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1216,
+        -832
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 1056,
+        "height": 3568,
+        "content": "# Automated project status tracking with Airtable and Motion\n## Who's it for\nProject managers, team leads, and agencies who need to automatically monitor project completion status across multiple clients and send notifications when specific milestones are reached.\n## What it does\nThis workflow automatically tracks project progress by connecting Airtable project databases with Motion task management. It monitors specific tasks within active projects and triggers email notifications when key milestones are completed. The system is designed to handle multiple projects simultaneously and can be customized for various notification triggers.\n## How it works\nThe workflow follows a structured monitoring process:\n\nData Retrieval: Fetches project information from Airtable (project names and Motion workspace IDs)\nMotion Integration: Connects to Motion API using HTTP requests to retrieve project details\nProject Filtering: Identifies only active projects with \"Todo\" status containing \"SEO\" in the name\nTask Monitoring: Checks for specific completed tasks (e.g., \"Int\u00e9grer les articles de blog\")\nConditional Notifications: Sends email alerts only when target tasks are marked as \"Completed\"\nDatabase Updates: Updates Airtable with last notification timestamps\n\n## Requirements\n\nAirtable account with project database\nMotion account with API access\nGmail account for email notifications\nHTTP request authentication for Motion API\n\n## How to set up\n### Step 1: Configure your Airtable database\nEnsure your Airtable contains the following fields:\n\nProject names: Names of projects to monitor\nMotion Workspace ID: Workspace identifiers for Motion API calls\nStatus - Calendrier \u00e9ditorial: Project status field (set to \"Actif\" for active projects)\nLast sent - Calendrier \u00e9ditorial: Timestamp tracking for notification frequency\nEmail addresses: Client and team member contact information\n\n### Step 2: Set up API credentials\nConfigure the following authentication in n8n:\n\nAirtable Personal Access Token: For database access\nMotion API: HTTP header authentication for Motion integration\nGmail OAuth2: For email notification sending\n\n### Step 3: Configure Motion API integration\n\nBase URL: Uses Motion API v1 endpoints\nProject retrieval: Fetches projects using workspace ID parameter\nTask monitoring: Searches for specific task names and completion status\nCustom filtering: Targets projects with \"SEO\" in name and \"Todo\" status\n\n### Step 4: Customize scheduling\n\nDefault schedule: Runs daily between 10th-31st of each month at 8 AM\nCron expression: 0 8 10-31 * * (modify as needed)\nFrequency options: Can be adjusted for weekly, daily, or custom intervals\n\n### Step 5: Set up email notifications\nConfigure Gmail settings:\n\nRecipients: Project managers, clients, and collaborators\nSubject line: Dynamic formatting with project name and month\nMessage template: HTML-formatted email with professional signature\nSender name: Customizable organization name\n\n## How to customize the workflow\n### Single project, multiple tasks monitoring\nTo adapt for monitoring one project with several different tasks:\n\nModify the filter conditions to target your specific project\nAdd multiple HTTP requests for different task names\nCreate conditional branches for each task type\nSet up different notification templates per task\n\n### Multi-project customization\n\nDatabase fields: Add custom fields in Airtable for different project types\nFiltering logic: Modify conditions to match your project categorization\nMotion workspace: Support multiple workspaces per client\nNotification rules: Set different notification frequencies per project\n\n### Alternative notification methods\nReplace or complement Gmail with:\n\nSlack notifications: Send updates to team channels\nDiscord integration: Alert development teams\nSMS notifications: Urgent milestone alerts\nWebhook integrations: Connect to custom internal systems\nTeams notifications: Enterprise communication\n\n### Task monitoring variations\n\nMultiple task types: Monitor different milestones (design, development, testing)\nTask dependencies: Check completion of prerequisite tasks\nProgress tracking: Monitor task progress percentages\nDeadline monitoring: Alert on approaching deadlines\n\n## Conditional logic features\n### Smart filtering system\n\nActive project detection: Only processes projects marked as \"Actif\"\nDate-based filtering: Prevents duplicate notifications using timestamp comparison\nStatus verification: Confirms task completion before sending notifications\nProject type filtering: Targets specific project categories (SEO projects in this example)\n\n### Notification frequency control\n\nMonthly notifications: Prevents spam by tracking last sent dates\nConditional execution: Only sends emails when tasks are actually completed\nDatabase updates: Automatically records notification timestamps\nLoop management: Processes multiple projects sequentially\n\n## Results interpretation\n### Automated monitoring outcomes\n\nProject status tracking: Real-time monitoring of active projects\nMilestone notifications: Immediate alerts when key tasks complete\nDatabase synchronization: Automatic updates of notification records\nTeam coordination: Ensures all stakeholders are informed of progress\n\n### Email notification content\nEach notification includes:\n\nProject identification: Clear project name and context\nCompletion confirmation: Specific task that was completed\nCalendar reference: Links to editorial calendars or project resources\nProfessional formatting: Branded email template with company signature\nAction items: Clear next steps for recipients\n\n## Use cases\n### Agency project management\n\nClient deliverable tracking: Monitor when content is ready for client review\nMilestone notifications: Alert teams when phases complete\nQuality assurance: Ensure all deliverables meet completion criteria\nClient communication: Automated updates on project progress\n\n### Editorial workflow management\n\nContent publication: Track when articles are integrated into websites\nEditorial calendar: Monitor content creation and publication schedules\nTeam coordination: Notify writers, editors, and publishers of status changes\nClient approval: Alert clients when content is ready for review\n\n### Development project tracking\n\nFeature completion: Monitor when development milestones are reached\nTesting phases: Track QA completion and deployment readiness\nClient delivery: Automate notifications for UAT and launch phases\nTeam synchronization: Keep all stakeholders informed of progress\n\n## Workflow limitations\n\nMotion API dependency: Requires stable Motion API access and proper authentication\nSingle task monitoring: Currently tracks one specific task type per execution\nEmail-only notifications: Default setup uses Gmail (easily expandable)\nMonthly frequency: Designed for monthly notifications (customizable)\nProject naming dependency: Filters based on specific naming conventions\nManual configuration: Requires setup for each new project type or workspace"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {
+    "Schedule Trigger": [
+      {
+        "Hour": "08",
+        "Year": "2025",
+        "Month": "August",
+        "Minute": "00",
+        "Second": "00",
+        "Timezone": "Europe/Berlin (UTC+02:00)",
+        "timestamp": "2025-08-14T08:00:00.033+02:00",
+        "Day of week": "Thursday",
+        "Day of month": "14",
+        "Readable date": "August 14th 2025, 8:00:00 am",
+        "Readable time": "8:00:00 am"
+      }
+    ]
+  },
+  "connections": {
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Todo": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actif": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "R\u00e9cup\u00e9ration des projets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tri des projets": {
+      "main": [
+        [
+          {
+            "node": "Todo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "R\u00e9cup\u00e9ration infos airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "R\u00e9cup\u00e9ration des projets": {
+      "main": [
+        [
+          {
+            "node": "Tri des projets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "R\u00e9cup\u00e9ration infos airtable": {
+      "main": [
+        [
+          {
+            "node": "Actif",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Automated Editorial Task Tracking & Notifications with Motion and Airtable",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/7383",
+    "scraped_at": "2025-08-17 19:23:31"
+  }
+}

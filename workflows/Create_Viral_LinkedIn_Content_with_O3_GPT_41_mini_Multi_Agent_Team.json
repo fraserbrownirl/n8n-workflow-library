@@ -1,0 +1,481 @@
+{
+  "meta": {
+    "instanceId": "12e6f290a974a1eee154f8d915aade185e90e826260e6aeab8a087ba7386a1bc",
+    "templateCredsSetupCompleted": true
+  },
+  "nodes": [
+    {
+      "id": "linkedin-chat-trigger",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        -2864,
+        -576
+      ],
+      "webhookId": "linkedin-webhook-id",
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 1.1
+    },
+    {
+      "id": "content-director-agent",
+      "name": "Content Director Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -2640,
+        -816
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 2.1
+    },
+    {
+      "id": "linkedin-think",
+      "name": "Think",
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "position": [
+        -2512,
+        -496
+      ],
+      "parameters": {},
+      "typeVersion": 1.1
+    },
+    {
+      "id": "copywriter-agent",
+      "name": "LinkedIn Copywriter",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -2240,
+        -96
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in LinkedIn copywriting, engagement hooks, viral content, and platform-specific messaging"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "domain-agent",
+      "name": "Domain Expert",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1280,
+        -704
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in industry expertise, thought leadership content, and technical accuracy across various domains"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "proofreader-agent",
+      "name": "Proofreader & Editor",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1840,
+        -304
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in grammar checking, style editing, clarity improvement, and professional tone refinement"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "engagement-agent",
+      "name": "Engagement Strategist",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1328,
+        -80
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in LinkedIn engagement tactics, hashtag strategies, posting optimization, and audience growth"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "visual-agent",
+      "name": "Visual Content Strategist",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1744,
+        -1024
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in visual content planning, carousel designs, infographic concepts, and LinkedIn visual best practices"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "analytics-agent",
+      "name": "Content Performance Analyst",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1344,
+        -1264
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in LinkedIn analytics, content performance tracking, audience insights, and optimization recommendations"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "content-director-model",
+      "name": "OpenAI Chat Model Director",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -2672,
+        -496
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "o3",
+          "cachedResultName": "o3"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "copywriter-model",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -2208,
+        368
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "domain-model",
+      "name": "OpenAI Chat Model2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1312,
+        -496
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "proofreader-model",
+      "name": "OpenAI Chat Model3",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1824,
+        -144
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "engagement-model",
+      "name": "OpenAI Chat Model4",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1328,
+        96
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "visual-model",
+      "name": "OpenAI Chat Model5",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1776,
+        -768
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "analytics-model",
+      "name": "OpenAI Chat Model6",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1312,
+        -944
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "linkedin-header-sticky",
+      "name": "Sticky Note Header",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3808,
+        -880
+      ],
+      "parameters": {
+        "color": 2,
+        "width": 580,
+        "height": 320,
+        "content": "=======================================\n    CONTENT DIRECTOR WITH LINKEDIN TEAM\n=======================================\nFor any questions or support, please contact:\n    Yaron@nofluff.online\n\nExplore more tips and tutorials here:\n   - YouTube: https://www.youtube.com/@YaronBeen/videos\n   - LinkedIn: https://www.linkedin.com/in/yaronbeen/\n======================================="
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "linkedin-main-sticky",
+      "name": "Sticky Note Main",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3808,
+        -544
+      ],
+      "parameters": {
+        "color": 2,
+        "width": 740,
+        "height": 2500,
+        "content": "## \ud83d\udcbc **CONTENT DIRECTOR WITH LINKEDIN TEAM - AI WORKFLOW**\n\n**\ud83d\udd25 Powered by OpenAI O3 & GPT-4.1-mini Multi-Agent System**\n\n#LinkedInMarketing #ContentStrategy #n8nWorkflows #OpenAI #SocialMedia\n\n---\n\n### \ud83d\udcdd **Overview**\n\nThis multi-agent n8n automation creates a professional LinkedIn content powerhouse. A strategic Content Director agent receives your LinkedIn requests, analyzes engagement opportunities, and coordinates specialized agents for copywriting, domain expertise, proofreading, engagement strategy, visual content, and performance analytics\u2014delivering viral LinkedIn content that builds your personal brand.\n\n---\n\n### \u2699\ufe0f **How It Works**\n\n1. **Chat trigger** receives LinkedIn requests (e.g., \"Create a viral LinkedIn post about AI trends in finance\")\n2. **Content Director** (O3) analyzes content strategy and determines approach\n3. Delegates to specialist agents:\n   - LinkedIn Copywriter\n   - Domain Expert\n   - Proofreader & Editor\n   - Engagement Strategist\n   - Visual Content Strategist\n   - Content Performance Analyst\n4. Each agent uses **GPT-4.1-mini** for specialized content creation\n5. Results compiled into polished LinkedIn content with engagement strategy\n\n---\n\n### \ud83d\udc65 **Meet Your AI LinkedIn Team**\n\n| Agent | Purpose | Model | Output |\n|-------|---------|-------|--------|\n| \ud83d\udcbc **Content Director** | Content strategy & brand coordination | O3 | Strategic content leadership |\n| \u270d\ufe0f **LinkedIn Copywriter** | Engaging posts, hooks, viral content | GPT-4.1-mini | Compelling copy |\n| \ud83c\udf93 **Domain Expert** | Industry expertise, thought leadership | GPT-4.1-mini | Expert insights |\n| \ud83d\udcdd **Proofreader** | Grammar, style, professional tone | GPT-4.1-mini | Polished content |\n| \ud83d\ude80 **Engagement Strategist** | Hashtags, timing, audience growth | GPT-4.1-mini | Engagement tactics |\n| \ud83c\udfa8 **Visual Strategist** | Carousel designs, visual concepts | GPT-4.1-mini | Visual content plans |\n| \ud83d\udcca **Performance Analyst** | Analytics, optimization insights | GPT-4.1-mini | Performance reports |\n\n---\n\n### \ud83d\udca1 **Use Cases**\n\n- **Viral LinkedIn Posts**: Hook creation \u2192 Expert content \u2192 Polished copy \u2192 Engagement strategy\n- **Thought Leadership**: Industry insights \u2192 Expert analysis \u2192 Professional presentation\n- **Content Series**: Multi-post campaigns \u2192 Consistent messaging \u2192 Performance tracking\n- **Personal Branding**: Brand voice \u2192 Expert positioning \u2192 Visual identity\n- **Engagement Growth**: Hashtag strategy \u2192 Optimal timing \u2192 Community building\n- **Content Optimization**: Performance analysis \u2192 A/B testing \u2192 Continuous improvement\n\n---\n\n### \ud83d\udcb8 **Cost Optimization**\n\n- **O3 for Content Director**: Strategic content decisions only\n- **GPT-4.1-mini for specialists**: 90% cost reduction\n- **Parallel processing**: All content aspects handled simultaneously\n- **Template reuse**: Proven LinkedIn content frameworks\n\n---\n\n### \ud83c\udff7\ufe0f **Tags**\n\n#LinkedInContent #PersonalBranding #ThoughtLeadership #SocialMediaMarketing #ContentCreation\n#ProfessionalNetworking #LinkedInStrategy #ContentMarketing #DigitalBranding #SocialSelling\n#n8n #OpenAI #MultiAgentSystem #ContentAutomation #LinkedInGrowth #ProfessionalContent"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Think": {
+      "ai_tool": [
+        [
+          "Content Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Domain Expert": {
+      "ai_tool": [
+        [
+          "Content Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          "LinkedIn Copywriter",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          "Domain Expert",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          "Proofreader & Editor",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          "Engagement Strategist",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model5": {
+      "ai_languageModel": [
+        [
+          "Visual Content Strategist",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model6": {
+      "ai_languageModel": [
+        [
+          "Content Performance Analyst",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "LinkedIn Copywriter": {
+      "ai_tool": [
+        [
+          "Content Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Proofreader & Editor": {
+      "ai_tool": [
+        [
+          "Content Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Engagement Strategist": {
+      "ai_tool": [
+        [
+          "Content Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Visual Content Strategist": {
+      "ai_tool": [
+        [
+          "Content Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model Director": {
+      "ai_languageModel": [
+        [
+          "Content Director Agent",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          "Content Director Agent",
+          "main",
+          0
+        ]
+      ]
+    },
+    "Content Performance Analyst": {
+      "ai_tool": [
+        [
+          "Content Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create Viral LinkedIn Content with O3 & GPT-4.1-mini Multi-Agent Team",
+    "used_count": 30,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/6916",
+    "scraped_at": "2025-08-17 16:45:08"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "nodes": [
+    {
+      "name": "Mailjet Trigger",
+      "type": "n8n-nodes-base.mailjetTrigger",
+      "position": [
+        530,
+        400
+      ],
+      "parameters": {
+        "event": "sent"
+      },
+      "credentials": {
+        "mailjetEmailApi": "mailjet creds"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates on emails sent via Mailjet",
+    "used_count": 16,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/521",
+    "scraped_at": "2025-08-17 17:39:37"
+  }
+}

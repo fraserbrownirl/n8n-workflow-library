@@ -1,0 +1,208 @@
+{
+  "meta": {
+    "instanceId": "393ca9e36a1f81b0f643c72792946a5fe5e49eb4864181ba4032e5a408278263",
+    "templateCredsSetupCompleted": true
+  },
+  "nodes": [
+    {
+      "id": "ae4146bb-767a-432c-9a8e-26a7bdec5f41",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "c43059d4-f928-4be6-a37c-aa4ce3e9bd95",
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 1.3
+    },
+    {
+      "id": "91e94424-1984-4741-adc6-2f682048cfb6",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        208,
+        0
+      ],
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful assistant"
+        }
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "085842cf-69b0-438e-93a5-ff8924ab7978",
+      "name": "Anthropic Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "position": [
+        80,
+        208
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-20250514",
+          "cachedResultName": "Claude 4 Sonnet"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "anthropicApi": {
+          "id": "WXQf5QsxCs3AyxlW",
+          "name": "Anthropic account"
+        }
+      },
+      "typeVersion": 1.3
+    },
+    {
+      "id": "f522b0bd-cde1-4510-a805-b2488cbe7529",
+      "name": "Postgres Chat Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "position": [
+        224,
+        208
+      ],
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "credentials": {
+        "postgres": {
+          "id": "Bs4YHHIz76Yg6LAA",
+          "name": "Postgres account - Sigma"
+        }
+      },
+      "typeVersion": 1.3
+    },
+    {
+      "id": "4caec492-81f5-426a-91ba-3a21e6d7376b",
+      "name": "Supabase Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "position": [
+        368,
+        240
+      ],
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "options": {},
+        "tableName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "growth_ai_documents",
+          "cachedResultName": "growth_ai_documents"
+        },
+        "toolDescription": "Database"
+      },
+      "credentials": {
+        "supabaseApi": {
+          "id": "H0kInY9i7zSLf3eu",
+          "name": "IDR"
+        }
+      },
+      "typeVersion": 1.3
+    },
+    {
+      "id": "5b0304ba-e0fe-432e-a398-5dac8c35016b",
+      "name": "Embeddings OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "position": [
+        368,
+        416
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "Wk5dyBYFy6HDwml2",
+          "name": "OpenAi account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "e63c88d5-dfae-4bef-8c28-6bcd70bcc13d",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -992,
+        -736
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 880,
+        "height": 3744,
+        "content": "# Intelligent chatbot with custom knowledge base\n## Who's it for\nBusinesses, developers, and organizations who need a customizable AI chatbot for internal documentation access, customer support, e-commerce assistance, or any use case requiring intelligent conversation with access to specific knowledge bases.\n## What it does\nThis workflow creates a fully customizable AI chatbot that can be deployed on any platform supporting webhook triggers (websites, Slack, Teams, etc.). The chatbot accesses a personalized knowledge base stored in Supabase and can perform advanced actions like sending emails, scheduling appointments, or updating databases beyond simple conversation.\n## How it works\nThe workflow combines several powerful components:\n\nWebhook Trigger: Accepts messages from any platform that supports webhooks\nAI Agent: Processes user queries with customizable personality and instructions\nVector Database: Searches relevant information from your Supabase knowledge base\nMemory System: Maintains conversation history for context and traceability\nAction Tools: Performs additional tasks like email sending or calendar booking\n\n## Technical architecture\n\nChat trigger connects directly to AI Agent\nLanguage model, memory, and vector store all connect as tools/components to the AI Agent\nEmbeddings connect specifically to the Supabase Vector Store for similarity search\n\n## Requirements\n\nSupabase account and project\nAI model API key (any LLM provider of your choice)\nOpenAI API key (for embeddings - this is covered in Cole Medin's tutorial)\nn8n built-in PostgreSQL access (for conversation memory)\nPlatform-specific webhook configuration (optional)\n\n## How to set up\n### Step 1: Configure your trigger\n\nThe template uses n8n's default chat trigger\nFor external platforms: Replace with webhook trigger and configure your platform's webhook URL\nSupported platforms: Any service with webhook capabilities (websites, Slack, Teams, Discord, etc.)\n\n### Step 2: Set up your knowledge base\nFor creating and managing your vector database, follow this comprehensive guide:\n\nWatch Cole Medin's tutorial on document vectorization\nThis video shows how to build a complete knowledge base on Supabase\nThe tutorial covers document processing, embedding creation, and database optimization\nImportant: The video explains the OpenAI embeddings configuration required for vector search\n\n### Step 3: Configure the AI agent\n\nDefine your prompt: Customize the agent's personality and role\n\nExample: \"You are the virtual assistant for example.com. Help users by answering their questions about our products and services.\"\n\n\nSelect your language model: Choose any AI provider you prefer (OpenAI, Anthropic, Google, etc.)\nSet behavior parameters: Define response style, tone, and limitations\n\n### Step 4: Connect Supabase Vector Store\n\nAdd the \"Supabase Vector Store\" tool to your agent\nConfigure your Supabase project credentials\nMode: Set to \"retrieve-as-tool\" for automatic agent integration\nTool Description: Customize description (default: \"Database\") to describe your knowledge base\nTable configuration:\n\nSpecify the table containing your knowledge base (example shows \"growth_ai_documents\")\nEnsure your table name matches your actual knowledge base structure\nMultiple tables: You can connect several tables for organized data structure\n\n\nThe agent will automatically decide when to search the knowledge base based on user queries\n\n### Step 5: Set up conversation memory (recommended)\n\nUse \"Postgres Chat Memory\" with n8n's built-in PostgreSQL credentials\nConfigure table name: Choose a name for your chat history table (will be auto-created)\nContext Window Length: Set to 20 messages by default (adjustable based on your needs)\nBenefits:\n\nConversation traceability and analytics\nContext retention across messages\nUnique conversation IDs for user sessions\nStored in n8n's database, not Supabase\n\n\n\n## How to customize the workflow\n### Basic conversation features\n\nResponse style: Modify prompts to change personality and tone\nKnowledge scope: Update Supabase tables to expand or focus the knowledge base\nLanguage support: Configure for multiple languages\nResponse length: Set limits for concise or detailed answers\nMemory retention: Adjust context window length for longer or shorter conversation memory\n\n### Advanced action capabilities\nThe chatbot can be extended with additional tools for:\n\nEmail automation: Send support emails when users request assistance\nCalendar integration: Book appointments directly in Google Calendar\nDatabase updates: Modify Airtable or other databases based on user interactions\nAPI integrations: Connect to external services and systems\nFile handling: Process and analyze uploaded documents\n\n### Platform-specific deployments\n#### Website integration\n\nReplace chat trigger with webhook trigger\nConfigure your website's chat widget to send messages to the n8n webhook URL\nHandle response formatting for your specific chat interface\n\n#### Slack/Teams deployment\n\nSet up webhook trigger with Slack/Teams webhook URL\nConfigure response formatting for platform-specific message structures\nAdd platform-specific features (mentions, channels, etc.)\n\n#### E-commerce integration\n\nConnect to product databases\nAdd order tracking capabilities\nIntegrate with payment systems\nConfigure support ticket creation\n\n## Results interpretation\n### Conversation management\n\nChat history: All conversations stored in n8n's PostgreSQL database with unique IDs\nContext tracking: Agent maintains conversation flow and references previous messages\nAnalytics potential: Historical data available for analysis and improvement\n\n### Knowledge retrieval\n\nSemantic search: Vector database returns most relevant information based on meaning, not just keywords\nAutomatic decision: Agent automatically determines when to search the knowledge base\nSource tracking: Ability to trace answers back to source documents\nAccuracy improvement: Continuously refine knowledge base based on user queries\n\n## Use cases\n### Internal applications\n\nDeveloper documentation: Quick access to technical guides and APIs\nHR support: Employee handbook and policy questions\nIT helpdesk: Troubleshooting guides and system information\nTraining assistant: Learning materials and procedure guidance\n\n### External customer service\n\nE-commerce support: Product information and order assistance\nTechnical support: User manuals and troubleshooting\nSales assistance: Product recommendations and pricing\nFAQ automation: Common questions and instant responses\n\n### Specialized implementations\n\nLead qualification: Gather customer information and schedule sales calls\nAppointment booking: Healthcare, consulting, or service appointments\nOrder processing: Take orders and update inventory systems\nMulti-language support: Global customer service with language detection\n\n## Workflow limitations\n\nKnowledge base dependency: Quality depends on source documentation and embedding setup\nMemory storage: Requires active n8n PostgreSQL connection for conversation history\nPlatform restrictions: Some platforms may have webhook limitations\nResponse time: Vector search may add slight delay to responses\nToken limits: Large context windows may increase API costs\nEmbedding costs: OpenAI embeddings required for vector search functionality"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create a Knowledge-Powered Chatbot with Claude, Supabase Vector DB & Postgres Memory",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/7381",
+    "scraped_at": "2025-08-17 19:30:57"
+  }
+}

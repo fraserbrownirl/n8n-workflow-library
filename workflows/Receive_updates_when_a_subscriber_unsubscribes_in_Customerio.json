@@ -1,0 +1,34 @@
+{
+  "id": "29",
+  "name": "Receive updates when a subscriber unsubscribes in Customer.io",
+  "nodes": [
+    {
+      "name": "Customer.io Trigger",
+      "type": "n8n-nodes-base.customerIoTrigger",
+      "position": [
+        650,
+        260
+      ],
+      "webhookId": "88092579-1b8d-4d44-98d5-f24b3579cbc2",
+      "parameters": {
+        "events": [
+          "customer.unsubscribed"
+        ]
+      },
+      "credentials": {
+        "customerIoApi": "customerIO"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates when a subscriber unsubscribes in Customer.io",
+    "used_count": 13,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/645",
+    "scraped_at": "2025-08-17 17:56:10"
+  }
+}
