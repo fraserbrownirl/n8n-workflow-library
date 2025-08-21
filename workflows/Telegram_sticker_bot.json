@@ -1,0 +1,114 @@
+{
+  "nodes": [
+    {
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "updates": [
+          "message"
+        ]
+      },
+      "credentials": {
+        "telegramApi": ""
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Return Sticker",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        850,
+        200
+      ],
+      "parameters": {
+        "text": "=Hi {{$node[\"Look for Sticker\"].data[\"message\"][\"from\"][\"first_name\"]}}!\nThe ID of the sticker is: {{$node[\"Look for Sticker\"].data[\"message\"][\"sticker\"][\"file_id\"]}}\nIt is part of the sticker-set: {{$node[\"Look for Sticker\"].data[\"message\"][\"sticker\"][\"set_name\"]}}",
+        "chatId": "={{$node[\"Look for Sticker\"].data[\"message\"][\"chat\"][\"id\"]}}",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "telegramApi": ""
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Return no Sticker found",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        850,
+        400
+      ],
+      "parameters": {
+        "text": "=Hi {{$node[\"Look for Sticker\"].data[\"message\"][\"from\"][\"first_name\"]}}!\nYour message did not contain any sticker.",
+        "chatId": "={{$node[\"Look for Sticker\"].data[\"message\"][\"chat\"][\"id\"]}}",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "telegramApi": "n8nTestBot"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Look for Sticker",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        650,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{!!$node[\"Telegram Trigger\"].data[\"message\"][\"sticker\"]}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Look for Sticker": {
+      "main": [
+        [
+          {
+            "node": "Return Sticker",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Return no Sticker found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Look for Sticker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Telegram sticker bot",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/27",
+    "scraped_at": "2025-08-20 21:46:23",
+    "workflow_id": "e88bec12-e6e7-506b-ac6b-009d3e90629f"
+  },
+  "_filename": "Telegram_sticker_bot.json"
+}

@@ -1,0 +1,58 @@
+{
+  "id": "5",
+  "name": "new",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        540,
+        350
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Github",
+      "type": "n8n-nodes-base.github",
+      "position": [
+        790,
+        350
+      ],
+      "parameters": {
+        "owner": "n8n-io",
+        "resource": "repository",
+        "operation": "getProfile",
+        "repository": "n8n"
+      },
+      "credentials": {
+        "githubApi": "shraddha"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Github",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Get the community profile of a repository",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/450",
+    "scraped_at": "2025-08-21 01:06:45",
+    "workflow_id": "0945aaa6-a00a-552c-8dbf-2f1f57e98b75"
+  },
+  "_filename": "Get_the_community_profile_of_a_repository.json"
+}

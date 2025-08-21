@@ -1,0 +1,387 @@
+{
+  "id": "AnwVFKf8Tm5HHiyk",
+  "meta": {
+    "instanceId": "8981479cb588889c05b145eaed421551d37a4fff11ab279d3f4744a6577c6002",
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Preventing simultaneous executions for scheduled workflows",
+  "tags": [],
+  "nodes": [
+    {
+      "id": "ac9d5f0d-5fbd-4a26-93e4-a9b7ba66a7f1",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        32,
+        0
+      ],
+      "parameters": {
+        "width": 700,
+        "height": 136,
+        "content": "## Preventing simultaneous executions of scheduled workflow\nThis is the template with the example of how you can process your Google Sheet data continuously and prevent simultaneous executions of scheduled workflow.\n\nMore details in my [n8n tips blog](https://n8n-tips.blogspot.com/2025/07/tip-6-preventing-simultaneous.html)"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "c775e4d0-68c8-400c-adcc-3ffc1c43819c",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        448,
+        192
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "ae6127ea-e503-4c24-ad19-6733ed07e87a",
+      "name": "Read Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "onError": "continueErrorOutput",
+      "position": [
+        224,
+        288
+      ],
+      "parameters": {
+        "options": {},
+        "filtersUI": {
+          "values": [
+            {
+              "lookupValue": "READY",
+              "lookupColumn": "Status"
+            }
+          ]
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gid=0",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hKwP2_G6EaVSJlqWH1zYMVjarb9cuBx78D_U3HBrdhQ/edit#gid=0",
+          "cachedResultName": "Sheet1"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "1hKwP2_G6EaVSJlqWH1zYMVjarb9cuBx78D_U3HBrdhQ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hKwP2_G6EaVSJlqWH1zYMVjarb9cuBx78D_U3HBrdhQ/edit?usp=drivesdk",
+          "cachedResultName": "Tip #5: Fixing Google Sheets quota exceeding issue"
+        },
+        "authentication": "serviceAccount"
+      },
+      "credentials": {
+        "googleApi": {
+          "id": "FboA3kaXSneJmEGX",
+          "name": "Google Service Account account"
+        }
+      },
+      "typeVersion": 4.6
+    },
+    {
+      "id": "810336b0-1a21-448a-87a1-9bb4388ce9ae",
+      "name": "Update Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "onError": "continueErrorOutput",
+      "position": [
+        1088,
+        288
+      ],
+      "parameters": {
+        "columns": {
+          "value": {},
+          "schema": [
+            {
+              "id": "Color",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "Color",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "Status",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Number",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "Number",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "type": "number",
+              "display": true,
+              "removed": false,
+              "readOnly": true,
+              "required": false,
+              "displayName": "row_number",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [
+            "row_number"
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {},
+        "operation": "update",
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gid=0",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hKwP2_G6EaVSJlqWH1zYMVjarb9cuBx78D_U3HBrdhQ/edit#gid=0",
+          "cachedResultName": "Sheet1"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "1hKwP2_G6EaVSJlqWH1zYMVjarb9cuBx78D_U3HBrdhQ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hKwP2_G6EaVSJlqWH1zYMVjarb9cuBx78D_U3HBrdhQ/edit?usp=drivesdk",
+          "cachedResultName": "Tip #5: Fixing Google Sheets quota exceeding issue"
+        },
+        "authentication": "serviceAccount"
+      },
+      "credentials": {
+        "googleApi": {
+          "id": "FboA3kaXSneJmEGX",
+          "name": "Google Service Account account"
+        }
+      },
+      "typeVersion": 4.6
+    },
+    {
+      "id": "efa03f8c-e27d-47eb-b671-f42265ccbece",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        32,
+        288
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "d11b9464-0510-404d-82c1-a2aac71a67cc",
+      "name": "Wait random seconds (workload)",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        656,
+        288
+      ],
+      "webhookId": "aaf428d8-9821-456f-8d32-ee2589d60c8a",
+      "parameters": {
+        "amount": "={{ Math.round(Math.random() * 60) }}"
+      },
+      "typeVersion": 1.1
+    },
+    {
+      "id": "fe31d962-d720-4ba4-8ef3-4827f7f965a0",
+      "name": "Prepare output",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        880,
+        288
+      ],
+      "parameters": {
+        "options": {},
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4a875792-664d-4c97-af72-1252c86cc64a",
+              "name": "row_number",
+              "type": "number",
+              "value": "={{ $json.row_number }}"
+            },
+            {
+              "id": "cd47a508-aad7-4c7c-94cc-15752e8ede05",
+              "name": "Number",
+              "type": "number",
+              "value": "={{ $json.Color.length }}"
+            },
+            {
+              "id": "b67e8c39-f3f9-4614-9b5d-96876cb6a669",
+              "name": "Status",
+              "type": "string",
+              "value": "DONE"
+            }
+          ]
+        }
+      },
+      "typeVersion": 3.4
+    },
+    {
+      "id": "512983c7-5f71-470a-a4eb-ff819483a137",
+      "name": "Wait after quota error",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        1088,
+        528
+      ],
+      "webhookId": "2c4355f6-9def-43a5-b2fc-fad09ea736f3",
+      "parameters": {
+        "unit": "minutes",
+        "amount": "=1"
+      },
+      "typeVersion": 1.1
+    },
+    {
+      "id": "625ad76b-deea-4a34-a9cd-5c706282bdae",
+      "name": "Wait after quota error 2",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        224,
+        528
+      ],
+      "webhookId": "9ab22397-31cd-4121-ab93-650c6ba82764",
+      "parameters": {
+        "unit": "minutes",
+        "amount": "=1"
+      },
+      "typeVersion": 1.1
+    }
+  ],
+  "active": false,
+  "pinData": {},
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionOrder": "v1",
+    "executionTimeout": 300
+  },
+  "versionId": "97a9be17-9826-4377-9e81-e1f0afbd874a",
+  "connections": {
+    "Prepare output": {
+      "main": [
+        [
+          {
+            "node": "Update Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Wait random seconds (workload)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait after quota error 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait after quota error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait after quota error": {
+      "main": [
+        [
+          {
+            "node": "Update Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait after quota error 2": {
+      "main": [
+        [
+          {
+            "node": "Read Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait random seconds (workload)": {
+      "main": [
+        [
+          {
+            "node": "Prepare output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Sequential Google Sheets Data Processing with Execution Control",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/6196",
+    "scraped_at": "2025-08-21 05:32:05",
+    "workflow_id": "8aeee7e0-d343-5120-9985-11ea30108de6"
+  },
+  "_filename": "Sequential_Google_Sheets_Data_Processing_with_Execution_Control.json"
+}

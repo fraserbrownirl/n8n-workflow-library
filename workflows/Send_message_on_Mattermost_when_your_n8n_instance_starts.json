@@ -1,0 +1,58 @@
+{
+  "nodes": [
+    {
+      "name": "n8n Trigger",
+      "type": "n8n-nodes-base.n8nTrigger",
+      "position": [
+        450,
+        200
+      ],
+      "parameters": {
+        "events": [
+          "init"
+        ]
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Mattermost",
+      "type": "n8n-nodes-base.mattermost",
+      "position": [
+        650,
+        200
+      ],
+      "parameters": {
+        "message": "=Your n8n instance started at {{$json[\"timestamp\"]}}",
+        "channelId": "toyi3uoycf8rirtm7d5jm15sso",
+        "attachments": [],
+        "otherOptions": {}
+      },
+      "credentials": {
+        "mattermostApi": "Mattermost Credentials"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "n8n Trigger": {
+      "main": [
+        [
+          {
+            "node": "Mattermost",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Send message on Mattermost when your n8n instance starts",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/1058",
+    "scraped_at": "2025-08-21 00:18:06",
+    "workflow_id": "5fd5e866-a272-54e5-922e-f09b0c29c166"
+  },
+  "_filename": "Send_message_on_Mattermost_when_your_n8n_instance_starts.json"
+}

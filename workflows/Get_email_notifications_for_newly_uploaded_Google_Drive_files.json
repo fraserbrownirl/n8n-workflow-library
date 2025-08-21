@@ -1,0 +1,69 @@
+{
+  "nodes": [
+    {
+      "name": "Google Drive Trigger",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "position": [
+        250,
+        150
+      ],
+      "parameters": {
+        "event": "fileCreated",
+        "options": {},
+        "triggerOn": "specificFolder",
+        "folderToWatch": "1HwOAKkkgveLji8vVpW9Xrg1EsBskwMNb"
+      },
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "28",
+          "name": "Google Drive account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "position": [
+        450,
+        150
+      ],
+      "parameters": {
+        "text": "=A file in your Google Drive file folder has been created: {{$json[\"name\"]}}",
+        "options": {},
+        "subject": "File Update",
+        "toEmail": "mutedjam@n8n.io",
+        "fromEmail": "mutedjam@n8n.io"
+      },
+      "credentials": {
+        "smtp": {
+          "id": "14",
+          "name": "SMTP account"
+        }
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Get email notifications for newly uploaded Google Drive files",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/1283",
+    "scraped_at": "2025-08-20 23:48:24",
+    "workflow_id": "ca42cba4-2adf-51dc-a35c-2f13f36fa507"
+  },
+  "_filename": "Get_email_notifications_for_newly_uploaded_Google_Drive_files.json"
+}

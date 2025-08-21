@@ -1,0 +1,483 @@
+{
+  "meta": {
+    "instanceId": "12e6f290a974a1eee154f8d915aade185e90e826260e6aeab8a087ba7386a1bc",
+    "templateCredsSetupCompleted": true
+  },
+  "nodes": [
+    {
+      "id": "content-chat-trigger",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        -2864,
+        -576
+      ],
+      "webhookId": "content-webhook-id",
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 1.1
+    },
+    {
+      "id": "content-director-agent",
+      "name": "Content Director Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -2640,
+        -816
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 2.1
+    },
+    {
+      "id": "content-think",
+      "name": "Think",
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "position": [
+        -2512,
+        -496
+      ],
+      "parameters": {},
+      "typeVersion": 1.1
+    },
+    {
+      "id": "blog-agent",
+      "name": "Blog Content Writer",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -2240,
+        -96
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in blog content writing, long-form articles, editorial content, and thought leadership pieces"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "social-agent",
+      "name": "Social Media Content Creator",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1280,
+        -704
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in social media content creation, posts, captions, hashtags, and community engagement content"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "video-agent",
+      "name": "Video Script Writer",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1840,
+        -304
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in video script writing, YouTube content, explainer videos, and video marketing scripts"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "email-agent",
+      "name": "Email Newsletter Writer",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1328,
+        -80
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in email newsletter writing, campaign creation, nurture sequences, and email marketing content"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "website-agent",
+      "name": "Website Copy Specialist",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1744,
+        -1024
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in website copywriting, landing pages, product descriptions, and conversion-focused content"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "strategy-agent",
+      "name": "Content Strategist & Planner",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1344,
+        -1264
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in content strategy, editorial calendars, content planning, and brand voice development"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "content-director-model",
+      "name": "OpenAI Chat Model Content Director",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -2672,
+        -496
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "o3",
+          "cachedResultName": "o3"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "blog-model",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -2208,
+        368
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "social-model",
+      "name": "OpenAI Chat Model2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1312,
+        -496
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "video-model",
+      "name": "OpenAI Chat Model3",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1824,
+        -144
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "email-model",
+      "name": "OpenAI Chat Model4",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1328,
+        96
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "website-model",
+      "name": "OpenAI Chat Model5",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1776,
+        -768
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "strategy-model",
+      "name": "OpenAI Chat Model6",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1312,
+        -944
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "content-header-sticky",
+      "name": "Sticky Note Header",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3808,
+        -880
+      ],
+      "parameters": {
+        "color": 5,
+        "width": 580,
+        "height": 320,
+        "content": "=======================================\n      CONTENT DIRECTOR WITH CONTENT TEAM\n=======================================\nFor any questions or support, please contact:\n    Yaron@nofluff.online\n\nExplore more tips and tutorials here:\n   - YouTube: https://www.youtube.com/@YaronBeen/videos\n   - LinkedIn: https://www.linkedin.com/in/yaronbeen/\n======================================="
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "content-main-sticky",
+      "name": "Sticky Note Main",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3808,
+        -544
+      ],
+      "parameters": {
+        "color": 5,
+        "width": 740,
+        "height": 2500,
+        "content": "## \u270d\ufe0f **CONTENT DIRECTOR WITH CONTENT TEAM - AI WORKFLOW**\n\n**\ud83d\udd25 Powered by OpenAI O3 & GPT-4.1-mini Multi-Agent System**\n\n#ContentMarketing #ContentCreation #n8nWorkflows #OpenAI #DigitalMarketing\n\n---\n\n### \ud83d\udcdd **Overview**\n\nThis multi-agent n8n automation creates a comprehensive content powerhouse. A strategic Content Director agent receives your content requests, analyzes audience needs, and coordinates specialized agents for blog writing, social media, video scripts, email marketing, website copy, and content strategy\u2014delivering cohesive, high-quality content across all channels.\n\n---\n\n### \u2699\ufe0f **How It Works**\n\n1. **Chat trigger** receives content requests (e.g., \"Create a complete content campaign for our new SaaS product launch\")\n2. **Content Director** (O3) analyzes audience and determines content strategy\n3. Delegates to specialist agents:\n   - Blog Content Writer\n   - Social Media Content Creator\n   - Video Script Writer\n   - Email Newsletter Writer\n   - Website Copy Specialist\n   - Content Strategist & Planner\n4. Each agent uses **GPT-4.1-mini** for specialized content creation\n5. Results integrated into comprehensive content campaign\n\n---\n\n### \ud83d\udc65 **Meet Your AI Content Team**\n\n| Agent | Purpose | Model | Output |\n|-------|---------|-------|--------|\n| \u270d\ufe0f **Content Director** | Content strategy & campaign coordination | O3 | Strategic content leadership |\n| \ud83d\udcdd **Blog Writer** | Long-form articles, thought leadership | GPT-4.1-mini | Blog posts & articles |\n| \ud83d\udcf1 **Social Media Creator** | Posts, captions, community engagement | GPT-4.1-mini | Social content |\n| \ud83c\udfac **Video Script Writer** | YouTube scripts, explainer videos | GPT-4.1-mini | Video scripts |\n| \ud83d\udce7 **Email Writer** | Newsletters, campaigns, sequences | GPT-4.1-mini | Email content |\n| \ud83c\udf10 **Website Copy** | Landing pages, product descriptions | GPT-4.1-mini | Website copy |\n| \ud83d\udcca **Content Strategist** | Editorial calendars, planning | GPT-4.1-mini | Content strategies |\n\n---\n\n### \ud83d\udca1 **Use Cases**\n\n- **Product Launches**: Complete content campaigns across all channels\n- **Brand Storytelling**: Consistent narrative across blog, social, and email\n- **Lead Generation**: Content funnels that convert prospects to customers\n- **Thought Leadership**: Industry expertise through articles and videos\n- **Social Engagement**: Community-building content for all platforms\n- **Email Marketing**: Newsletter series and nurture sequences\n\n---\n\n### \ud83d\udcb8 **Cost Optimization**\n\n- **O3 for Content Director**: Strategic content decisions only\n- **GPT-4.1-mini for specialists**: 90% cost reduction\n- **Parallel processing**: All content types created simultaneously\n- **Consistent brand voice**: Coordinated messaging across channels\n\n---\n\n### \ud83c\udff7\ufe0f **Tags**\n\n#BlogWriting #SocialMediaContent #VideoScripts #EmailMarketing #WebsiteCopy\n#ContentStrategy #ContentMarketing #BrandStorytelling #DigitalContent #ContentCreation\n#n8n #OpenAI #MultiAgentSystem #ContentAutomation #MarketingContent #ContentTeam"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Think": {
+      "ai_tool": [
+        [
+          "Content Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          "Blog Content Writer",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          "Social Media Content Creator",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          "Video Script Writer",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          "Email Newsletter Writer",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model5": {
+      "ai_languageModel": [
+        [
+          "Website Copy Specialist",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model6": {
+      "ai_languageModel": [
+        [
+          "Content Strategist & Planner",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "Blog Content Writer": {
+      "ai_tool": [
+        [
+          "Content Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Video Script Writer": {
+      "ai_tool": [
+        [
+          "Content Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Email Newsletter Writer": {
+      "ai_tool": [
+        [
+          "Content Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Website Copy Specialist": {
+      "ai_tool": [
+        [
+          "Content Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          "Content Director Agent",
+          "main",
+          0
+        ]
+      ]
+    },
+    "Content Strategist & Planner": {
+      "ai_tool": [
+        [
+          "Content Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Social Media Content Creator": {
+      "ai_tool": [
+        [
+          "Content Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model Content Director": {
+      "ai_languageModel": [
+        [
+          "Content Director Agent",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create Multi-Channel Content with O3 Director & GPT-4 Specialist Agents",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/6910",
+    "scraped_at": "2025-08-21 04:22:11",
+    "workflow_id": "37de8f86-0d54-592a-b187-8930ed4c9b58"
+  },
+  "_filename": "Create_Multi_Channel_Content_with_O3_Director_GPT_4_Specialist_Agents.json"
+}

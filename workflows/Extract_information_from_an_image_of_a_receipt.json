@@ -1,0 +1,78 @@
+{
+  "id": "77",
+  "name": "Extract information from an image of a receipt",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        340
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Mindee",
+      "type": "n8n-nodes-base.mindee",
+      "position": [
+        650,
+        340
+      ],
+      "parameters": {},
+      "credentials": {
+        "mindeeReceiptApi": "mindee"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        450,
+        340
+      ],
+      "parameters": {
+        "url": "https://miro.medium.com/max/1400/0*1T9GkAb93w5NSMsf",
+        "options": {},
+        "responseFormat": "file"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Mindee",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Extract information from an image of a receipt",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/702",
+    "scraped_at": "2025-08-20 23:09:03",
+    "workflow_id": "fd9e0213-d906-5143-a724-12e417ca8830"
+  },
+  "_filename": "Extract_information_from_an_image_of_a_receipt.json"
+}

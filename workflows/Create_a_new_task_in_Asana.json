@@ -1,0 +1,57 @@
+{
+  "id": "98",
+  "name": "Create a new task in Asana",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Asana",
+      "type": "n8n-nodes-base.asana",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "name": "",
+        "workspace": "",
+        "otherProperties": {}
+      },
+      "credentials": {
+        "asanaApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Asana",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create a new task in Asana",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/478",
+    "scraped_at": "2025-08-20 23:34:46",
+    "workflow_id": "e902e4ae-1a67-523b-a464-65459cdc2afd"
+  },
+  "_filename": "Create_a_new_task_in_Asana.json"
+}

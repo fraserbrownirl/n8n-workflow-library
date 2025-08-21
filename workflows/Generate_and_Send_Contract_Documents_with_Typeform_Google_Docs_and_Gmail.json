@@ -1,0 +1,175 @@
+{
+  "nodes": [
+    {
+      "name": "Typeform Trigger",
+      "type": "n8n-nodes-base.typeformTrigger",
+      "position": [
+        100,
+        300
+      ],
+      "parameters": {
+        "formId": "your-form-id"
+      },
+      "credentials": {
+        "typeformApi": "Typeform API"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Set Variables",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        300,
+        300
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "client_name",
+              "value": "={{$json[\"answers\"][0].text}}"
+            },
+            {
+              "name": "project_scope",
+              "value": "={{$json[\"answers\"][1].text}}"
+            },
+            {
+              "name": "deadline",
+              "value": "={{$json[\"answers\"][2].text}}"
+            },
+            {
+              "name": "email",
+              "value": "={{$json[\"answers\"][3].email}}"
+            }
+          ]
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Fill Contract Template",
+      "type": "n8n-nodes-base.googleDocs",
+      "position": [
+        500,
+        300
+      ],
+      "parameters": {
+        "mode": "template",
+        "fields": [
+          {
+            "name": "{{client_name}}",
+            "value": "={{$json[\"client_name\"]}}"
+          },
+          {
+            "name": "{{project_scope}}",
+            "value": "={{$json[\"project_scope\"]}}"
+          },
+          {
+            "name": "{{deadline}}",
+            "value": "={{$json[\"deadline\"]}}"
+          }
+        ],
+        "documentId": "your-template-id"
+      },
+      "credentials": {
+        "googleApi": "Google API"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Export as PDF",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        700,
+        300
+      ],
+      "parameters": {
+        "fileId": "={{$node[\"Fill Contract Template\"].json[\"documentId\"]}}",
+        "mimeType": "application/pdf",
+        "operation": "export"
+      },
+      "credentials": {
+        "googleApi": "Google API"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Send via Email",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        900,
+        300
+      ],
+      "parameters": {
+        "text": "Hi {{$json[\"client_name\"]}},\n\nPlease find attached your contract.\n\nRegards,\nYour Company",
+        "subject": "Your Contract",
+        "toEmail": "={{$json[\"email\"]}}",
+        "fromEmail": "your-email@example.com",
+        "attachments": [
+          {
+            "binaryPropertyName": "data"
+          }
+        ]
+      },
+      "credentials": {
+        "gmailOAuth2": "Gmail OAuth"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Export as PDF": {
+      "main": [
+        [
+          {
+            "node": "Send via Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Variables": {
+      "main": [
+        [
+          {
+            "node": "Fill Contract Template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Typeform Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fill Contract Template": {
+      "main": [
+        [
+          {
+            "node": "Export as PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Generate and Send Contract Documents with Typeform, Google Docs and Gmail",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/6817",
+    "scraped_at": "2025-08-21 03:48:42",
+    "workflow_id": "067e1448-d9b5-506b-b97c-64b709cc8310"
+  },
+  "_filename": "Generate_and_Send_Contract_Documents_with_Typeform_Google_Docs_and_Gmail.json"
+}

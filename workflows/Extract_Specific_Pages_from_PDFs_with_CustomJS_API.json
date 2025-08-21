@@ -1,0 +1,94 @@
+{
+  "id": "rLoXUoKSZ4a9XUAv",
+  "meta": {
+    "instanceId": "7599ed929ea25767a019b87ecbc83b90e16a268cb51892887b450656ac4518a2"
+  },
+  "name": "My workflow 6",
+  "tags": [],
+  "nodes": [
+    {
+      "id": "dad32e79-af45-4255-90d9-845a5357395a",
+      "name": "When clicking \u2018Test workflow\u2019",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        -580,
+        920
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "id": "1cadea33-7c6a-4282-be84-e127fc7437c2",
+      "name": "Extract Pages From PDF1",
+      "type": "@custom-js/n8n-nodes-pdf-toolkit.ExtractPages",
+      "position": [
+        -140,
+        920
+      ],
+      "parameters": {
+        "pageRange": "2-3",
+        "field_name": "=data"
+      },
+      "credentials": {
+        "customJsApi": {
+          "id": "h29wo2anYKdANAzm",
+          "name": "CustomJS account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "a8554e6b-6e2d-4a26-909c-25e74e618480",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -360,
+        920
+      ],
+      "parameters": {
+        "url": "https://www.sldttc.org/allpdf/21583473018.pdf",
+        "options": {}
+      },
+      "typeVersion": 4.2
+    }
+  ],
+  "active": false,
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "82cbb24e-e907-419a-97d6-bdb577269927",
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Extract Pages From PDF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \u2018Test workflow\u2019": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Extract Specific Pages from PDFs with CustomJS API",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/3872",
+    "scraped_at": "2025-08-21 01:11:06",
+    "workflow_id": "138930c7-14e8-59ba-94c8-1f0c229a4c41"
+  },
+  "_filename": "Extract_Specific_Pages_from_PDFs_with_CustomJS_API.json"
+}

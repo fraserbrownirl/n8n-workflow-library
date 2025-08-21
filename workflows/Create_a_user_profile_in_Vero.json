@@ -1,0 +1,56 @@
+{
+  "id": "127",
+  "name": "Create a user profile in Vero",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Vero",
+      "type": "n8n-nodes-base.vero",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "id": "",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "veroApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Vero",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create a user profile in Vero",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/499",
+    "scraped_at": "2025-08-21 01:19:49",
+    "workflow_id": "54d9b4f1-d3e9-52a8-8bf2-0bfbd324c348"
+  },
+  "_filename": "Create_a_user_profile_in_Vero.json"
+}

@@ -1,0 +1,56 @@
+{
+  "id": "100",
+  "name": "Create a new task in Todoist",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        550,
+        250
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Todoist",
+      "type": "n8n-nodes-base.todoist",
+      "position": [
+        750,
+        250
+      ],
+      "parameters": {
+        "content": "",
+        "options": {}
+      },
+      "credentials": {
+        "todoistApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Todoist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create a new task in Todoist",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/481",
+    "scraped_at": "2025-08-21 00:08:43",
+    "workflow_id": "7759fedf-af39-5a50-a9d3-1bce6d7df2f9"
+  },
+  "_filename": "Create_a_new_task_in_Todoist.json"
+}

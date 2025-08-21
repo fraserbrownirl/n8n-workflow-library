@@ -1,0 +1,95 @@
+{
+  "id": "174",
+  "name": "Send the Astronomy Picture of the day daily to a Telegram channel",
+  "nodes": [
+    {
+      "name": "Cron",
+      "type": "n8n-nodes-base.cron",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "hour": 20
+            }
+          ]
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "NASA",
+      "type": "n8n-nodes-base.nasa",
+      "position": [
+        650,
+        300
+      ],
+      "parameters": {
+        "download": false,
+        "additionalFields": {}
+      },
+      "credentials": {
+        "nasaApi": "NASA"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        850,
+        300
+      ],
+      "parameters": {
+        "file": "={{$node[\"NASA\"].json[\"url\"]}}",
+        "chatId": "-485365454",
+        "operation": "sendPhoto",
+        "additionalFields": {
+          "caption": "={{$node[\"NASA\"].json[\"title\"]}}"
+        }
+      },
+      "credentials": {
+        "telegramApi": "Telegram n8n bot"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "Cron": {
+      "main": [
+        [
+          {
+            "node": "NASA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NASA": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Send the astronomy picture of the day daily to a Telegram channel",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/828",
+    "scraped_at": "2025-08-20 23:45:05",
+    "workflow_id": "c42af2cc-dfee-5037-a39f-a7780b46c970"
+  },
+  "_filename": "Send_the_astronomy_picture_of_the_day_daily_to_a_Telegram_channel.json"
+}

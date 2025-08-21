@@ -1,0 +1,57 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "text": "This is a message to demonstrate the n8n Send Email workflow!",
+        "options": {
+          "allowUnauthorizedCerts": false
+        },
+        "subject": "n8n rocks!",
+        "toEmail": "user@example.com",
+        "fromEmail": "user@from.email"
+      },
+      "credentials": {
+        "smtp": "your@smtp_creds.here"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Send an email",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/584",
+    "scraped_at": "2025-08-20 21:19:22",
+    "workflow_id": "039cf226-be46-5449-ab79-3d94778a3e9d"
+  },
+  "_filename": "Send_an_email.json"
+}

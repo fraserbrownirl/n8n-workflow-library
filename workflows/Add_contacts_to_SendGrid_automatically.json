@@ -1,0 +1,118 @@
+{
+  "id": "209",
+  "name": "Create, update and get a contact using the SendGrid node",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        270,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "SendGrid",
+      "type": "n8n-nodes-base.sendGrid",
+      "position": [
+        470,
+        300
+      ],
+      "parameters": {
+        "email": "",
+        "resource": "contact",
+        "additionalFields": {
+          "firstName": ""
+        }
+      },
+      "credentials": {
+        "sendGridApi": "SendGrid Credentials"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "SendGrid1",
+      "type": "n8n-nodes-base.sendGrid",
+      "position": [
+        670,
+        300
+      ],
+      "parameters": {
+        "email": "={{$node[\"SendGrid\"].parameter[\"email\"]}}",
+        "resource": "contact",
+        "additionalFields": {
+          "lastName": ""
+        }
+      },
+      "credentials": {
+        "sendGridApi": "SendGrid Credentials"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "SendGrid2",
+      "type": "n8n-nodes-base.sendGrid",
+      "position": [
+        870,
+        300
+      ],
+      "parameters": {
+        "by": "email",
+        "email": "={{$node[\"SendGrid\"].parameter[\"email\"]}}",
+        "resource": "contact",
+        "operation": "get"
+      },
+      "credentials": {
+        "sendGridApi": "SendGrid Credentials"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "SendGrid": {
+      "main": [
+        [
+          {
+            "node": "SendGrid1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SendGrid1": {
+      "main": [
+        [
+          {
+            "node": "SendGrid2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "SendGrid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Add contacts to SendGrid automatically",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/901",
+    "scraped_at": "2025-08-21 00:45:27",
+    "workflow_id": "6f8bb5a7-6f8b-5958-beab-04cdf0b1caa7"
+  },
+  "_filename": "Add_contacts_to_SendGrid_automatically.json"
+}

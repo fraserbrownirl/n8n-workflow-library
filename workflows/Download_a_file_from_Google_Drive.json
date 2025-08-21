@@ -1,0 +1,76 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Google Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "fileId": "1dJEBaECGmua09YP7W6WCBu66icIq32yRadQpk",
+        "options": {},
+        "operation": "download"
+      },
+      "credentials": {
+        "googleApi": "n8n-test-service-account"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Write Binary File",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "position": [
+        650,
+        300
+      ],
+      "parameters": {
+        "fileName": "/data/downloaded_file.pdf"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Write Binary File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Download a file from Google Drive",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/515",
+    "scraped_at": "2025-08-20 21:03:18",
+    "workflow_id": "653499fa-7c0f-5ef4-b867-05d53fa890a6"
+  },
+  "_filename": "Download_a_file_from_Google_Drive.json"
+}

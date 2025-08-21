@@ -1,0 +1,50 @@
+{
+  "nodes": [
+    {
+      "name": "Mock Data",
+      "type": "n8n-nodes-base.function",
+      "position": [
+        802,
+        307
+      ],
+      "parameters": {
+        "functionCode": "return [\n  {\n    json: {\n      id: 1,\n      name: \"Jim\"\n    }\n  },\n  {\n    json: {\n      id: 2,\n      name: \"Stefan\"\n    }\n  },\n  {\n    json: {\n      id: 3,\n      name: \"Hans\"\n    }\n  }\n];"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Create an array of objects",
+      "type": "n8n-nodes-base.function",
+      "position": [
+        1052,
+        307
+      ],
+      "parameters": {
+        "functionCode": "return [\n  {\n    json: {\n      data_object: items.map(item => item.json),\n    },\n  }\n];\n"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Mock Data": {
+      "main": [
+        [
+          {
+            "node": "Create an array of objects",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create an array of objects",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/767",
+    "scraped_at": "2025-08-20 22:26:44",
+    "workflow_id": "fe9ca647-537f-5936-b699-bb135153633e"
+  },
+  "_filename": "Create_an_array_of_objects.json"
+}

@@ -1,0 +1,64 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Bannerbear",
+      "type": "n8n-nodes-base.bannerbear",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "templateId": "8BK3vWZJ7Wl5Jzk1aX",
+        "modificationsUi": {
+          "modificationsValues": [
+            {
+              "name": "message",
+              "text": "this is some text",
+              "color": "#3097BC",
+              "background": "#28A96F"
+            }
+          ]
+        },
+        "additionalFields": {
+          "waitForImage": true
+        }
+      },
+      "credentials": {
+        "bannerbearApi": "bannerbear_creds"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Bannerbear",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create an image procedurally using Bannerbear",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/544",
+    "scraped_at": "2025-08-21 00:25:46",
+    "workflow_id": "c8ad2fe8-feec-5f50-bb0b-f02a70c75a24"
+  },
+  "_filename": "Create_an_image_procedurally_using_Bannerbear.json"
+}

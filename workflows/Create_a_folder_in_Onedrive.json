@@ -1,0 +1,54 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Microsoft OneDrive",
+      "type": "n8n-nodes-base.microsoftOneDrive",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "name": "n8n-rocks",
+        "options": {},
+        "resource": "folder",
+        "operation": "create"
+      },
+      "credentials": {
+        "microsoftOneDriveOAuth2Api": "n8n-docs-creds"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Microsoft OneDrive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create a folder in Onedrive",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/565",
+    "scraped_at": "2025-08-20 22:41:23",
+    "workflow_id": "10178f45-3ce8-5a12-b9e6-3de4e4aabbbf"
+  },
+  "_filename": "Create_a_folder_in_Onedrive.json"
+}

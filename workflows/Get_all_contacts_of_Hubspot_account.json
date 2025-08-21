@@ -1,0 +1,58 @@
+{
+  "id": "7",
+  "name": "6",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        440,
+        320
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Hubspot",
+      "type": "n8n-nodes-base.hubspot",
+      "position": [
+        750,
+        320
+      ],
+      "parameters": {
+        "resource": "contact",
+        "operation": "getAll",
+        "returnAll": true,
+        "additionalFields": {}
+      },
+      "credentials": {
+        "hubspotApi": "scsc"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Hubspot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Get all contacts of Hubspot account",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/466",
+    "scraped_at": "2025-08-20 23:53:10",
+    "workflow_id": "5ee0b829-7237-54e5-9f90-ca557156b2ee"
+  },
+  "_filename": "Get_all_contacts_of_Hubspot_account.json"
+}

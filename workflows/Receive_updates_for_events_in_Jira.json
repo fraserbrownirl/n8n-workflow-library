@@ -1,0 +1,33 @@
+{
+  "nodes": [
+    {
+      "name": "Jira Trigger",
+      "type": "n8n-nodes-base.jiraTrigger",
+      "position": [
+        880,
+        400
+      ],
+      "webhookId": "a3ddaf66-7f75-4494-b435-ef88ef1f1917",
+      "parameters": {
+        "events": [
+          "*"
+        ],
+        "additionalFields": {}
+      },
+      "credentials": {
+        "jiraSoftwareCloudApi": "n8n"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates for events in Jira",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/569",
+    "scraped_at": "2025-08-20 21:49:17",
+    "workflow_id": "4f8273c1-1d02-5589-b5c3-23ed2d742c5e"
+  },
+  "_filename": "Receive_updates_for_events_in_Jira.json"
+}

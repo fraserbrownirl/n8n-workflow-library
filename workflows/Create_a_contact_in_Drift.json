@@ -1,0 +1,56 @@
+{
+  "id": "125",
+  "name": "Create a contact in Drift",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Drift ",
+      "type": "n8n-nodes-base.drift",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "email": "",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "driftApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Drift ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create a contact in Drift",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/497",
+    "scraped_at": "2025-08-21 01:13:45",
+    "workflow_id": "b5253f80-f7bd-5d6c-890a-557bf4dafdd0"
+  },
+  "_filename": "Create_a_contact_in_Drift.json"
+}

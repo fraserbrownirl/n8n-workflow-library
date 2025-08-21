@@ -1,0 +1,55 @@
+{
+  "id": "8",
+  "name": "Sample Spotify",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        500,
+        310
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Spotify",
+      "type": "n8n-nodes-base.spotify",
+      "position": [
+        780,
+        310
+      ],
+      "parameters": {
+        "id": "spotify:track:6SPOM20nWbQSBvTwzgIzqg"
+      },
+      "credentials": {
+        "spotifyOAuth2Api": "spotifyOAuth2"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Spotify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Add a song to your Spotify queue",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/440",
+    "scraped_at": "2025-08-21 00:18:57",
+    "workflow_id": "b7caebfd-f657-5c7c-956b-b24380c7b561"
+  },
+  "_filename": "Add_a_song_to_your_Spotify_queue.json"
+}

@@ -1,0 +1,64 @@
+{
+  "id": "95",
+  "name": "Receive updates when a new activity gets created and tweet about it",
+  "nodes": [
+    {
+      "name": "Strava Trigger",
+      "type": "n8n-nodes-base.stravaTrigger",
+      "position": [
+        710,
+        220
+      ],
+      "webhookId": "5ad7a644-4005-4118-a27e-7112bd0035a5",
+      "parameters": {
+        "event": "create",
+        "object": "activity",
+        "options": {}
+      },
+      "credentials": {
+        "stravaOAuth2Api": "strava"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Twitter",
+      "type": "n8n-nodes-base.twitter",
+      "position": [
+        910,
+        220
+      ],
+      "parameters": {
+        "text": "=I ran {{$node[\"Strava Trigger\"].json[\"object_data\"][\"distance\"]}} meters and completed my {{$node[\"Strava Trigger\"].json[\"object_data\"][\"name\"]}}!",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "twitterOAuth1Api": "twitter-Harshil"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "Strava Trigger": {
+      "main": [
+        [
+          {
+            "node": "Twitter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Receive updates when a new activity gets created and tweet about it",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/745",
+    "scraped_at": "2025-08-20 23:58:37",
+    "workflow_id": "e63655a1-c4bc-523c-bd91-60481b7d72ac"
+  },
+  "_filename": "Receive_updates_when_a_new_activity_gets_created_and_tweet_about_it.json"
+}

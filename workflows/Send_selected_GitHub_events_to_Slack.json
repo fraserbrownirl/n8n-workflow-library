@@ -1,0 +1,132 @@
+{
+  "nodes": [
+    {
+      "name": "Github Trigger",
+      "type": "n8n-nodes-base.githubTrigger",
+      "position": [
+        500,
+        350
+      ],
+      "parameters": {
+        "owner": "n8n-io",
+        "events": [
+          "star"
+        ],
+        "repository": "n8n"
+      },
+      "credentials": {
+        "githubApi": ""
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        700,
+        350
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$node[\"Github Trigger\"].data[\"body\"][\"action\"]}}",
+              "value2": "created"
+            }
+          ]
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Slack - Add",
+      "type": "n8n-nodes-base.slack",
+      "position": [
+        900,
+        250
+      ],
+      "parameters": {
+        "channel": "#general",
+        "attachments": [
+          {
+            "text": "=The project has now: {{$node[\"Github Trigger\"].data[\"body\"][\"repository\"][\"stargazers_count\"]}} Stars",
+            "color": "#88FF00",
+            "title": "=Got new star from: {{$node[\"Github Trigger\"].data[\"body\"][\"sender\"][\"login\"]}}",
+            "image_url": "={{$node[\"Github Trigger\"].data[\"body\"][\"sender\"][\"avatar_url\"]}}",
+            "title_link": "={{$node[\"Github Trigger\"].data[\"body\"][\"sender\"][\"html_url\"]}}"
+          }
+        ],
+        "otherOptions": {}
+      },
+      "credentials": {
+        "slackApi": ""
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Slack - Remove",
+      "type": "n8n-nodes-base.slack",
+      "position": [
+        900,
+        450
+      ],
+      "parameters": {
+        "channel": "#general",
+        "attachments": [
+          {
+            "text": "=The project has now: {{$node[\"Github Trigger\"].data[\"body\"][\"repository\"][\"stargazers_count\"]}} Stars",
+            "color": "#ff0000",
+            "title": "=Star got removed by: {{$node[\"Github Trigger\"].data[\"body\"][\"sender\"][\"login\"]}}",
+            "image_url": "={{$node[\"Github Trigger\"].data[\"body\"][\"sender\"][\"avatar_url\"]}}",
+            "title_link": "={{$node[\"Github Trigger\"].data[\"body\"][\"sender\"][\"html_url\"]}}"
+          }
+        ],
+        "otherOptions": {}
+      },
+      "credentials": {
+        "slackApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Slack - Add",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Slack - Remove",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Github Trigger": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Send selected GitHub events to Slack",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/4",
+    "scraped_at": "2025-08-20 23:33:25",
+    "workflow_id": "8cd54944-4295-50f9-8759-c4dff41ccc82"
+  },
+  "_filename": "Send_selected_GitHub_events_to_Slack.json"
+}

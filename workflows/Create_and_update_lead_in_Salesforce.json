@@ -1,0 +1,112 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        420,
+        260
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Salesforce",
+      "type": "n8n-nodes-base.salesforce",
+      "position": [
+        620,
+        260
+      ],
+      "parameters": {
+        "company": "CompanyInc",
+        "lastname": "DudeOne",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "salesforceOAuth2Api": "salesforce_creds"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Salesforce1",
+      "type": "n8n-nodes-base.salesforce",
+      "position": [
+        810,
+        260
+      ],
+      "parameters": {
+        "leadId": "={{$node[\"Salesforce\"].json[\"id\"]}}",
+        "operation": "update",
+        "updateFields": {
+          "city": "Berlin"
+        }
+      },
+      "credentials": {
+        "salesforceOAuth2Api": "salesforce_creds"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Salesforce2",
+      "type": "n8n-nodes-base.salesforce",
+      "position": [
+        1020,
+        260
+      ],
+      "parameters": {
+        "title": "Deal Won!",
+        "leadId": "={{$node[\"Salesforce\"].json[\"id\"]}}",
+        "options": {},
+        "operation": "addNote"
+      },
+      "credentials": {
+        "salesforceOAuth2Api": "salesforce_creds"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Salesforce": {
+      "main": [
+        [
+          {
+            "node": "Salesforce1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Salesforce1": {
+      "main": [
+        [
+          {
+            "node": "Salesforce2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Salesforce",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create and update lead in Salesforce",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/664",
+    "scraped_at": "2025-08-20 22:17:29",
+    "workflow_id": "84f4609a-8764-5ec5-8a2f-cbf843b6e654"
+  },
+  "_filename": "Create_and_update_lead_in_Salesforce.json"
+}

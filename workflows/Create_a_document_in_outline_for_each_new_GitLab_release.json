@@ -1,0 +1,89 @@
+{
+  "nodes": [
+    {
+      "name": "Gitlab Trigger",
+      "type": "n8n-nodes-base.gitlabTrigger",
+      "position": [
+        240,
+        140
+      ],
+      "parameters": {
+        "owner": "tennox",
+        "events": [
+          "tag_push"
+        ],
+        "repository": "ci-test"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        820,
+        40
+      ],
+      "parameters": {
+        "url": "https://app.getoutline.com/api/documents.create",
+        "options": {},
+        "requestMethod": "POST",
+        "authentication": "headerAuth",
+        "jsonParameters": true,
+        "bodyParametersJson": "={ \n\"collectionId\": \"PLACEHOLDER\",\n\"parentDocumentId\": \"PLACEHOLDER\",\n\"publish\": true, \n\"title\": {{JSON.stringify(\"Release \" + $json.body.name)}},\n\"text\": {{JSON.stringify($json.body.description + '\\n\\n\\\\\\n[More info](' + $json.body.url + ')')}}\n}"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        540,
+        140
+      ],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.body.object_kind}}",
+              "value2": "release"
+            }
+          ]
+        }
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gitlab Trigger": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create a document in outline for each new GitLab release",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/1375",
+    "scraped_at": "2025-08-20 22:41:12",
+    "workflow_id": "8f5fd53a-f672-5687-95fe-ce9bab9269da"
+  },
+  "_filename": "Create_a_document_in_outline_for_each_new_GitLab_release.json"
+}

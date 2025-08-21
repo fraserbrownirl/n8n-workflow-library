@@ -1,0 +1,58 @@
+{
+  "nodes": [
+    {
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        700,
+        300
+      ],
+      "parameters": {
+        "range": "Problems!A:D",
+        "options": {},
+        "sheetId": "17fzSFl1BZ1njldTfp5lvh8HtS0-pNXH66b7qGZIiGRU"
+      },
+      "credentials": {
+        "googleApi": ""
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        500,
+        300
+      ],
+      "parameters": {
+        "path": "webhook",
+        "options": {},
+        "responseData": "allEntries",
+        "responseMode": "lastNode"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Transfer data from website to Google Sheets",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/1076",
+    "scraped_at": "2025-08-20 22:45:19",
+    "workflow_id": "138580f2-f81a-59bf-b663-325d5f138a3b"
+  },
+  "_filename": "Transfer_data_from_website_to_Google_Sheets.json"
+}

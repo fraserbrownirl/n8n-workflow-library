@@ -1,0 +1,31 @@
+{
+  "nodes": [
+    {
+      "name": "IMAP Email",
+      "type": "n8n-nodes-base.emailReadImap",
+      "position": [
+        760,
+        400
+      ],
+      "parameters": {
+        "options": {
+          "allowUnauthorizedCerts": false
+        }
+      },
+      "credentials": {
+        "imap": "imap_creds"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {},
+  "_metadata": {
+    "name": "Receive email updates via IMAP",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/587",
+    "scraped_at": "2025-08-20 23:03:11",
+    "workflow_id": "e6e3c37d-729c-5cea-b729-14418c714ebb"
+  },
+  "_filename": "Receive_email_updates_via_IMAP.json"
+}

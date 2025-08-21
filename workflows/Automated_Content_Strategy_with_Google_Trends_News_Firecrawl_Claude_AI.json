@@ -1,0 +1,775 @@
+{
+  "meta": {
+    "instanceId": "393ca9e36a1f81b0f643c72792946a5fe5e49eb4864181ba4032e5a408278263",
+    "templateCredsSetupCompleted": true
+  },
+  "nodes": [
+    {
+      "id": "1c6e3667-2a2b-43be-ba3e-9b94db926e54",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        1072,
+        208
+      ],
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"query1\": [\"query\", \"\u00e9volution\"],\n    \"query2\": [\"query\", \"\u00e9volution\"],\n    \"query3\": [\"query\", \"\u00e9volution\"]\n}"
+      },
+      "typeVersion": 1.3
+    },
+    {
+      "id": "a6c8f655-2052-4791-b9ba-57e6a3a48397",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        208,
+        0
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "566c1440-e01d-4721-baf2-faf9ed110f98",
+      "name": "Anthropic Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "position": [
+        880,
+        208
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-20250514",
+          "cachedResultName": "Claude Sonnet 4"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "anthropicApi": {
+          "id": "WXQf5QsxCs3AyxlW",
+          "name": "Anthropic account"
+        }
+      },
+      "typeVersion": 1.3
+    },
+    {
+      "id": "7214cc02-1302-413a-9c90-811dfa916302",
+      "name": "Loop Over Items1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        2048,
+        0
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "93b8e495-f6e7-445d-a41f-e8cfd4a2c8ff",
+      "name": "Loop Over Items2",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        2656,
+        0
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 3
+    },
+    {
+      "id": "2a0d938c-e799-403f-ac8b-e9f847823a5b",
+      "name": "Anthropic Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "position": [
+        3136,
+        496
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-4-20250514",
+          "cachedResultName": "Claude 4 Sonnet"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "anthropicApi": {
+          "id": "WXQf5QsxCs3AyxlW",
+          "name": "Anthropic account"
+        }
+      },
+      "typeVersion": 1.3
+    },
+    {
+      "id": "cef2ba4d-426d-447a-b905-4ad324bf7002",
+      "name": "Search trend",
+      "type": "n8n-nodes-serpapi.serpApi",
+      "position": [
+        480,
+        0
+      ],
+      "parameters": {
+        "q": "={{ $json.Query }}",
+        "operation": "google_trends",
+        "requestOptions": {},
+        "additionalFields": {
+          "hl": "fr",
+          "geo": "FR",
+          "date": "today 1-m",
+          "data_type": "RELATED_QUERIES"
+        }
+      },
+      "credentials": {
+        "serpApi": {
+          "id": "w1oDmQzMKE4Wcj2P",
+          "name": "SerpAPI account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "435c4eb8-6225-4566-af04-6baf8f6743a7",
+      "name": "Cr\u00e9ation feuille sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1584,
+        0
+      ],
+      "parameters": {
+        "title": "={{ new Date(new Date().setMonth(new Date().getMonth() - 1)).toLocaleDateString('fr-FR', { month: 'long' }).charAt(0).toUpperCase() + new Date(new Date().setMonth(new Date().getMonth() - 1)).toLocaleDateString('fr-FR', { month: 'long' }).slice(1) }} {{ $('Loop Over Items').item.json.Query }}",
+        "options": {},
+        "operation": "create",
+        "documentId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "https://docs.google.com/spreadsheets/d/1z7iP_i98PT9BQuUypAi0c3NHkdhREEPJWkDjyj8Snfw"
+        }
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wBRLUCktxqXE6DVJ",
+          "name": "Google Sheets account"
+        }
+      },
+      "typeVersion": 4.6
+    },
+    {
+      "id": "e85b3aed-3e1d-4ca1-a515-38e576341ed2",
+      "name": "Search GNews",
+      "type": "n8n-nodes-serpapi.serpApi",
+      "position": [
+        2304,
+        0
+      ],
+      "parameters": {
+        "q": "={{ $json.Query }}",
+        "operation": "google_news",
+        "requestOptions": {},
+        "additionalFields": {
+          "gl": "fr",
+          "hl": "fr"
+        }
+      },
+      "credentials": {
+        "serpApi": {
+          "id": "w1oDmQzMKE4Wcj2P",
+          "name": "SerpAPI account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "c6f64302-5e32-4aea-aebf-0be722ce2865",
+      "name": "Return URL only",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        2480,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// R\u00e9cup\u00e9rer les donn\u00e9es d'entr\u00e9e\nconst inputData = $input.all()[0].json;\n\n// Extraire les r\u00e9sultats de news\nconst newsResults = inputData.news_results || [];\n\n// Trier par position (ordre croissant)\nconst sortedResults = newsResults.sort((a, b) => a.position - b.position);\n\n// Prendre les 3 premiers r\u00e9sultats et extraire seulement l'URL\nconst top3Results = sortedResults.slice(0, 3).map(result => ({\n  link: result.link\n}));\n\n// Retourner les 3 premiers r\u00e9sultats\nreturn top3Results.map(item => ({ json: item }));"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "e8deaa80-c2e0-4d71-9c81-d47becaee6fd",
+      "name": "Scrape articles",
+      "type": "@mendable/n8n-nodes-firecrawl.firecrawl",
+      "position": [
+        2912,
+        0
+      ],
+      "parameters": {
+        "url": "={{ $json.link }}",
+        "operation": "scrape",
+        "requestOptions": {}
+      },
+      "credentials": {
+        "firecrawlApi": {
+          "id": "E34WDB80ik5VHjiI",
+          "name": "Firecrawl account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "979755ba-7d54-4240-aca7-a9febea049d7",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        -224,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 1 * *"
+            }
+          ]
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "05229024-42ae-4f30-bd46-e614abc649af",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1696,
+        -768
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 776,
+        "height": 2292,
+        "content": "# Automated trend monitoring for content strategy\n\n## Who's it for\nContent creators, marketers, and social media managers who want to stay ahead of emerging trends and generate relevant content ideas based on data-driven insights.\n\n## What it does\nThis workflow automatically identifies trending topics related to your industry, collects recent news articles about these trends, and generates content suggestions. It transforms raw trend data into actionable editorial opportunities by analyzing search volume growth and current news coverage.\n\n## How it works\nThe workflow follows a three-step automation process:\n\nTrend Analysis: Examines searches related to your topics and identifies those with the strongest recent growth\nArticle Collection: Searches Google News for current articles about emerging trends and scrapes their full content\nContent Generation: Creates personalized content suggestions based on collected articles and trend data\n\nThe system automatically excludes geo-localized searches to provide a global perspective on trends, though this can be customized.\n\n## Requirements\n\nSerpAPI account (for trend and news data)\nFirecrawl API key (for scraping article content from Google News results)\nGoogle Sheets access\nAI model API key (for content analysis and recommendations - you can use any LLM provider you prefer)\n\n## How to set up\n### Step 1: Prepare your tracking sheet\nDuplicate this [Google Sheets template ](https://docs.google.com/spreadsheets/d/1z7iP_i98PT9BQuUypAi0c3NHkdhREEPJWkDjyj8Snfw)\nRename your copy and ensure it's accessible\n\n### Step 2: Configure API credentials\nBefore running the workflow, set up the following credentials in n8n:\n\nSerpAPI: For trend analysis and Google News search\nFirecrawl API: For scraping article content\nAI Model API: For content analysis and recommendations (Anthropic Claude, OpenAI GPT, or any other LLM provider)\nGoogle Sheets OAuth2: For accessing and updating your tracking spreadsheet\n\n### Step 3: Configure the workflow\nIn the \"Get Query\" node, paste your duplicated Google Sheets URL in the \"Document\" field\nIn your Google Sheet \"Query\" tab, enter the topics you want to monitor\n\n### Step 4: Customize language and location settings\nThe workflow is currently configured for French content and France location. You can modify these settings in the SerpAPI nodes:\n\nLanguage (hl): Change from \"fr\" to your preferred language code\nGeographic location (geo/gl): Change from \"FR\" to your target country code\nDate range: Currently set to \"today 1-m\" (last month) but can be adjusted\n\n### Step 5: Adjust filtering (optional)\nThe \"Sorting Queries\" node excludes geo-localized queries by default. You can modify the AI agent's instructions to include location-specific queries or change filtering criteria based on your requirements.\n### Step 6: Configure scheduling (optional)\nThe workflow includes an automated scheduler that runs monthly (1st day of each month at 8 AM). You can modify the cron expression 0 8 1 * * in the Schedule Trigger node to change:\n\nFrequency (daily, weekly, monthly)\nTime of execution\nDay of the month\n\n## How to customize the workflow\n\nChange trend count: The workflow processes up to 10 related queries per topic but filters them through AI to select the most relevant non-geolocalized ones\nAdjust article collection: Currently collects exactly 3 news articles per query for analysis\nContent style: Customize the AI prompts in content generation nodes to match your brand voice\nOutput format: Modify the Google Sheets structure to include additional data points\nAI model: Replace the Anthropic model with your preferred LLM provider\nScraping options: Configure Firecrawl settings to extract specific content elements from articles\n\n## Results interpretation\n\nFor each monitored topic, the workflow generates a separate sheet named by month and topic (e.g., \"January Digital Marketing\") containing:\nData structure (four columns):\n\nQuery: The trending search term ranked by growth\n\u00c9volution: Growth percentage over the last month\nNews: Links to 3 relevant news articles\nId\u00e9e: AI-generated content suggestions based on comprehensive article analysis\n\nThe workflow provides monthly retrospective analysis, helping you identify emerging topics before competitors and optimize your content calendar with high-potential subjects.\n\n## Workflow limitations\n\nProcesses up to 10 related queries per topic with AI filtering\nCollects exactly 3 news articles per query\nResults are automatically organized in monthly sheets\nRequires stable internet connection for API calls"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "8a61dc73-4805-434a-85b9-8088f25bb28d",
+      "name": "Get Query",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        -16,
+        0
+      ],
+      "parameters": {
+        "options": {},
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Query"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "=https://docs.google.com/spreadsheets/d/1z7iP_i98PT9BQuUypAi0c3NHkdhREEPJWkDjyj8Snfw"
+        }
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wBRLUCktxqXE6DVJ",
+          "name": "Google Sheets account"
+        }
+      },
+      "typeVersion": 4.6
+    },
+    {
+      "id": "5a61f1ba-682d-4ce9-9ab5-25b6278c6fd5",
+      "name": "Classing query",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        688,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// N8N Code Node - Create Nested Structure for Related Queries\n// This code creates a nested structure: Topic -> related queries\n// Get the input data (assuming it's the first item)\nconst inputData = $input.all()[0].json;\n// Initialize arrays to store extracted data\nlet relatedQueries = [];\nlet risingQueries = [];\ntry {\n  // Check if the response contains related_queries data\n  if (inputData.related_queries) {\n    \n    // Extract \"top\" related queries if they exist\n    if (inputData.related_queries.top) {\n      relatedQueries = \n        inputData.related_queries.top.map((query, index) => ({\n          query: query.query,\n          value: query.value,\n          extracted_value: query.extracted_value,\n          link: query.link,\n          serpapi_link: query.serpapi_link,\n          type: 'top',\n          rank: index + 1\n        }));\n    }\n    \n    // Extract \"rising\" related queries if they exist\n    if (inputData.related_queries.rising) {\n      risingQueries = \n        inputData.related_queries.rising.map((query, index) => ({\n          query: query.query,\n          value: query.value,\n          extracted_value: query.extracted_value,\n          link: query.link,\n          serpapi_link: query.serpapi_link,\n          type: 'rising',\n          rank: index + 1\n        }));\n    }\n  }\n  \n  // Combine all queries with their types\n  const allQueries = [...relatedQueries, ...risingQueries];\n  \n  // Sort by extracted_value (descending) to get top performers\n  const sortedQueries = allQueries.sort((a, b) => {\n    const aVal = typeof a.extracted_value === 'number' ? a.extracted_value : 0;\n    const bVal = typeof b.extracted_value === 'number' ? b.extracted_value : 0;\n    return bVal - aVal;\n  });\n  \n  // Get top 10 queries\n  const top10Queries = sortedQueries.slice(0, 10);\n  \n  // Return only top 10 queries\n  return [\n    {\n      json: {\n        topic: inputData.search_parameters?.q || 'Unknown',\n        top_10_queries: top10Queries\n      }\n    }\n  ];\n  \n} catch (error) {\n  // Handle errors gracefully\n  return [\n    {\n      json: {\n        error: 'Failed to extract and structure related queries data',\n        error_message: error.message,\n        topic: inputData.search_parameters?.q || 'Unknown'\n      }\n    }\n  ];\n}"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "8b337af3-c190-4113-82aa-ce8fe9abbc12",
+      "name": "Sorting queries",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        912,
+        0
+      ],
+      "parameters": {
+        "text": "=Votre t\u00e2che est de s\u00e9lectionner lister les requ\u00eates qui correspond \u00e9troitement au cr\u00e9neau de \"{{ $('Loop Over Items').item.json.Query }}\" mais elle ne doit pas \u00eatre g\u00e9olocalis\u00e9e, par exemple \"{{ $('Loop Over Items').item.json.Query }} Paris\" car nous ne voulons pas de sujets li\u00e9s \u00e0 la localisation.\n\nPour chaque requ\u00eate indique son \u00e9volution en pourcentage (sans le +).\n\n{{ JSON.stringify($json.top_10_queries, null, 2) }}\n\n",
+        "batching": {},
+        "promptType": "define",
+        "hasOutputParser": true
+      },
+      "typeVersion": 1.7
+    },
+    {
+      "id": "28bf3218-140a-4eae-9758-5ac06574964a",
+      "name": "Sorting output > table",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1280,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// R\u00e9cup\u00e9rer les donn\u00e9es d'entr\u00e9e\nconst inputData = $input.all()[0].json.output;\n\n// Initialiser le tableau de sortie\nlet restructuredData = [];\n\n// Parcourir chaque query dans l'objet\nObject.keys(inputData).forEach(key => {\n  const queryData = inputData[key];\n  \n  restructuredData.push({\n    Query: queryData[0],           // Le nom de la requ\u00eate\n    \u00c9volution: queryData[1],       // Le pourcentage d'\u00e9volution\n    News: \"\",                       // Colonne vide pour l'instant\n    Id\u00e9e: \"\"                        // Colonne vide pour l'instant\n  }); \n});\n\n// Retourner le tableau restructur\u00e9\nreturn restructuredData.map(item => ({ json: item }));"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "a2002422-28b1-4c58-b3a0-850cd6a63591",
+      "name": "Add datas",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1584,
+        176
+      ],
+      "parameters": {
+        "columns": {
+          "value": {},
+          "schema": [],
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {},
+        "operation": "append",
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ new Date(new Date().setMonth(new Date().getMonth() - 1)).toLocaleDateString('fr-FR', { month: 'long' }).charAt(0).toUpperCase() + new Date(new Date().setMonth(new Date().getMonth() - 1)).toLocaleDateString('fr-FR', { month: 'long' }).slice(1) }} {{ $('Loop Over Items').item.json.Query }}"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "https://docs.google.com/spreadsheets/d/1z7iP_i98PT9BQuUypAi0c3NHkdhREEPJWkDjyj8Snfw"
+        }
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wBRLUCktxqXE6DVJ",
+          "name": "Google Sheets account"
+        }
+      },
+      "typeVersion": 4.6
+    },
+    {
+      "id": "c1134ef9-865b-4cf4-aa96-a14121f10fe0",
+      "name": "Filter queries",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1824,
+        0
+      ],
+      "parameters": {
+        "include": "selected",
+        "options": {},
+        "assignments": {
+          "assignments": [
+            {
+              "id": "245bf100-21a3-4de2-9b92-74e09e3347a7",
+              "name": "Query",
+              "type": "string",
+              "value": "={{ $json.Query }}"
+            }
+          ]
+        },
+        "includeOtherFields": true
+      },
+      "typeVersion": 3.4
+    },
+    {
+      "id": "e51a3336-4a8a-407e-9529-37658bf74132",
+      "name": "Compile datas",
+      "type": "n8n-nodes-base.aggregate",
+      "position": [
+        2928,
+        288
+      ],
+      "parameters": {
+        "options": {},
+        "aggregate": "aggregateAllItemData"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "e7aa0bac-7576-4d55-b0be-411cb7c60b7f",
+      "name": "Article analysis",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        3184,
+        288
+      ],
+      "parameters": {
+        "text": "=Source 1\n\n{{ $json.data[0].data.markdown }}\n\nSource 2 \n\n{{ $json.data[1].data.markdown }}\n\nSource 3\n\n{{ $json.data[2].data.markdown }}\n",
+        "batching": {},
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Voil\u00e0 le contenu de 3 article sur le th\u00e8me \"{{ $('Loop Over Items').item.json.Query }}\", peux tu les analyser en en d\u00e9duire 3 id\u00e9e d'article de blog SEO avec \u00e0 chaque fois une proposition de mot cl\u00e9 associ\u00e9.\n\nExemple : \nTh\u00e8me de l'article 1, proposition de mot cl\u00e9 1\nTh\u00e8me de l'article 2, proposition de mot cl\u00e9 2\nTh\u00e8me de l'article 3, proposition de mot cl\u00e9 3\n\nNe fais pas d'introduction ou de conclusion \u00e0 ta r\u00e9ponse r\u00e9pond simplement \u00e0 la requ\u00eate"
+            }
+          ]
+        },
+        "promptType": "define"
+      },
+      "typeVersion": 1.7
+    },
+    {
+      "id": "c3918ddb-f7e6-4021-8c0d-71f36e5ae5ff",
+      "name": "Add article datas",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        3552,
+        288
+      ],
+      "parameters": {
+        "columns": {
+          "value": {
+            "News": "={{ $('Search GNews').item.json.news_results[0].link }}\n{{ $('Search GNews').item.json.news_results[1].link }}\n{{ $('Search GNews').item.json.news_results[2].link }}",
+            "Id\u00e9e": "={{ $json.text }}",
+            "Query": "={{ $('Loop Over Items1').item.json.Query }}"
+          },
+          "schema": [
+            {
+              "id": "Query",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "Query",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "\u00c9volution",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "\u00c9volution",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "News",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "News",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Id\u00e9e",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "Id\u00e9e",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": true,
+              "required": false,
+              "displayName": "row_number",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "Query"
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {},
+        "operation": "update",
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ new Date(new Date().setMonth(new Date().getMonth() - 1)).toLocaleDateString('fr-FR', { month: 'long' }).charAt(0).toUpperCase() + new Date(new Date().setMonth(new Date().getMonth() - 1)).toLocaleDateString('fr-FR', { month: 'long' }).slice(1) }} {{ $('Loop Over Items').item.json.Query }}"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "https://docs.google.com/spreadsheets/d/1z7iP_i98PT9BQuUypAi0c3NHkdhREEPJWkDjyj8Snfw"
+        }
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wBRLUCktxqXE6DVJ",
+          "name": "Google Sheets account"
+        }
+      },
+      "typeVersion": 4.6
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Add datas": {
+      "main": [
+        [
+          {
+            "node": "Filter queries",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Query": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search GNews": {
+      "main": [
+        [
+          {
+            "node": "Return URL only",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search trend": {
+      "main": [
+        [
+          {
+            "node": "Classing query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compile datas": {
+      "main": [
+        [
+          {
+            "node": "Article analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classing query": {
+      "main": [
+        [
+          {
+            "node": "Sorting queries",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter queries": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Search trend",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Return URL only": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape articles": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sorting queries": {
+      "main": [
+        [
+          {
+            "node": "Sorting output > table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Article analysis": {
+      "main": [
+        [
+          {
+            "node": "Add article datas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Search GNews",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [
+          {
+            "node": "Compile datas",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Scrape articles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add article datas": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Sorting queries",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Article analysis",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sorting output > table": {
+      "main": [
+        [
+          {
+            "node": "Cr\u00e9ation feuille sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Add datas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cr\u00e9ation feuille sheets": {
+      "main": [
+        []
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Sorting queries",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Automated Content Strategy with Google Trends, News, Firecrawl & Claude AI",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/7372",
+    "scraped_at": "2025-08-21 05:59:24",
+    "workflow_id": "3685d92b-7089-5dcd-881d-bf956582c951"
+  },
+  "_filename": "Automated_Content_Strategy_with_Google_Trends_News_Firecrawl_Claude_AI.json"
+}

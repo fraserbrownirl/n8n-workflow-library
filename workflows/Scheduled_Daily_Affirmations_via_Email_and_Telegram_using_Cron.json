@@ -1,0 +1,236 @@
+{
+  "id": "UN5orqkCo7Cpl3s1",
+  "meta": {
+    "instanceId": "8c8b20afd941aa66690830b5f1f0b9d7a4611a25b0382c8675a2fab2026ff320",
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Schedule daily affirmations to your inbox using Cron (optional Telegram)",
+  "tags": [],
+  "nodes": [
+    {
+      "id": "1c7b92ef-c3b8-456b-9732-2b2517bd0d33",
+      "name": "README - Template Description",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1520,
+        -160
+      ],
+      "parameters": {
+        "width": 520,
+        "height": 716,
+        "content": "## Who it's for\nBusy women, creators, and homemakers who want a gentle, automated daily affirmation.\n\n## What it does\n- Runs every morning at 7 AM  \n- Picks one affirmation at random  \n- Sends via **email** (required) and **Telegram** (optional)  \n- Zero secrets stored in nodes\u2014everything is configurable\n\n## How to set up\n1. Import this workflow  \n2. Credentials \u2192 add **SMTP** (Email) and **Telegram Bot** (optional)  \n3. Open **Set: Configuration** and enter your email, Telegram chat ID (or leave empty to disable)  \n4. Edit the affirmations list  \n5. Activate\n\n## Requirements\n- SMTP credential  \n- Telegram Bot credential (optional)  \n\n## How to customize\n- Change Cron time or frequency  \n- Swap affirmations list for quotes, bible verses, etc.  \n- Add a Notion logger branch if desired"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "1ccaa156-e893-402f-92c7-00650f3d502e",
+      "name": "Cron: Trigger Daily at 7 AM",
+      "type": "n8n-nodes-base.cron",
+      "position": [
+        -368,
+        272
+      ],
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "hour": 7
+            }
+          ]
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "ee4ea726-e77b-4a5b-be2a-30a933fb584a",
+      "name": "Set: Configuration (edit me)",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -48,
+        272
+      ],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "fromEmail",
+              "value": "sender@example.com"
+            },
+            {
+              "name": "toEmail",
+              "value": "recipient@example.com"
+            },
+            {
+              "name": "subject",
+              "value": "\ud83c\udf38 Morning Affirmation"
+            },
+            {
+              "name": "telegramChatId"
+            },
+            {
+              "name": "affirmations",
+              "value": "I choose peace today.\nI am grounded, present, and safe.\nMy creativity flows with ease.\nI honor my rhythms and rest.\nI am worthy of beautiful systems.\nSmall steps create big shifts.\nI trust my inner wisdom.\nI am consistent and kind to myself.\nI make room for joy and spaciousness.\nI release what I can\u2019t control."
+            }
+          ],
+          "boolean": [
+            {
+              "name": "sendTelegram"
+            }
+          ]
+        },
+        "options": {},
+        "keepOnlySet": true
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "0e53b915-f601-4d59-ac2a-4407321d0579",
+      "name": "Code: Pick Random Affirmation",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        256,
+        272
+      ],
+      "parameters": {
+        "jsCode": "// v2 syntax \u2013 must return an array of { json: {...} }\nconst lines = $json.affirmations\n  .split('\\n')\n  .map(s => s.trim())\n  .filter(Boolean);\n\nconst pick = lines.length\n  ? lines[Math.floor(Math.random() * lines.length)]\n  : 'I am enough.';\n\nreturn [{\n  json: {\n    ...$json,\n    affirmation: pick\n  }\n}];"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "df92af24-63f2-4f06-a2b5-c95efc770c43",
+      "name": "IF: Telegram Enabled?",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        544,
+        384
+      ],
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.sendTelegram}}",
+              "operation": "is true"
+            }
+          ]
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "0e71dab6-50b7-4d69-a3f7-f1e859fe5071",
+      "name": "Email: Send Affirmation",
+      "type": "n8n-nodes-base.emailSend",
+      "position": [
+        848,
+        272
+      ],
+      "webhookId": "cc9a4979-35b0-45f3-883d-dad56ae10906",
+      "parameters": {
+        "text": "={{$json.affirmation}}",
+        "options": {},
+        "subject": "={{$json.subject}}",
+        "toEmail": "={{$json.toEmail}}",
+        "fromEmail": "={{ $json.fromEmail}}"
+      },
+      "credentials": {
+        "smtp": {
+          "id": "MX4srF0whebaDqig",
+          "name": "SMTP account"
+        }
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "a27509fc-57c0-4f17-8575-c15bda10b211",
+      "name": "Telegram: Send Affirmation",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        848,
+        512
+      ],
+      "webhookId": "13b34521-c384-48d4-8ec0-48b8a94f8208",
+      "parameters": {
+        "text": "\ud83c\udf38 {{$json.affirmation}}",
+        "chatId": "={{$json.telegramChatId}}",
+        "additionalFields": {}
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "2b7e064e-bc38-4d89-bd5e-f3b99e858fe9",
+      "name": "Setup Tips",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1504,
+        592
+      ],
+      "parameters": {
+        "width": 520,
+        "height": 216,
+        "content": "### Quick Setup Checklist\n- [ ] Add SMTP credential to **Email: Send Affirmation**\n- [ ] (Optional) Add Telegram Bot credential to **Telegram: Send Affirmation**\n- [x] Edit **Set: Configuration** \u2192 enter your email, Telegram chat ID, and affirmations\n- [ ] Test: change Cron to `Every minute` temporarily, then revert"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "27f28c5e-3146-4e5e-95dd-d4cb657326af",
+  "connections": {
+    "IF: Telegram Enabled?": {
+      "main": [
+        [
+          {
+            "node": "Telegram: Send Affirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cron: Trigger Daily at 7 AM": {
+      "main": [
+        [
+          {
+            "node": "Set: Configuration (edit me)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set: Configuration (edit me)": {
+      "main": [
+        [
+          {
+            "node": "Code: Pick Random Affirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code: Pick Random Affirmation": {
+      "main": [
+        [
+          {
+            "node": "Email: Send Affirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Scheduled Daily Affirmations via Email and Telegram using Cron",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/7421",
+    "scraped_at": "2025-08-21 05:58:35",
+    "workflow_id": "1464ad71-432a-5f87-b939-bcaa0183bf0b"
+  },
+  "_filename": "Scheduled_Daily_Affirmations_via_Email_and_Telegram_using_Cron.json"
+}

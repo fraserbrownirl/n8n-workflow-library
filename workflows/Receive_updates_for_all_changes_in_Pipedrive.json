@@ -1,0 +1,31 @@
+{
+  "id": "115",
+  "name": "Receive updates for all changes in Pipedrive",
+  "nodes": [
+    {
+      "name": "Pipedrive Trigger",
+      "type": "n8n-nodes-base.pipedriveTrigger",
+      "position": [
+        750,
+        250
+      ],
+      "parameters": {},
+      "credentials": {
+        "pipedriveApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates for all changes in Pipedrive",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/490",
+    "scraped_at": "2025-08-21 01:03:50",
+    "workflow_id": "efd17e2f-cb51-55eb-b55b-6000e5e7d820"
+  },
+  "_filename": "Receive_updates_for_all_changes_in_Pipedrive.json"
+}

@@ -1,0 +1,52 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Zoho CRM",
+      "type": "n8n-nodes-base.zohoCrm",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "options": {},
+        "operation": "getAll"
+      },
+      "credentials": {
+        "zohoOAuth2Api": "zoho_creds"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Zoho CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Get all leads from Zoho CRM",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/552",
+    "scraped_at": "2025-08-20 22:28:35",
+    "workflow_id": "27d2a1af-e718-5000-b4a2-74605ad26b8a"
+  },
+  "_filename": "Get_all_leads_from_Zoho_CRM.json"
+}

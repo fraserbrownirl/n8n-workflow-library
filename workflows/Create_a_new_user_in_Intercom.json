@@ -1,0 +1,57 @@
+{
+  "id": "91",
+  "name": "Create a new user in Intercom",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        600,
+        250
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Intercom",
+      "type": "n8n-nodes-base.intercom",
+      "position": [
+        800,
+        250
+      ],
+      "parameters": {
+        "idValue": "",
+        "identifierType": "email",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "intercomApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Intercom",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create a new user in Intercom",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/464",
+    "scraped_at": "2025-08-21 00:39:23",
+    "workflow_id": "08faa092-4bf1-5b35-a4c9-21fceedafeca"
+  },
+  "_filename": "Create_a_new_user_in_Intercom.json"
+}

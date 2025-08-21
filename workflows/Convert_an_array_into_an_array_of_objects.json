@@ -1,0 +1,50 @@
+{
+  "nodes": [
+    {
+      "name": "Mock Data",
+      "type": "n8n-nodes-base.function",
+      "position": [
+        550,
+        300
+      ],
+      "parameters": {
+        "functionCode": "return [{json:[\"item-1\", \"item-2\", \"item-3\", \"item-4\"]}];"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Function",
+      "type": "n8n-nodes-base.function",
+      "position": [
+        750,
+        300
+      ],
+      "parameters": {
+        "functionCode": "return items[0].json.map(item => {\n  return {\n    json: {\n      data:item\n    },\n  }\n});\n"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Mock Data": {
+      "main": [
+        [
+          {
+            "node": "Function",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Convert an array into an array of objects",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/763",
+    "scraped_at": "2025-08-20 22:49:41",
+    "workflow_id": "2fcf1b20-2457-5038-8407-bd2d1128ca4d"
+  },
+  "_filename": "Convert_an_array_into_an_array_of_objects.json"
+}
