@@ -1,0 +1,121 @@
+{
+  "id": "165",
+  "name": "Create, update and get a user from Iterable",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        310,
+        340
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Iterable",
+      "type": "n8n-nodes-base.iterable",
+      "position": [
+        510,
+        340
+      ],
+      "parameters": {
+        "value": "",
+        "identifier": "email",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "iterableApi": "Iterable"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Iterable1",
+      "type": "n8n-nodes-base.iterable",
+      "position": [
+        710,
+        340
+      ],
+      "parameters": {
+        "value": "={{$node[\"Iterable\"].parameter[\"value\"]}}",
+        "identifier": "email",
+        "additionalFields": {
+          "dataFieldsUi": {
+            "dataFieldValues": [
+              {
+                "key": "Name",
+                "value": ""
+              }
+            ]
+          }
+        }
+      },
+      "credentials": {
+        "iterableApi": "Iterable"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Iterable2",
+      "type": "n8n-nodes-base.iterable",
+      "position": [
+        910,
+        340
+      ],
+      "parameters": {
+        "email": "={{$node[\"Iterable\"].parameter[\"value\"]}}",
+        "operation": "get"
+      },
+      "credentials": {
+        "iterableApi": "Iterable"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "Iterable": {
+      "main": [
+        [
+          {
+            "node": "Iterable1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Iterable1": {
+      "main": [
+        [
+          {
+            "node": "Iterable2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Iterable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create, update and get a user from Iterable",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/813",
+    "scraped_at": "2025-08-21 01:06:05",
+    "workflow_id": "109e58b2-d4d5-5eb3-add8-603424cfe9b4"
+  },
+  "_filename": "Create_update_and_get_a_user_from_Iterable.json"
+}

@@ -1,0 +1,82 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "AWS Textract",
+      "type": "n8n-nodes-base.awsTextract",
+      "position": [
+        650,
+        300
+      ],
+      "parameters": {},
+      "credentials": {
+        "aws": {
+          "id": "12",
+          "name": "AWS account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "AWS S3",
+      "type": "n8n-nodes-base.awsS3",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "fileKey": "Rechnung.jpg",
+        "bucketName": "textract-demodata"
+      },
+      "credentials": {
+        "aws": {
+          "id": "12",
+          "name": "AWS account"
+        }
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "AWS S3": {
+      "main": [
+        [
+          {
+            "node": "AWS Textract",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "AWS S3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Send a file from S3 to AWS Textract",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/1282",
+    "scraped_at": "2025-08-20 23:31:52",
+    "workflow_id": "1c11238d-4c6b-56e7-9269-b1e6cc06fe93"
+  },
+  "_filename": "Send_a_file_from_S3_to_AWS_Textract.json"
+}

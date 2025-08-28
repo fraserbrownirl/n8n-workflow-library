@@ -1,0 +1,168 @@
+{
+  "id": "fa3hibN6VBUhcGwq",
+  "meta": {
+    "instanceId": "b9d26382fbc087c17fe86e193d09f32e5d99f4a254d13f3b8ee28079e71766cf",
+    "templateCredsSetupCompleted": true
+  },
+  "name": "ca7ai n8n urlscan workflow template",
+  "tags": [],
+  "nodes": [
+    {
+      "id": "707a9468-0824-4be6-9da0-e3723f799c5a",
+      "name": "Sticky Note \u2014 How it works",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -352,
+        -48
+      ],
+      "parameters": {
+        "color": 7,
+        "width": 520,
+        "height": 400,
+        "content": "## How it works\n1. **Webhook** receives a POST with a `url`.\n2. **urlscan.io** submits the scan and returns an ID (UUID).\n3. **Wait (30s)** gives urlscan time to generate artifacts (e.g., screenshot).\n4. **Gmail** sends an email with links to the result page, screenshot, and API JSON.\n\n### Input example\n```json\n{ \"url\": \"https://example.com\" }\n```\n\n### Output\n- Result page link\n- Screenshot link (when ready)\n- API JSON link"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "76a366e5-b143-4ac2-89e3-e1d289c07b7b",
+      "name": "Sticky Note \u2014 Setup",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -352,
+        384
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 520,
+        "height": 360,
+        "content": "## Setup & Credentials\n- Create **urlscan.io** API Key credential.\n- Connect **Gmail OAuth2**.\n- Set the **To** address in the Gmail node.\n\n### Webhook\n- Path: `/urlscan`\n- Test URL: `/webhook-test/urlscan`\n- Production URL: `/webhook/urlscan`\n\n### Notes\n- **Wait** is set to 30s; increase if screenshots aren't ready.\n- No hard-coded API keys in HTTP Request nodes (use n8n credentials).\n- Sticky Notes use **Markdown**."
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "9612523c-e1c0-40b5-bef7-1c3778843e5c",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        240,
+        224
+      ],
+      "webhookId": "498809c9-160b-452d-bc7d-a40fde518b08",
+      "parameters": {
+        "path": "urlscan",
+        "options": {},
+        "httpMethod": "POST"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "5425b204-ff3f-436e-b309-9aeae544c4f2",
+      "name": "Perform a scan",
+      "type": "n8n-nodes-base.urlScanIo",
+      "position": [
+        464,
+        224
+      ],
+      "parameters": {
+        "url": "={{ $json.body?.url?.[0] ?? $json.body?.url ?? $json.url }}",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "urlScanIoApi": {
+          "id": "FFFludnLTTtPBB",
+          "name": "urlscan.io"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "e02bbd59-27c7-4a88-bcf7-70b44ca4abbc",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "position": [
+        672,
+        224
+      ],
+      "webhookId": "317b4b1c-1c57-4281-8d6f-e6a29e4c8569",
+      "parameters": {
+        "amount": 30
+      },
+      "typeVersion": 1.1
+    },
+    {
+      "id": "c30e2048-9cf4-42a5-9b3e-0b2514d9f208",
+      "name": "Send a message",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        896,
+        224
+      ],
+      "webhookId": "fd97447d-60ce-4453-9a49-8bfd8e52e239",
+      "parameters": {
+        "sendTo": "email@domain.com",
+        "message": "=<p><strong>URL submitted to <a href=\"https://urlscan.io\">urlscan.io</a></strong></p>\n<p><strong>Scanned URL:</strong>{{ $json.url }}</p>\n<p><strong>Result URL:</strong> {{ $json.result }}\n<p><strong>Scan ID:</strong>{{ $json.scanId }}</p>\n<p><strong>Screenshot (when ready):</strong> <a href=\"https://urlscan.io/screenshots/{{ $json.scanId || $json.uuid || $json.task?.uuid }}.png\">https://urlscan.io/screenshots/{{ $json.scanId || $json.uuid || $json.task?.uuid }}.png</a></p>\n<p><strong>API result (JSON):</strong><br>{{ $json.api }}</p>\n<hr>\n",
+        "options": {
+          "appendAttribution": false
+        },
+        "subject": "=URLScan Submitted for {{ $json.url || $item(0).$node[\"Webhook\"].json.body.url?.[0] || $item(0).$node[\"Webhook\"].json.body.url }}"
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "111F7TWKxYiCuuj",
+          "name": "Gmail"
+        }
+      },
+      "typeVersion": 2.1
+    }
+  ],
+  "active": false,
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5d685fbd-8fc6-48b8-a0c9-c8a8ea373775",
+  "connections": {
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Perform a scan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perform a scan": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Scan URLs with urlscan.io and Send Results via Gmail",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/6946",
+    "scraped_at": "2025-08-21 05:30:12",
+    "workflow_id": "33b75253-af8f-5731-a203-8c72bb61e84d"
+  },
+  "_filename": "Scan_URLs_with_urlscanio_and_Send_Results_via_Gmail.json"
+}

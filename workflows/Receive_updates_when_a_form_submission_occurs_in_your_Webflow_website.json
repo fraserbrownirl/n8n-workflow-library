@@ -1,0 +1,35 @@
+{
+  "id": "42",
+  "name": "Receive updates when a form submission occurs in your Webflow website",
+  "nodes": [
+    {
+      "name": "Webflow Trigger",
+      "type": "n8n-nodes-base.webflowTrigger",
+      "position": [
+        514,
+        217
+      ],
+      "webhookId": "ce934229-1396-4920-8bfe-10579aa6f9dd",
+      "parameters": {
+        "site": "5f4e2d2bbdf69039816428f7",
+        "authentication": "oAuth2"
+      },
+      "credentials": {
+        "webflowOAuth2Api": "webflow"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates when a form submission occurs in your Webflow website",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/651",
+    "scraped_at": "2025-08-21 01:06:18",
+    "workflow_id": "7a2ada73-82d1-5ffc-b2be-6e8379ba48a0"
+  },
+  "_filename": "Receive_updates_when_a_form_submission_occurs_in_your_Webflow_website.json"
+}

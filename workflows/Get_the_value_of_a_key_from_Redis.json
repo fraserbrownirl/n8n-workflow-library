@@ -1,0 +1,53 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        270,
+        320
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Redis",
+      "type": "n8n-nodes-base.redis",
+      "position": [
+        470,
+        320
+      ],
+      "parameters": {
+        "key": "hello",
+        "options": {},
+        "operation": "get"
+      },
+      "credentials": {
+        "redis": "redis-docker_creds"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Get the value of a key from Redis",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/557",
+    "scraped_at": "2025-08-20 23:49:46",
+    "workflow_id": "690fbcdf-6d6d-5fc3-8bee-444011c710aa"
+  },
+  "_filename": "Get_the_value_of_a_key_from_Redis.json"
+}

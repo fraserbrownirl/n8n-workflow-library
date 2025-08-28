@@ -1,0 +1,483 @@
+{
+  "meta": {
+    "instanceId": "12e6f290a974a1eee154f8d915aade185e90e826260e6aeab8a087ba7386a1bc",
+    "templateCredsSetupCompleted": true
+  },
+  "nodes": [
+    {
+      "id": "seo-chat-trigger",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        -2864,
+        -576
+      ],
+      "webhookId": "seo-webhook-id",
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 1.1
+    },
+    {
+      "id": "seo-director-agent",
+      "name": "SEO Director Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -2640,
+        -816
+      ],
+      "parameters": {
+        "options": {}
+      },
+      "typeVersion": 2.1
+    },
+    {
+      "id": "seo-think",
+      "name": "Think",
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "position": [
+        -2512,
+        -496
+      ],
+      "parameters": {},
+      "typeVersion": 1.1
+    },
+    {
+      "id": "keyword-agent",
+      "name": "Keyword Research Specialist",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -2240,
+        -96
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in keyword research, search intent analysis, competitor keyword analysis, and keyword clustering"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "content-agent",
+      "name": "SEO Content Writer",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1280,
+        -704
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in SEO-optimized content creation, blog posts, landing pages, and content optimization"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "technical-agent",
+      "name": "Technical SEO Specialist",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1840,
+        -304
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in technical SEO audits, site speed optimization, schema markup, and crawling issues"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "link-agent",
+      "name": "Link Building Strategist",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1328,
+        -80
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in link building strategies, outreach campaigns, and backlink analysis"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "local-agent",
+      "name": "Local SEO Specialist",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1744,
+        -1024
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in local SEO optimization, Google My Business, local citations, and geo-targeted content"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "analytics-agent",
+      "name": "SEO Analytics Specialist",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "position": [
+        -1344,
+        -1264
+      ],
+      "parameters": {
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {},
+        "toolDescription": "call this AI Agent that specializes in SEO performance tracking, Google Analytics, Search Console analysis, and ranking monitoring"
+      },
+      "typeVersion": 2.2
+    },
+    {
+      "id": "seo-director-model",
+      "name": "OpenAI Chat Model SEO Director",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -2672,
+        -496
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "o3",
+          "cachedResultName": "o3"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "keyword-model",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -2208,
+        368
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "content-model",
+      "name": "OpenAI Chat Model2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1312,
+        -496
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "technical-model",
+      "name": "OpenAI Chat Model3",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1824,
+        -144
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "link-model",
+      "name": "OpenAI Chat Model4",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1328,
+        96
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "local-model",
+      "name": "OpenAI Chat Model5",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1776,
+        -768
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "analytics-model",
+      "name": "OpenAI Chat Model6",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -1312,
+        -944
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account"
+        }
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "seo-header-sticky",
+      "name": "Sticky Note Header",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3808,
+        -880
+      ],
+      "parameters": {
+        "color": 5,
+        "width": 580,
+        "height": 320,
+        "content": "=======================================\n        SEO DIRECTOR WITH SEO TEAM\n=======================================\nFor any questions or support, please contact:\n    Yaron@nofluff.online\n\nExplore more tips and tutorials here:\n   - YouTube: https://www.youtube.com/@YaronBeen/videos\n   - LinkedIn: https://www.linkedin.com/in/yaronbeen/\n======================================="
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "seo-main-sticky",
+      "name": "Sticky Note Main",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3808,
+        -544
+      ],
+      "parameters": {
+        "color": 5,
+        "width": 740,
+        "height": 2500,
+        "content": "## \ud83d\udd0d **SEO DIRECTOR WITH SEO TEAM - AI WORKFLOW**\n\n**\ud83d\udd25 Powered by OpenAI O3 & GPT-4.1-mini Multi-Agent System**\n\n#SEO #SearchEngine #n8nWorkflows #OpenAI #DigitalMarketing\n\n---\n\n### \ud83d\udcdd **Overview**\n\nThis multi-agent n8n automation creates a comprehensive SEO powerhouse. A strategic SEO Director agent receives your search optimization requests, analyzes ranking opportunities, and coordinates specialized agents for keyword research, content creation, technical SEO, link building, local SEO, and analytics\u2014delivering complete search engine optimization with measurable results.\n\n---\n\n### \u2699\ufe0f **How It Works**\n\n1. **Chat trigger** receives SEO requests (e.g., \"Create a complete SEO strategy to rank for 'project management software'\")\n2. **SEO Director** (O3) analyzes search landscape and determines optimization strategy\n3. Delegates to specialist agents:\n   - Keyword Research Specialist\n   - SEO Content Writer\n   - Technical SEO Specialist\n   - Link Building Strategist\n   - Local SEO Specialist\n   - SEO Analytics Specialist\n4. Each agent uses **GPT-4.1-mini** for specialized execution\n5. Results integrated into comprehensive SEO campaign\n\n---\n\n### \ud83d\udc65 **Meet Your AI SEO Team**\n\n| Agent | Purpose | Model | Output |\n|-------|---------|-------|--------|\n| \ud83d\udd0d **SEO Director** | SEO strategy & campaign coordination | O3 | Strategic SEO leadership |\n| \ud83d\udd11 **Keyword Research** | Keyword discovery, intent analysis | GPT-4.1-mini | Keyword strategies |\n| \u270d\ufe0f **Content Writer** | SEO-optimized content creation | GPT-4.1-mini | Optimized content |\n| \u2699\ufe0f **Technical SEO** | Site optimization, crawling issues | GPT-4.1-mini | Technical improvements |\n| \ud83d\udd17 **Link Building** | Backlink strategies, outreach | GPT-4.1-mini | Link campaigns |\n| \ud83d\udccd **Local SEO** | Local optimization, GMB management | GPT-4.1-mini | Local presence |\n| \ud83d\udcca **Analytics** | Performance tracking, reporting | GPT-4.1-mini | SEO insights |\n\n---\n\n### \ud83d\udca1 **Use Cases**\n\n- **Complete SEO Campaigns**: Research \u2192 Content \u2192 Technical \u2192 Links \u2192 Analytics\n- **Keyword Domination**: Comprehensive keyword strategies for target markets\n- **Content SEO**: Blog posts, landing pages, and site-wide optimization\n- **Technical Audits**: Site speed, crawling, indexing, and schema optimization\n- **Link Building**: Strategic backlink acquisition and outreach campaigns\n- **Local Dominance**: Google My Business and local search optimization\n\n---\n\n### \ud83d\udcb8 **Cost Optimization**\n\n- **O3 for SEO Director**: Strategic SEO decisions only\n- **GPT-4.1-mini for specialists**: 90% cost reduction\n- **Parallel processing**: All SEO aspects handled simultaneously\n- **Data integration**: Leverage existing analytics and tools\n\n---\n\n### \ud83c\udff7\ufe0f **Tags**\n\n#KeywordResearch #ContentSEO #TechnicalSEO #LinkBuilding #LocalSEO #SEOAnalytics\n#SearchOptimization #OrganicTraffic #GoogleRankings #SEOStrategy #DigitalMarketing\n#n8n #OpenAI #MultiAgentSystem #SEOAutomation #SearchMarketing #SEOTools"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Think": {
+      "ai_tool": [
+        [
+          "SEO Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          "Keyword Research Specialist",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          "SEO Content Writer",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          "Technical SEO Specialist",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          "Link Building Strategist",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model5": {
+      "ai_languageModel": [
+        [
+          "Local SEO Specialist",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model6": {
+      "ai_languageModel": [
+        [
+          "SEO Analytics Specialist",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    },
+    "SEO Content Writer": {
+      "ai_tool": [
+        [
+          "SEO Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Local SEO Specialist": {
+      "ai_tool": [
+        [
+          "SEO Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Link Building Strategist": {
+      "ai_tool": [
+        [
+          "SEO Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "SEO Analytics Specialist": {
+      "ai_tool": [
+        [
+          "SEO Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "Technical SEO Specialist": {
+      "ai_tool": [
+        [
+          "SEO Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          "SEO Director Agent",
+          "main",
+          0
+        ]
+      ]
+    },
+    "Keyword Research Specialist": {
+      "ai_tool": [
+        [
+          "SEO Director Agent",
+          "ai_tool",
+          0
+        ]
+      ]
+    },
+    "OpenAI Chat Model SEO Director": {
+      "ai_languageModel": [
+        [
+          "SEO Director Agent",
+          "ai_languageModel",
+          0
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Comprehensive SEO Strategy with O3 Director & GPT-4 Specialist Team",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/6908",
+    "scraped_at": "2025-08-21 03:53:51",
+    "workflow_id": "9c5877cd-3a8e-5dbb-8c3e-11aa47dbf42a"
+  },
+  "_filename": "Comprehensive_SEO_Strategy_with_O3_Director_GPT_4_Specialist_Team.json"
+}

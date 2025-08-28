@@ -1,0 +1,54 @@
+{
+  "nodes": [
+    {
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "position": [
+        250,
+        500
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Mailgun",
+      "type": "n8n-nodes-base.mailgun",
+      "position": [
+        450,
+        500
+      ],
+      "parameters": {
+        "text": "=Error: {{$node[\"Error Trigger\"].data[\"execution\"][\"error\"][\"message\"]}}\n\nStack Trace:\n{{$node[\"Error Trigger\"].data[\"execution\"][\"error\"][\"stack\"]}}",
+        "subject": "=Workflow Error:  {{$node[\"Error Trigger\"].data[\"workflow\"][\"name\"]}}",
+        "toEmail": "",
+        "fromEmail": ""
+      },
+      "credentials": {
+        "mailgunApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Mailgun",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Handle errors from a different workflow",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/8",
+    "scraped_at": "2025-08-20 23:37:04",
+    "workflow_id": "afe71e9d-12de-5d7d-bbcf-91a10251bb4a"
+  },
+  "_filename": "Handle_errors_from_a_different_workflow.json"
+}

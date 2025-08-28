@@ -1,0 +1,100 @@
+{
+  "nodes": [
+    {
+      "name": "QuickBooks2",
+      "type": "n8n-nodes-base.quickbooks",
+      "position": [
+        870,
+        300
+      ],
+      "parameters": {
+        "email": "",
+        "resource": "invoice",
+        "invoiceId": "={{$json[\"Id\"]}}",
+        "operation": "send"
+      },
+      "credentials": {
+        "quickBooksOAuth2Api": "QuickBooks OAuth Credentials"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "QuickBooks1",
+      "type": "n8n-nodes-base.quickbooks",
+      "position": [
+        670,
+        300
+      ],
+      "parameters": {
+        "Line": [
+          {
+            "Amount": 100,
+            "itemId": "1",
+            "DetailType": "SalesItemLineDetail",
+            "Description": "Consulting service"
+          }
+        ],
+        "resource": "invoice",
+        "operation": "create",
+        "CustomerRef": "={{$json[\"Id\"]}}",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "quickBooksOAuth2Api": "QuickBooks OAuth Credentials"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "QuickBooks",
+      "type": "n8n-nodes-base.quickbooks",
+      "position": [
+        470,
+        300
+      ],
+      "parameters": {
+        "operation": "create",
+        "displayName": "Jack Ryan",
+        "additionalFields": {
+          "PrimaryEmailAddr": "jack@ryan.com"
+        }
+      },
+      "credentials": {
+        "quickBooksOAuth2Api": "QuickBooks OAuth Credentials"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "QuickBooks": {
+      "main": [
+        [
+          {
+            "node": "QuickBooks1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "QuickBooks1": {
+      "main": [
+        [
+          {
+            "node": "QuickBooks2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create a customer and send the invoice automatically",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/949",
+    "scraped_at": "2025-08-20 22:10:56",
+    "workflow_id": "efbc3ca5-b335-5bb2-8fff-63690b30f0f0"
+  },
+  "_filename": "Create_a_customer_and_send_the_invoice_automatically.json"
+}

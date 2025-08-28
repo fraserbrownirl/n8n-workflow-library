@@ -1,0 +1,118 @@
+{
+  "nodes": [
+    {
+      "name": "Bitwarden",
+      "type": "n8n-nodes-base.bitwarden",
+      "position": [
+        470,
+        320
+      ],
+      "parameters": {
+        "name": "documentation",
+        "resource": "group",
+        "operation": "create",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "bitwardenApi": "Bitwarden API Credentials"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Bitwarden1",
+      "type": "n8n-nodes-base.bitwarden",
+      "position": [
+        670,
+        320
+      ],
+      "parameters": {
+        "resource": "member",
+        "operation": "getAll",
+        "returnAll": true
+      },
+      "credentials": {
+        "bitwardenApi": "Bitwarden API Credentials"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Bitwarden2",
+      "type": "n8n-nodes-base.bitwarden",
+      "position": [
+        870,
+        320
+      ],
+      "parameters": {
+        "groupId": "={{$node[\"Bitwarden\"].json[\"id\"]}}",
+        "resource": "group",
+        "memberIds": "={{$json[\"id\"]}}",
+        "operation": "updateMembers"
+      },
+      "credentials": {
+        "bitwardenApi": "Bitwarden API Credentials"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Bitwarden3",
+      "type": "n8n-nodes-base.bitwarden",
+      "position": [
+        1070,
+        320
+      ],
+      "parameters": {
+        "groupId": "={{$node[\"Bitwarden\"].json[\"id\"]}}",
+        "resource": "group",
+        "operation": "getMembers"
+      },
+      "credentials": {
+        "bitwardenApi": "Bitwarden API Credentials"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Bitwarden": {
+      "main": [
+        [
+          {
+            "node": "Bitwarden1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bitwarden1": {
+      "main": [
+        [
+          {
+            "node": "Bitwarden2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bitwarden2": {
+      "main": [
+        [
+          {
+            "node": "Bitwarden3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Manage group members in Bitwarden automatically",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/1001",
+    "scraped_at": "2025-08-21 00:21:25",
+    "workflow_id": "e9b9de01-36df-5e75-8334-e2d5da976265"
+  },
+  "_filename": "Manage_group_members_in_Bitwarden_automatically.json"
+}

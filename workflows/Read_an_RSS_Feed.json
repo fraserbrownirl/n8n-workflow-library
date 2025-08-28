@@ -1,0 +1,48 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        260,
+        320
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "RSS Feed Read",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        460,
+        320
+      ],
+      "parameters": {
+        "url": "https://failedmachine.com/rss/"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "RSS Feed Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Read an RSS Feed",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/583",
+    "scraped_at": "2025-08-20 23:00:48",
+    "workflow_id": "de34bb0f-f9c3-55d0-8365-57114cc59794"
+  },
+  "_filename": "Read_an_RSS_Feed.json"
+}

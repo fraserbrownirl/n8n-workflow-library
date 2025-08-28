@@ -1,0 +1,32 @@
+{
+  "nodes": [
+    {
+      "name": "Stripe Trigger",
+      "type": "n8n-nodes-base.stripeTrigger",
+      "position": [
+        890,
+        400
+      ],
+      "webhookId": "4b359a40-a292-4c58-bc15-842b4d8eb3ca",
+      "parameters": {
+        "events": [
+          "*"
+        ]
+      },
+      "credentials": {
+        "stripeApi": "stripe_creds"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates for Stripe events",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/545",
+    "scraped_at": "2025-08-20 23:51:02",
+    "workflow_id": "12e3ac79-ccbd-588f-a41a-056cb4cf0a5d"
+  },
+  "_filename": "Receive_updates_for_Stripe_events.json"
+}

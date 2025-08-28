@@ -1,0 +1,104 @@
+{
+  "nodes": [
+    {
+      "name": "Read Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "sheetId": "1GT2dc0dOkAC1apY0UlTKY9vitBl8PtKrILvFiAy5VBs"
+      },
+      "credentials": {
+        "googleApi": ""
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Convert to XLS",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "position": [
+        650,
+        300
+      ],
+      "parameters": {
+        "operation": "toFile"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Upload Dropbox",
+      "type": "n8n-nodes-base.dropbox",
+      "position": [
+        850,
+        300
+      ],
+      "parameters": {
+        "path": "/my-sheets/prices.xls",
+        "binaryData": true
+      },
+      "credentials": {
+        "dropboxApi": ""
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Trigger all 15 min",
+      "type": "n8n-nodes-base.interval",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {
+        "unit": "minutes",
+        "interval": 15
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Read Sheet": {
+      "main": [
+        [
+          {
+            "node": "Convert to XLS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to XLS": {
+      "main": [
+        [
+          {
+            "node": "Upload Dropbox",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger all 15 min": {
+      "main": [
+        [
+          {
+            "node": "Read Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Add data from Google Sheet to Dropbox",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/11",
+    "scraped_at": "2025-08-20 23:52:16",
+    "workflow_id": "96dc2f51-b899-5d74-8d3e-11faf419f7d3"
+  },
+  "_filename": "Add_data_from_Google_Sheet_to_Dropbox.json"
+}

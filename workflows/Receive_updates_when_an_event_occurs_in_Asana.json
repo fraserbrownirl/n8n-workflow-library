@@ -1,0 +1,35 @@
+{
+  "id": "47",
+  "name": "Receive updates when an event occurs in Asana",
+  "nodes": [
+    {
+      "name": "Asana-Trigger",
+      "type": "n8n-nodes-base.asanaTrigger",
+      "position": [
+        1490,
+        860
+      ],
+      "webhookId": "0de3b493-efb6-472c-9deb-80d28c89d28d",
+      "parameters": {
+        "resource": "Tweets",
+        "workspace": "Engineering"
+      },
+      "credentials": {
+        "asanaApi": "asana"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates when an event occurs in Asana",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/654",
+    "scraped_at": "2025-08-20 23:36:52",
+    "workflow_id": "f9a73f7e-c72d-5dcd-b177-06fc82c11779"
+  },
+  "_filename": "Receive_updates_when_an_event_occurs_in_Asana.json"
+}

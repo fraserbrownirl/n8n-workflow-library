@@ -1,0 +1,87 @@
+{
+  "id": "4",
+  "name": "greeting",
+  "nodes": [
+    {
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        720,
+        410
+      ],
+      "parameters": {
+        "path": "greetinghook"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1120,
+        410
+      ],
+      "parameters": {
+        "url": "https://webhook.site/c0a47a6f-6a71-4d18-baef-51f694f7c56b",
+        "requestMethod": "POST",
+        "responseFormat": "string",
+        "bodyParametersUi": {
+          "parameter": [
+            {
+              "name": "greeting",
+              "value": "={{$node[\"FunctionItem\"].data[\"greeting\"]}}"
+            }
+          ]
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "FunctionItem",
+      "type": "n8n-nodes-base.functionItem",
+      "position": [
+        930,
+        410
+      ],
+      "parameters": {
+        "functionCode": "item.greeting = `Hello ${item.query.name}, have fun at the ${item.query.event}!`;\nitem.greeting = \"Hello \" + item.query.name + \", have fun at the \" + item.query.event + \"!\";\nreturn item;"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "FunctionItem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FunctionItem": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "n8n Nodemation basic - creating your first simple workflow (23)",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/19",
+    "scraped_at": "2025-08-20 22:04:41",
+    "workflow_id": "37bb1f83-9c3f-5c24-9832-c6b413dd0283"
+  },
+  "_filename": "n8n_Nodemation_basic_creating_your_first_simple_workflow_23.json"
+}

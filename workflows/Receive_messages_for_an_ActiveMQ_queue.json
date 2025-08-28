@@ -1,0 +1,33 @@
+{
+  "id": "135",
+  "name": "Receive messages for an ActiveMQ queue via AMQP Trigger",
+  "nodes": [
+    {
+      "name": "AMQP Trigger",
+      "type": "n8n-nodes-base.amqpTrigger",
+      "position": [
+        650,
+        200
+      ],
+      "parameters": {
+        "sink": ""
+      },
+      "credentials": {
+        "amqp": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Receive messages for an ActiveMQ queue",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/513",
+    "scraped_at": "2025-08-21 00:32:23",
+    "workflow_id": "d091506f-b040-51ea-9370-71833b3c5318"
+  },
+  "_filename": "Receive_messages_for_an_ActiveMQ_queue.json"
+}

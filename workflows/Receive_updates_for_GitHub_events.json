@@ -1,0 +1,34 @@
+{
+  "nodes": [
+    {
+      "name": "Github Trigger",
+      "type": "n8n-nodes-base.githubTrigger",
+      "position": [
+        260,
+        410
+      ],
+      "webhookId": "887a6b2b-dfc3-48b5-86e3-fc414613baee",
+      "parameters": {
+        "owner": "n8n-io",
+        "events": [
+          "*"
+        ],
+        "repository": "n8n-docs"
+      },
+      "credentials": {
+        "githubApi": "github_creds"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates for GitHub events",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/527",
+    "scraped_at": "2025-08-21 00:41:09",
+    "workflow_id": "0cf86040-f3b8-50d3-a14c-98908d6ccf86"
+  },
+  "_filename": "Receive_updates_for_GitHub_events.json"
+}

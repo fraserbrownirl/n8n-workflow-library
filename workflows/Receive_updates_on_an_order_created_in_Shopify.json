@@ -1,0 +1,30 @@
+{
+  "nodes": [
+    {
+      "name": "Shopify Trigger",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "position": [
+        450,
+        450
+      ],
+      "webhookId": "fd11b3d8-ff82-4902-89cc-c93b36ae38e7",
+      "parameters": {
+        "topic": "orders/create"
+      },
+      "credentials": {
+        "shopifyApi": "shopify_creds"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates on an order created in Shopify",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/547",
+    "scraped_at": "2025-08-20 23:27:07",
+    "workflow_id": "168438bc-184b-568e-9d15-11ac0b154fe1"
+  },
+  "_filename": "Receive_updates_on_an_order_created_in_Shopify.json"
+}

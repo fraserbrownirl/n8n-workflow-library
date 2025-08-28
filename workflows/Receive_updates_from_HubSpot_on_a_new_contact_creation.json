@@ -1,0 +1,33 @@
+{
+  "nodes": [
+    {
+      "name": "Hubspot Trigger",
+      "type": "n8n-nodes-base.hubspotTrigger",
+      "position": [
+        700,
+        260
+      ],
+      "webhookId": "9fe8c037-be4f-4809-a7c2-96e509bfc52e",
+      "parameters": {
+        "appId": "dghert3",
+        "additionalFields": {
+          "maxConcurrentRequests": 5
+        }
+      },
+      "credentials": {
+        "hubspotDeveloperApi": "hubspot_trigger"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates from HubSpot on a new contact creation",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/628",
+    "scraped_at": "2025-08-21 00:29:50",
+    "workflow_id": "6397a1a2-0733-5975-9f33-92e89b613048"
+  },
+  "_filename": "Receive_updates_from_HubSpot_on_a_new_contact_creation.json"
+}

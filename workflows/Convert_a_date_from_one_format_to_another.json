@@ -1,0 +1,51 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Date & Time",
+      "type": "n8n-nodes-base.dateTime",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "value": "14/02/2020",
+        "options": {
+          "fromFormat": "DD/MM/YYYY"
+        }
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Date & Time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Convert a date from one format to another",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/575",
+    "scraped_at": "2025-08-20 23:14:44",
+    "workflow_id": "0cac27d1-11b7-5a83-81c4-c961bb5533fa"
+  },
+  "_filename": "Convert_a_date_from_one_format_to_another.json"
+}

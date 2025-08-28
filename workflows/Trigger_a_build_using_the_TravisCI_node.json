@@ -1,0 +1,63 @@
+{
+  "id": "52",
+  "name": "Trigger a build using the TravisCI node",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        510,
+        350
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "TravisCI",
+      "type": "n8n-nodes-base.travisCi",
+      "position": [
+        710,
+        350
+      ],
+      "parameters": {
+        "slug": "",
+        "branch": "",
+        "operation": "trigger",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "travisCiApi": "travisCI"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "TravisCI": {
+      "main": [
+        []
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "TravisCI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Trigger a build using the TravisCI node",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/658",
+    "scraped_at": "2025-08-21 01:02:30",
+    "workflow_id": "63cf468b-10b3-5b46-b6a0-de6bcf265fe4"
+  },
+  "_filename": "Trigger_a_build_using_the_TravisCI_node.json"
+}

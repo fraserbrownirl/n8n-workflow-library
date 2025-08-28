@@ -1,75 +1,85 @@
 {
-  "id": "xyq7qemab2OGGItB",
+  "id": "1xrqMJ6EWwURrcKa",
   "meta": {
     "instanceId": "84ad02d6104594179f43f1ce9cfe3a81637b2faedb57dafcb9e649b7542988db",
     "templateCredsSetupCompleted": true
   },
-  "name": "YouTube Lead Scraper Automation",
+  "name": "SEO Keyword Monitoring",
   "tags": [],
   "nodes": [
     {
-      "id": "23a2cfe7-16f0-4f7b-942e-b0de7b0059f7",
-      "name": "Trigger Apify Scraper",
-      "type": "n8n-nodes-base.httpRequest",
-      "position": [
-        220,
-        0
-      ],
-      "parameters": {
-        "url": "https://api.apify.com/v2/actor-tasks/YOUR_TASK_ID/run-sync",
-        "method": "POST",
-        "options": {},
-        "jsonBody": "{\n  \"input\": {\n    \"searchKeywords\": [\n      \"fitness\"\n    ],\n    \"maxResults\": 10,\n    \"scrapeEmails\": true\n  }\n}",
-        "sendBody": true,
-        "sendQuery": true,
-        "specifyBody": "json",
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "token",
-              "value": "YOUR_APIFY_TOKEN"
-            }
-          ]
-        }
-      },
-      "typeVersion": 4.2
-    },
-    {
-      "id": "02c53b04-7321-4d5f-be59-121536160236",
-      "name": "Manual Trigger",
-      "type": "n8n-nodes-base.manualTrigger",
+      "id": "dd7dfdd7-afc0-4e42-abbb-00a79bad0cd4",
+      "name": "Fetch Keywords from Airtable",
+      "type": "n8n-nodes-base.airtableTrigger",
       "position": [
         0,
         0
       ],
-      "parameters": {},
+      "parameters": {
+        "baseId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "https://airtable.com/appjaqV0O7FkXT2qj/shrst7GnlbzMDz4te"
+        },
+        "tableId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "https://airtable.com/appjaqV0O7FkXT2qj/tblTAvRqVFOo5AVDF/viwEp0ssaidZOo4nl?blocks=hide"
+        },
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerField": "Keyword",
+        "authentication": "airtableTokenApi",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "OQJxQX3N8GKNxEOl",
+          "name": "Airtable Personal Access Token account 2"
+        }
+      },
       "typeVersion": 1
     },
     {
-      "id": "c62a8f67-9636-4ddb-a639-1997d609446e",
-      "name": "Get Apify Results",
+      "id": "0cc36294-63c3-4ffb-9282-8a9d98a3606d",
+      "name": "Check Rank via Firecrawl",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        440,
-        0
+        300,
+        -220
       ],
       "parameters": {
-        "url": "=https://api.apify.com/v2/datasets/{{ $json.data.defaultDatasetId }}/items",
+        "url": "https://api.firecrawl.dev/serp",
+        "method": "POST",
         "options": {},
-        "sendQuery": true,
-        "queryParameters": {
+        "sendBody": true,
+        "sendHeaders": true,
+        "bodyParameters": {
           "parameters": [
             {
-              "name": "token",
-              "value": "YOUR_APIFY_TOKEN"
+              "name": "query",
+              "value": "={{ $json.fields.Keyword }}"
             },
             {
-              "name": "clean",
-              "value": "true"
+              "name": "country",
+              "value": "us"
             },
             {
-              "name": "format",
-              "value": "json"
+              "name": "language",
+              "value": "en"
+            }
+          ]
+        },
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_API_KEY"
             }
           ]
         }
@@ -77,231 +87,246 @@
       "typeVersion": 4.2
     },
     {
-      "id": "e9f37f8b-1444-47a7-b134-1478ef5dbc9d",
-      "name": "Extract Email & Channel",
-      "type": "n8n-nodes-base.set",
+      "id": "3b38da51-67e5-45b5-a481-6b064c143eca",
+      "name": "Combine Airtable + Firecrawl Result",
+      "type": "n8n-nodes-base.merge",
       "position": [
-        780,
-        0
+        580,
+        -20
+      ],
+      "parameters": {},
+      "typeVersion": 3.1
+    },
+    {
+      "id": "479ab102-bd2c-4278-b869-4a72fbdaa639",
+      "name": "Compare Ranks",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        900,
+        -20
       ],
       "parameters": {
-        "options": {},
-        "assignments": {
-          "assignments": [
+        "jsCode": "// Find the item that contains results\nconst resultItem = items.find(item => Array.isArray(item.json.results));\nconst dataItem = items.find(item => item.json.fields && item.json.fields[\"Target URL\"]);\n\n// Defensive check\nif (!resultItem || !dataItem) {\n  throw new Error(\"Missing result or Airtable data\");\n}\n\nconst results = resultItem.json.results;\nconst fields = dataItem.json.fields;\n\nconst targetUrl = fields[\"Target URL\"];\nconst keyword = fields[\"Keyword\"];\n\nlet rank = null;\n\nfor (let i = 0; i < results.length; i++) {\n  const resultUrl = results[i].url?.toLowerCase() || '';\n  if (resultUrl.includes(targetUrl.toLowerCase())) {\n    rank = i + 1;\n    break;\n  }\n}\n\nreturn [\n  {\n    json: {\n      keyword,\n      target_url: targetUrl,\n      current_rank: fields[\"Current Rank\"],\n      new_rank: rank !== null ? rank : \"Not in Top 10\",\n      rank_changed: rank !== null && rank !== fields[\"Current Rank\"],\n      notes: fields[\"Notes\"] || \"\",\n      airtable_id: dataItem.json.id,\n      raw_results: results // Optional\n    }\n  }\n];\n"
+      },
+      "typeVersion": 2
+    },
+    {
+      "id": "bf89e7d8-bc10-4e12-9671-3b21976f901d",
+      "name": "Update Airtable Record",
+      "type": "n8n-nodes-base.airtable",
+      "position": [
+        1120,
+        -20
+      ],
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "mode": "list",
+          "value": "appjaqV0O7FkXT2qj",
+          "cachedResultUrl": "https://airtable.com/appjaqV0O7FkXT2qj",
+          "cachedResultName": "Table no.1"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": "tblTAvRqVFOo5AVDF",
+          "cachedResultUrl": "https://airtable.com/appjaqV0O7FkXT2qj/tblTAvRqVFOo5AVDF",
+          "cachedResultName": "Table 1"
+        },
+        "columns": {
+          "value": {
+            "id": "={{ $json.airtable_id }}",
+            "Current Rank": "={{ $json.new_rank }}"
+          },
+          "schema": [
             {
-              "id": "01c29690-9b43-41c5-9b88-a587c7e1e4b9",
-              "name": "channelTitle",
+              "id": "id",
               "type": "string",
-              "value": "={{ $json.channelTitle }}"
+              "display": true,
+              "removed": false,
+              "readOnly": true,
+              "required": false,
+              "displayName": "id",
+              "defaultMatch": true
             },
             {
-              "id": "9ad0d2f1-5bb8-4af0-8633-a45a1ec36c20",
-              "name": "email",
+              "id": "Keyword",
               "type": "string",
-              "value": "={{ $json.email }}"
-            }
-          ]
-        }
-      },
-      "typeVersion": 3.4
-    },
-    {
-      "id": "7f73ffd4-0a09-4287-948f-314e89a3e8fc",
-      "name": "Email Exists?",
-      "type": "n8n-nodes-base.if",
-      "position": [
-        1000,
-        0
-      ],
-      "parameters": {
-        "options": {},
-        "conditions": {
-          "options": {
-            "version": 2,
-            "leftValue": "",
-            "caseSensitive": true,
-            "typeValidation": "strict"
-          },
-          "combinator": "and",
-          "conditions": [
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Keyword",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
             {
-              "id": "94741b49-6e09-438a-8de1-1b67379ba0c5",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              },
-              "leftValue": "={{ $json.email }}",
-              "rightValue": ""
-            }
-          ]
-        }
-      },
-      "typeVersion": 2.2
-    },
-    {
-      "id": "c8d8243e-7a15-48a1-9c69-1bb79009ab79",
-      "name": "Verify Email (ZeroBounce)",
-      "type": "n8n-nodes-base.httpRequest",
-      "position": [
-        1320,
-        -120
-      ],
-      "parameters": {
-        "url": "=https://api.zerobounce.net/v2/validate?api_key=YOUR_API_KEY&email={{ $json.email }}",
-        "options": {}
-      },
-      "typeVersion": 4.2
-    },
-    {
-      "id": "59f7ab1e-4ac0-4cde-9eae-e3379ff6c669",
-      "name": "Email is Valid?",
-      "type": "n8n-nodes-base.if",
-      "position": [
-        1540,
-        -120
-      ],
-      "parameters": {
-        "options": {},
-        "conditions": {
-          "options": {
-            "version": 2,
-            "leftValue": "",
-            "caseSensitive": true,
-            "typeValidation": "strict"
-          },
-          "combinator": "and",
-          "conditions": [
+              "id": "Target URL",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Target URL",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
             {
-              "id": "d17ab221-1aea-4c4a-9ce0-923ef4a67585",
-              "operator": {
-                "type": "string",
-                "operation": "equals"
-              },
-              "leftValue": "={{ $json.status }}",
-              "rightValue": "=valid"
+              "id": "Current Rank",
+              "type": "number",
+              "display": true,
+              "removed": false,
+              "readOnly": false,
+              "required": false,
+              "displayName": "Current Rank",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
             }
-          ]
-        }
-      },
-      "typeVersion": 2.2
-    },
-    {
-      "id": "9f4cc0e7-95e2-41cf-add7-b8c052377431",
-      "name": "Send Cold Email",
-      "type": "n8n-nodes-base.gmail",
-      "position": [
-        1880,
-        -240
-      ],
-      "webhookId": "49cb665d-3716-4588-a079-9b3b55a5fb87",
-      "parameters": {
-        "sendTo": "={{ $json.address }}",
-        "message": "=Hi,\n\nI just checked out your YouTube channel \u2013 awesome content on home workouts!  I'm reaching out because we help fitness creators like you grow their email lists and monetize content with premium guides and courses \u2013 with no up-front cost.  Would you be open to a quick chat next week? I\u2019d love to show you a couple of ways we could help.\n\nBest Alex",
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "id"
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
         "options": {},
-        "subject": "=Love your channel, {{ $('Email Exists?').item.json.channelTitle }} \u2013 Quick idea!"
+        "operation": "update"
       },
       "credentials": {
-        "gmailOAuth2": {
-          "id": "YMHjS2nJsRGP7svY",
-          "name": "Gmail account"
+        "airtableTokenApi": {
+          "id": "OQJxQX3N8GKNxEOl",
+          "name": "Airtable Personal Access Token account 2"
         }
       },
       "typeVersion": 2.1
     },
     {
-      "id": "08af4ffa-b21e-4173-a0d3-1ea63439c348",
-      "name": "Sticky Note",
-      "type": "n8n-nodes-base.stickyNote",
+      "id": "6cda42ab-19eb-4309-85f3-0d84a195931a",
+      "name": "Check if Rank Changed",
+      "type": "n8n-nodes-base.if",
       "position": [
-        -60,
-        -680
+        1460,
+        -20
       ],
       "parameters": {
-        "color": 5,
-        "width": 660,
-        "height": 900,
-        "content": "## \ud83d\udd01 SECTION 1: **Start & Scrape YouTube Data**\n\n### \ud83d\udfe2 **Nodes Involved**\n\n* \u26a1 `Manual Trigger`\n* \ud83c\udf10 `Trigger Apify Scraper`\n* \ud83c\udf10 `Get Apify Results`\n\n---\n\n### \u2728 What This Section Does\n\n|Step                      |  Description                                                                                                                   |\n| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |\n| **Manual Trigger**         | Starts the workflow manually (great for testing or on-demand runs).                                                              |\n| **Trigger Apify Scraper** | Sends a `POST` request to Apify to run the YouTube Scraper Actor with your target keywords like `\"fitness\"` or `\"tech\"`.         |\n| **Get Apify Results**     | Waits for the scrape to complete and then fetches the dataset containing YouTube channel details, including emails if available. |\n\n### \ud83d\udce6 Output Example:\n\n```json\n{\n  \"channelTitle\": \"FitLife Hacks\",\n  \"channelUrl\": \"https://youtube.com/@fitlifehacks\",\n  \"email\": \"contact@fitlifehacks.com\"\n}\n```\n\n---\n\n"
+        "options": {},
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "e16a90ab-e577-46f8-abf2-9c8de77059fc",
+              "operator": {
+                "type": "number",
+                "operation": "notEquals"
+              },
+              "leftValue": "={{ $('Compare Ranks').item.json.current_rank }}",
+              "rightValue": "={{ $('Compare Ranks').item.json.new_rank }}"
+            }
+          ]
+        }
       },
-      "typeVersion": 1
+      "typeVersion": 2.2
     },
     {
-      "id": "7acea3ed-cc26-4e39-879e-af2648eb52ce",
+      "id": "02ed48b0-4e24-42ea-8856-8a25ca0446cb",
+      "name": "Send Slack Notification",
+      "type": "n8n-nodes-base.slack",
+      "position": [
+        1740,
+        -200
+      ],
+      "webhookId": "f0ed69d2-fcd1-457e-b981-614ec29954cc",
+      "parameters": {
+        "text": "hi",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "C08TTV0CC3E",
+          "cachedResultName": "all-nathing"
+        },
+        "otherOptions": {}
+      },
+      "credentials": {
+        "slackApi": {
+          "id": "L2vpqY0w5ba50NlR",
+          "name": "Slack account 2"
+        }
+      },
+      "typeVersion": 2.3
+    },
+    {
+      "id": "dff0f256-73c3-4cdc-8b1c-db30070a3965",
       "name": "No Operation, do nothing",
       "type": "n8n-nodes-base.noOp",
       "position": [
-        1320,
-        200
+        1740,
+        180
       ],
       "parameters": {},
       "typeVersion": 1
     },
     {
-      "id": "2fc0ad18-040b-4da6-a83d-8e90be99889b",
-      "name": "No Operation, do nothing1",
-      "type": "n8n-nodes-base.noOp",
+      "id": "a9171863-7fd9-4cd4-ac67-b6b4fb5b7dc7",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1900,
-        60
+        -40,
+        -1320
       ],
-      "parameters": {},
+      "parameters": {
+        "width": 760,
+        "height": 1520,
+        "content": "## \ud83d\udd0d **Section 1: Fetch and Merge Data**\n\n### \ud83c\udfaf Goal: Get keyword data from Airtable, fetch rank info from Firecrawl, and merge both for comparison.\n\n---\n\n### \ud83e\uddf1 **Step 1: Fetch Keywords from Airtable**\n\n**Node Name:** `Fetch Keywords from Airtable`\n**\ud83d\udccc Description:**\nTriggers when a new or updated record is found in Airtable. It fetches the following fields:\n\n* `Keyword`\n* `Target URL`\n* `Current Rank`\n\nThis is the starting point of the workflow.\n\n---\n\n### \ud83c\udf10 **Step 2: Check Rank via Firecrawl**\n\n**Node Name:** `Check Rank via Firecrawl`\n**\ud83d\udccc Description:**\nSends a POST request to [Firecrawl API](https://api.firecrawl.dev) with the `Keyword` as the main parameter. It returns updated ranking information for that keyword.\n\n---\n\n### \ud83d\udd17 **Step 3: Combine Airtable + Firecrawl Result**\n\n**Node Name:** `Combine Airtable + Firecrawl Result`\n**\ud83d\udccc Description:**\nA `Merge` node that combines:\n\n* The original data from Airtable\n* The response from Firecrawl\n\nThis prepares a unified object to be used in the next comparison step.\n"
+      },
       "typeVersion": 1
     },
     {
-      "id": "1b9c2db4-776f-4b9c-a60d-c44d873d8d46",
+      "id": "7c568ca6-16dd-4d16-bea1-7cbdbf5b973b",
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        720,
-        -660
+        820,
+        -980
       ],
       "parameters": {
         "color": 3,
-        "width": 420,
-        "height": 880,
-        "content": "## \ud83d\udd0e SECTION 2: **Filter & Prepare Leads**\n\n### \ud83d\udfe2 **Nodes Involved**\n\n* \ud83e\uddee `Extract Email & Channel`\n* \ud83d\udea6 `Email Exists?`\n\n---\n\n### \u2728 What This Section Does\n\n| \ud83d\udd27 Step                        | \ud83e\uddfe Description                                                                                |\n| ------------------------------ | --------------------------------------------------------------------------------------------- |\n|  **Extract Email & Channel** | Uses the `Edit Fields` node to isolate the fields you need: `email` and `channelTitle`.       |\n|  **Email Exists?**           | An `IF` node that checks if `email` is not empty. Only leads with actual emails move forward. |\n\n### \ud83e\udde0 Why This Matters:\n\nFiltering out empty emails ensures you don\u2019t waste verification API calls or try to email blanks.\n\n---\n\n"
+        "width": 460,
+        "height": 1180,
+        "content": "## \ud83e\udde0 **Section 2: Compare & Update Airtable Record**\n\n### \ud83c\udfaf Goal: Check if the rank has changed. If yes, update Airtable with the new rank.\n\n---\n\n### \ud83e\uddee **Step 4: Compare Ranks**\n\n**Node Name:** `Compare Ranks`\n**\ud83d\udccc Description:**\nA `Code` node that compares the `Current Rank` from Airtable and the `New Rank` from Firecrawl.\nIt adds a new field:\n\n```js\nrankChanged: true // or false\n```\n\nThis acts as the decision flag for the next step.\n\n---\n\n### \ud83d\udcdd **Step 5: Update Airtable Record**\n\n**Node Name:** `Update Airtable Record`\n**\ud83d\udccc Description:**\nUses the unique record ID to update the Airtable row with the new rank.\nOptional fields to update:\n\n* `New Rank`\n* `Rank Changed Date`\n* Any notes or audit logs\n\n---\n\n"
       },
       "typeVersion": 1
     },
     {
-      "id": "b8c055f7-802a-4f97-bbff-908275e2a7e9",
+      "id": "60ea4f45-7a33-4cf1-8952-7989df4c6edf",
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1260,
-        -840
-      ],
-      "parameters": {
-        "color": 6,
-        "width": 400,
-        "height": 920,
-        "content": "## \u2705 SECTION 3: **Verify Emails via ZeroBounce**\n\n### \ud83d\udfe2 **Nodes Involved**\n\n* \ud83c\udf10 `Verify Email (ZeroBounce)`\n* \ud83d\udea5 `Email is Valid?`\n\n---\n\n### \u2728 What This Section Does\n\n| \ud83d\udd27 Step                          | \ud83e\uddfe Description                                                                                             |\n| -------------------------------- | ---------------------------------------------------------------------------------------------------------- |\n| \ud83c\udf10 **Verify Email (ZeroBounce)** | Sends an API request to ZeroBounce to check if the email is `valid`, `catch-all`, `invalid`, `abuse`, etc. |\n| \ud83d\udea5 **Email is Valid?**           | An `IF` node filters out only those emails where the verification result is `\"valid\"` (or safe to send).   |\n\n### \u2705 Output Example:\n\n```json\n{\n  \"status\": \"valid\",\n  \"email\": \"contact@fitlifehacks.com\"\n}\n```\n\n---\n\n"
-      },
-      "typeVersion": 1
-    },
-    {
-      "id": "39701534-2755-49b9-89cd-67e5c7d4a087",
-      "name": "Sticky Note3",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        1800,
-        -720
+        1400,
+        -900
       ],
       "parameters": {
         "color": 7,
-        "width": 260,
-        "height": 680,
-        "content": "## \u2709\ufe0f SECTION 4: **Send Cold Email**\n\n### \ud83d\udfe2 **Nodes Involved**\n\n* \ud83d\udce7 `Send Cold Email` (Gmail)\n\n---\n\n### \u2728 What This Section Does\n\n|  Step           |  Description                                                                                                         |\n| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |\n|  **Gmail Node** | Sends a customized cold email to the lead using Gmail. You can personalize the email using fields like `channelTitle`. |\n\n---\n"
+        "width": 500,
+        "height": 1220,
+        "content": "## \u2705 **Section 3: Conditional Alert**\n\n### \ud83c\udfaf Goal: Notify via Slack if the rank has changed.\n\n---\n\n### \ud83d\udd00 **Step 6: Check if Rank Changed**\n\n**Node Name:** `Check if Rank Changed`\n**\ud83d\udccc Description:**\nAn `If` node that checks the `rankChanged` flag from the previous step.\n\n* **true:** Proceed to send Slack notification\n* **false:** Do nothing and stop workflow here\n\n---\n\n### \ud83d\udcac **Step 7: Send Slack Notification**\n\n**Node Name:** `Send Slack Notification`\n**\ud83d\udccc Description:**\nPosts a message in a specified Slack channel with:\n\n* \ud83d\udcc8 `Keyword`\n* \ud83d\udd17 `Target URL`\n* \ud83c\udd95 `New Rank`\n* \ud83d\udd53 Timestamp or context\n\nThis ensures the team is alerted about SEO improvements or drops.\n"
       },
       "typeVersion": 1
     },
     {
-      "id": "728b1e9e-ca99-4d9a-90df-7d12468b285d",
+      "id": "bd9813ca-f877-4a50-8b4a-8284dc5cd2da",
       "name": "Sticky Note9",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         -1720,
-        -660
+        -1320
       ],
       "parameters": {
         "color": 4,
@@ -312,98 +337,44 @@
       "typeVersion": 1
     },
     {
-      "id": "7599233b-b1d5-48a8-b47b-95730a5a2732",
+      "id": "8c6e6722-1d72-4736-8c69-cf245d6cc06d",
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         -1720,
-        -320
+        -980
       ],
       "parameters": {
         "color": 4,
         "width": 1289,
-        "height": 3238,
-        "content": "# \ud83e\udde0 YouTube Lead Scraper Automation \u2013 n8n Workflow Breakdown\n\nThis automation scrapes YouTube for channels in your niche, extracts emails, validates them, and sends personalized cold emails via Gmail.\n\n---\n\n## \ud83d\udd01 SECTION 1: **Start & Scrape YouTube Data**\n\n### \ud83d\udfe2 **Nodes Involved**\n\n* \u26a1 `Manual Trigger`\n* \ud83c\udf10 `Trigger Apify Scraper`\n* \ud83c\udf10 `Get Apify Results`\n\n---\n\n### \u2728 What This Section Does\n\n| \ud83d\udd27 Step                      | \ud83e\uddfe Description                                                                                                                   |\n| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |\n|  **Manual Trigger**         | Starts the workflow manually (great for testing or on-demand runs).                                                              |\n|  **Trigger Apify Scraper** | Sends a `POST` request to Apify to run the YouTube Scraper Actor with your target keywords like `\"fitness\"` or `\"tech\"`.         |\n|  **Get Apify Results**     | Waits for the scrape to complete and then fetches the dataset containing YouTube channel details, including emails if available. |\n\n### \ud83d\udce6 Output Example:\n\n```json\n{\n  \"channelTitle\": \"FitLife Hacks\",\n  \"channelUrl\": \"https://youtube.com/@fitlifehacks\",\n  \"email\": \"contact@fitlifehacks.com\"\n}\n```\n\n---\n\n## \ud83d\udd0e SECTION 2: **Filter & Prepare Leads**\n\n### \ud83d\udfe2 **Nodes Involved**\n\n* \ud83e\uddee `Extract Email & Channel`\n* \ud83d\udea6 `Email Exists?`\n\n---\n\n### \u2728 What This Section Does\n\n| \ud83d\udd27 Step                        | \ud83e\uddfe Description                                                                                |\n| ------------------------------ | --------------------------------------------------------------------------------------------- |\n|  **Extract Email & Channel** | Uses the `Edit Fields` node to isolate the fields you need: `email` and `channelTitle`.       |\n| **Email Exists?**           | An `IF` node that checks if `email` is not empty. Only leads with actual emails move forward. |\n\n### \ud83e\udde0 Why This Matters:\n\nFiltering out empty emails ensures you don\u2019t waste verification API calls or try to email blanks.\n\n---\n\n## \u2705 SECTION 3: **Verify Emails via ZeroBounce**\n\n### \ud83d\udfe2 **Nodes Involved**\n\n* \ud83c\udf10 `Verify Email (ZeroBounce)`\n* \ud83d\udea5 `Email is Valid?`\n\n---\n\n### \u2728 What This Section Does\n\n| \ud83d\udd27 Step                          | \ud83e\uddfe Description                                                                                             |\n| -------------------------------- | ---------------------------------------------------------------------------------------------------------- |\n| \ud83c\udf10 **Verify Email (ZeroBounce)** | Sends an API request to ZeroBounce to check if the email is `valid`, `catch-all`, `invalid`, `abuse`, etc. |\n| \ud83d\udea5 **Email is Valid?**           | An `IF` node filters out only those emails where the verification result is `\"valid\"` (or safe to send).   |\n\n### \u2705 Output Example:\n\n```json\n{\n  \"status\": \"valid\",\n  \"email\": \"contact@fitlifehacks.com\"\n}\n```\n\n---\n\n## \u2709\ufe0f SECTION 4: **Send Cold Email**\n\n### \ud83d\udfe2 **Nodes Involved**\n\n* \ud83d\udce7 `Send Cold Email` (Gmail)\n\n---\n\n### \u2728 What This Section Does\n\n| \ud83d\udd27 Step           | \ud83e\uddfe Description                                                                                                         |\n| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |\n|  **Gmail Node** | Sends a customized cold email to the lead using Gmail. You can personalize the email using fields like `channelTitle`. |\n\n---\n\n### \ud83d\udc8c Sample Email Content:\n\n```html\nSubject: Quick idea for {{$json[\"channelTitle\"]}}\n\nHi there,\n\nLoved your channel {{$json[\"channelTitle\"]}}! I had a quick idea on how you could grow your audience and monetize better.\n\nWould love to share \u2014 open to a quick call next week?\n\nBest,  \n[Your Name]  \n[Your Website]\n```\n\n---\n\n## \ud83c\udfaf Overall Flow Summary\n\n| Section               | Purpose                                                 |\n| --------------------- | ------------------------------------------------------- |\n|  **Start & Scrape** | Launches the Apify scraper and gets lead data           |\n|  **Filter Leads**   | Extracts relevant info and removes leads without emails |\n|  **Verify Emails**   | Checks email validity via ZeroBounce                    |\n|  **Send Emails**    | Sends cold emails to the filtered, verified leads       |\n\n---\n\n## \ud83d\ude80 Suggestions for Next Level\n\n* \u23f1\ufe0f Add `Wait` or `Delay` nodes to avoid hitting Gmail rate limits\n* \ud83d\udcca Log results to Airtable or Google Sheets\n* \ud83d\udd01 Loop with batch processing for large lead lists\n* \ud83e\udde0 Add AI-generated personalized messages with OpenAI API\n\n---\n\n"
+        "height": 2178,
+        "content": "\n# \ud83d\ude80 **Automated Rank Tracker Workflow (n8n)**\n\n---\n\n## \ud83d\udccc **Purpose**\n\nThis workflow is designed to **automatically monitor keyword rankings**, compare them with new data from an SEO API (Firecrawl), and **alert your team on Slack** whenever there\u2019s a change. It helps you stay on top of your SEO game **without manual checking**! \u26a1\n\n---\n\n## \ud83e\udde0 **What It Does \u2014 In 3 Simple Steps**\n\n---\n\n### \ud83d\udd0d **1. Fetch & Merge Data**\n\n\ud83d\udce6 **Source:** Airtable\n\ud83c\udf10 **Analyzer:** Firecrawl API\n\ud83d\udd17 **Process:** Merge both for side-by-side comparison\n\n* \u2705 Grabs `Keyword`, `Target URL`, and `Current Rank` from Airtable\n* \ud83c\udf10 Sends the `Keyword` to Firecrawl API to get the **Latest Rank**\n* \ud83d\udd17 Merges original Airtable data + Firecrawl result\n* \ud83d\udee0\ufe0f Prepares a complete object for decision-making\n\n---\n\n### \ud83e\uddee **2. Compare & Update Airtable**\n\n\ud83e\udde0 **Compare:** Current Rank vs Latest Rank\n\ud83d\udcdd **Update:** Airtable if there's a difference\n\n* \ud83d\udd0d Uses a Code node to check:\n\n  ```js\n  if (currentRank !== latestRank) \u2192 rankChanged = true\n  ```\n* \ud83d\udcdd If there's a change, updates the original Airtable row with:\n\n  * New Rank\n  * Timestamp\n  * Optional status/comments\n\n---\n\n### \u2705 **3. Alert If Rank Changed**\n\n\ud83e\uddea **Decision:** Did rank change?\n\ud83d\udce3 **Notify:** Slack if yes\n\n* \ud83e\udd16 Uses an `If` node to evaluate the `rankChanged` flag\n* \ud83d\udcac Posts a message in Slack like:\n\n  > \u201c\ud83c\udfaf Keyword: *\u2018best running shoes\u2019* rank has changed from *5 \u27a1 2*! \ud83d\ude80\u201d\n\n---\n\n## \ud83e\udde9 **Visual Flow Overview**\n\n```\nAirtable Trigger\n   \u2193\nFirecrawl HTTP Request\n   \u2193\nMerge Results\n   \u2193\nCompare Ranks (Code Node)\n   \u2193\nUpdate Airtable\n   \u2193\nCheck If Rank Changed (If Node)\n   \u21b3 true \u2192 Send Slack Notification\n```\n\n---\n\n\n## \ud83d\udca1 Final Thoughts\n\nThis elegant workflow combines **data fetching, comparison, storage, and notification** in a streamlined way. It\u2019s ideal for:\n\n* SEO Teams\n* Content Managers\n* Digital Agencies\n* Growth Hackers\n\n\u2728 **Set it and forget it \u2014 your ranks are now being watched 24/7.**\n\n---\n\nLet me know if you'd like a **shareable Markdown version** or a **Notion-style document**.\n"
       },
       "typeVersion": 1
     }
   ],
   "active": false,
   "pinData": {
-    "Get Apify Results": [
+    "Check Rank via Firecrawl": [
       {
         "json": {
-          "email": "contact@fitlifehacks.com",
-          "keywords": [
-            "fitness",
-            "wellness",
-            "training"
-          ],
-          "channelUrl": "https://www.youtube.com/@fitlifehacks",
-          "description": "Tips on fitness and wellness.",
-          "channelTitle": "FitLife Hacks",
-          "subscriberCount": 58400
-        }
-      },
-      {
-        "json": {
-          "email": "",
-          "keywords": [
-            "yoga",
-            "mindfulness"
-          ],
-          "channelUrl": "https://www.youtube.com/@wellnessroutine",
-          "description": "Yoga, mindfulness, and productivity.",
-          "channelTitle": "Wellness Routine",
-          "subscriberCount": 12900
-        }
-      },
-      {
-        "json": {
-          "email": "info@homeworkoutpros.net",
-          "keywords": [
-            "workout",
-            "home training"
-          ],
-          "channelUrl": "https://www.youtube.com/@homeworkoutpros",
-          "description": "Home workout routines and bodyweight training.",
-          "channelTitle": "Home Workout Pros",
-          "subscriberCount": 43200
-        }
-      }
-    ],
-    "Trigger Apify Scraper": [
-      {
-        "json": {
-          "data": {
-            "status": "SUCCEEDED",
-            "defaultDatasetId": "abc123xyz-leads-dataset"
-          }
-        }
-      }
-    ],
-    "Verify Email (ZeroBounce)": [
-      {
-        "json": {
-          "city": "Los Angeles",
-          "domain": "fitlifehacks.com",
-          "gender": "",
-          "region": "CA",
-          "status": "valid",
-          "account": "contact",
-          "address": "contact@fitlifehacks.com",
-          "country": "US",
-          "zipcode": "90001",
-          "lastname": "",
-          "mx_found": "true",
-          "firstname": "",
-          "mx_record": "alt1.aspmx.l.google.com",
-          "free_email": false,
-          "sub_status": "",
-          "did_you_mean": "",
-          "processed_at": "2025-05-31 10:30:00",
-          "smtp_provider": "google.com",
-          "domain_age_days": "2650"
+          "results": [
+            {
+              "url": "https://moz.com/blog/seo-automation-tools",
+              "title": "Top SEO Automation Tools for 2025",
+              "description": "Explore the best SEO automation tools for boosting rankings in 2025."
+            },
+            {
+              "url": "https://your-site.com/seo-guide",
+              "title": "Beginner\u2019s Guide to SEO Automation",
+              "description": "Learn how to automate your SEO efforts effectively."
+            },
+            {
+              "url": "https://ahrefs.com/blog/automate-keyword-research",
+              "title": "How to Automate Keyword Research",
+              "description": "Streamline your SEO keyword research using automation."
+            }
+          ]
         }
       }
     ]
@@ -411,13 +382,24 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "0146b023-e54a-4476-9adc-20d5bdfcd89f",
+  "versionId": "aded958b-db96-4a80-b05b-27afdb05f950",
   "connections": {
-    "Email Exists?": {
+    "Compare Ranks": {
       "main": [
         [
           {
-            "node": "Verify Email (ZeroBounce)",
+            "node": "Update Airtable Record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if Rank Changed": {
+      "main": [
+        [
+          {
+            "node": "Send Slack Notification",
             "type": "main",
             "index": 0
           }
@@ -431,73 +413,49 @@
         ]
       ]
     },
-    "Manual Trigger": {
+    "Update Airtable Record": {
       "main": [
         [
           {
-            "node": "Trigger Apify Scraper",
+            "node": "Check if Rank Changed",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Email is Valid?": {
+    "Check Rank via Firecrawl": {
       "main": [
         [
           {
-            "node": "Send Cold Email",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing1",
+            "node": "Combine Airtable + Firecrawl Result",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get Apify Results": {
+    "Fetch Keywords from Airtable": {
       "main": [
         [
           {
-            "node": "Extract Email & Channel",
+            "node": "Check Rank via Firecrawl",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Combine Airtable + Firecrawl Result",
+            "type": "main",
+            "index": 1
           }
         ]
       ]
     },
-    "Trigger Apify Scraper": {
+    "Combine Airtable + Firecrawl Result": {
       "main": [
         [
           {
-            "node": "Get Apify Results",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract Email & Channel": {
-      "main": [
-        [
-          {
-            "node": "Email Exists?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Verify Email (ZeroBounce)": {
-      "main": [
-        [
-          {
-            "node": "Email is Valid?",
+            "node": "Compare Ranks",
             "type": "main",
             "index": 0
           }
@@ -509,7 +467,9 @@
     "name": "Automated YouTube Channel Lead Generation & Email Outreach with Apify and ZeroBounce",
     "used_count": 0,
     "popularity_score": 25,
-    "source_url": "https://n8n.io/workflows/4582",
-    "scraped_at": "2025-08-18 01:03:10"
-  }
+    "source_url": "https://n8n.io/workflows/4579",
+    "scraped_at": "2025-08-21 01:34:19",
+    "workflow_id": "8ad860ef-1205-5fdd-bcb4-327d65b76ec6"
+  },
+  "_filename": "Automated_YouTube_Channel_Lead_Generation_Email_Outreach_with_Apify_and_ZeroBounce.json"
 }

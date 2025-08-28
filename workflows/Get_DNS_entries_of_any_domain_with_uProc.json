@@ -1,0 +1,81 @@
+{
+  "id": "113",
+  "name": "Get DNS entries",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        240,
+        290
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Create Domain Item",
+      "type": "n8n-nodes-base.functionItem",
+      "position": [
+        450,
+        290
+      ],
+      "parameters": {
+        "functionCode": "item.domain = \"n8n.io\";\nreturn item;"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Get DNS records",
+      "type": "n8n-nodes-base.uproc",
+      "position": [
+        650,
+        290
+      ],
+      "parameters": {
+        "tool": "getDomainRecords",
+        "group": "internet",
+        "domain": "= {{$node[\"Create Domain Item\"].json[\"domain\"]}}",
+        "additionalOptions": {}
+      },
+      "credentials": {
+        "uprocApi": "miquel-uproc"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "Create Domain Item": {
+      "main": [
+        [
+          {
+            "node": "Get DNS records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Create Domain Item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Get DNS entries of any domain with uProc",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/862",
+    "scraped_at": "2025-08-20 23:38:44",
+    "workflow_id": "b43953b8-b859-53a3-ac60-0f59415b0b33"
+  },
+  "_filename": "Get_DNS_entries_of_any_domain_with_uProc.json"
+}

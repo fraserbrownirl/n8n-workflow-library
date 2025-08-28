@@ -1,0 +1,29 @@
+{
+  "nodes": [
+    {
+      "name": "AWS-SNS-Trigger",
+      "type": "n8n-nodes-base.awsSnsTrigger",
+      "position": [
+        440,
+        300
+      ],
+      "parameters": {
+        "topic": "arn:aws:sns:ap-south-1:100558637562:n8n-rocks"
+      },
+      "credentials": {
+        "aws": "amudhan-aws"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates for AWS SNS Events",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/509",
+    "scraped_at": "2025-08-21 00:44:45",
+    "workflow_id": "4059848b-3489-5126-a59d-565875624bf0"
+  },
+  "_filename": "Receive_updates_for_AWS_SNS_Events.json"
+}

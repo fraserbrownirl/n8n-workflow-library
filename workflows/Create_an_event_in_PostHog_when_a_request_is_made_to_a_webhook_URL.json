@@ -1,0 +1,57 @@
+{
+  "nodes": [
+    {
+      "name": "PostHog",
+      "type": "n8n-nodes-base.postHog",
+      "position": [
+        640,
+        280
+      ],
+      "parameters": {
+        "eventName": "={{$json[\"query\"][\"event\"]}}",
+        "distinctId": "n8n",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "postHogApi": "PostHog Credentials"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        440,
+        280
+      ],
+      "webhookId": "f6d0071e-3cf9-49fd-8bbd-afdbea6b0c67",
+      "parameters": {
+        "path": "f6d0071e-3cf9-49fd-8bbd-afdbea6b0c67",
+        "options": {}
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "PostHog",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Create an event in PostHog when a request is made to a webhook URL",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/968",
+    "scraped_at": "2025-08-20 23:39:38",
+    "workflow_id": "59df6868-0db6-5940-960c-ccac522c99bd"
+  },
+  "_filename": "Create_an_event_in_PostHog_when_a_request_is_made_to_a_webhook_URL.json"
+}

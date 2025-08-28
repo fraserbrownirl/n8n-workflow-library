@@ -1,0 +1,58 @@
+{
+  "name": "Updating Shopify tags on Onfleet events",
+  "nodes": [
+    {
+      "name": "Onfleet Trigger",
+      "type": "n8n-nodes-base.onfleetTrigger",
+      "position": [
+        460,
+        300
+      ],
+      "webhookId": "6d6a2bee-f83e-4ebd-a1d5-8708c34393dc",
+      "parameters": {
+        "triggerOn": "taskDelayed",
+        "additionalFields": {}
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Shopify",
+      "type": "n8n-nodes-base.shopify",
+      "position": [
+        680,
+        300
+      ],
+      "parameters": {
+        "operation": "update",
+        "updateFields": {
+          "tags": ""
+        }
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "Onfleet Trigger": {
+      "main": [
+        [
+          {
+            "node": "Shopify",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Update Shopify order tags when a Onfleet event happens",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/1545",
+    "scraped_at": "2025-08-21 00:19:58",
+    "workflow_id": "56735571-e3ba-5f69-b301-82f074dcd981"
+  },
+  "_filename": "Update_Shopify_order_tags_when_a_Onfleet_event_happens.json"
+}

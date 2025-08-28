@@ -1,0 +1,57 @@
+{
+  "id": "56",
+  "name": "Send an SMS when a workflow fails",
+  "nodes": [
+    {
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "position": [
+        550,
+        260
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Twilio",
+      "type": "n8n-nodes-base.twilio",
+      "position": [
+        750,
+        260
+      ],
+      "parameters": {
+        "to": "",
+        "from": "",
+        "message": "=Your workflow with ID: {{$node[\"Error Trigger\"].json[\"workflow\"][\"id\"]}} and name: {{$node[\"Error Trigger\"].json[\"workflow\"][\"name\"]}} failed to execute."
+      },
+      "credentials": {
+        "twilioApi": "twilio-credentials"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Twilio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Send an SMS when a workflow fails",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/665",
+    "scraped_at": "2025-08-21 00:37:33",
+    "workflow_id": "65151933-9795-5a15-b5de-c2764e8fbf16"
+  },
+  "_filename": "Send_an_SMS_when_a_workflow_fails.json"
+}

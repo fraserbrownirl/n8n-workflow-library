@@ -1,0 +1,58 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "AWS SES",
+      "type": "n8n-nodes-base.awsSes",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "body": "This is a sample message body in an email\n",
+        "subject": "n8n Rocks",
+        "fromEmail": "n8n@n8n.io",
+        "toAddresses": [
+          "user@example.com",
+          "user2@example.com"
+        ],
+        "additionalFields": {}
+      },
+      "credentials": {
+        "aws": "aws"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "AWS SES",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Send an email using AWS SES",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/507",
+    "scraped_at": "2025-08-20 23:47:54",
+    "workflow_id": "fd7f55e9-7ac4-50b0-9216-1cf95a9e4ed6"
+  },
+  "_filename": "Send_an_email_using_AWS_SES.json"
+}

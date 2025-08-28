@@ -1,0 +1,58 @@
+{
+  "nodes": [
+    {
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        700,
+        300
+      ],
+      "parameters": {
+        "range": "Problems!A:D",
+        "options": {},
+        "sheetId": "17fzSFl1BZ1njldTfp5lvh8HtS0-pNXH66b7qGZIiGRU"
+      },
+      "credentials": {
+        "googleApi": ""
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        500,
+        300
+      ],
+      "parameters": {
+        "path": "webhook",
+        "options": {},
+        "responseData": "allEntries",
+        "responseMode": "lastNode"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Receive Google Sheet data via REST API",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/226",
+    "scraped_at": "2025-08-20 22:12:34",
+    "workflow_id": "68600847-33e1-576b-b849-54003b686619"
+  },
+  "_filename": "Receive_Google_Sheet_data_via_REST_API.json"
+}

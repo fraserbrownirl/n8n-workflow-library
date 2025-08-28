@@ -1,0 +1,57 @@
+{
+  "id": "92",
+  "name": "Translate text from English to German",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        270,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Google Translate",
+      "type": "n8n-nodes-base.googleTranslate",
+      "position": [
+        470,
+        300
+      ],
+      "parameters": {
+        "text": "Hello from n8n!",
+        "translateTo": "de",
+        "authentication": "oAuth2"
+      },
+      "credentials": {
+        "googleTranslateOAuth2Api": "google-translate"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Google Translate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Translate text from English to German",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/743",
+    "scraped_at": "2025-08-20 22:39:34",
+    "workflow_id": "81eb5e81-78b8-578c-b788-5e96100544e8"
+  },
+  "_filename": "Translate_text_from_English_to_German.json"
+}

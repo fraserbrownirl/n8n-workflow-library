@@ -1,0 +1,73 @@
+{
+  "id": "151",
+  "name": "Receive a Mattermost message when new data gets added to Airtable",
+  "nodes": [
+    {
+      "name": "Airtable Trigger",
+      "type": "n8n-nodes-base.airtableTrigger",
+      "position": [
+        550,
+        340
+      ],
+      "parameters": {
+        "baseId": "",
+        "tableId": "Data",
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerField": "Created",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "airtableApi": "Airtable Credentials n8n"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Mattermost",
+      "type": "n8n-nodes-base.mattermost",
+      "position": [
+        750,
+        340
+      ],
+      "parameters": {
+        "message": "=New Data was added to Airtable.\nID:{{$node[\"Airtable Trigger\"].json[\"fields\"][\"id\"]}}\nName: {{$node[\"Airtable Trigger\"].json[\"fields\"][\"name\"]}}",
+        "channelId": "",
+        "attachments": [],
+        "otherOptions": {}
+      },
+      "credentials": {
+        "mattermostApi": "mattermost"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "Airtable Trigger": {
+      "main": [
+        [
+          {
+            "node": "Mattermost",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Receive a Mattermost message when new data gets added to Airtable",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/799",
+    "scraped_at": "2025-08-21 01:00:23",
+    "workflow_id": "cf923c1d-0980-5214-bd0f-3c29fef15184"
+  },
+  "_filename": "Receive_a_Mattermost_message_when_new_data_gets_added_to_Airtable.json"
+}

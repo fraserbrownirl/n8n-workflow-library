@@ -1,0 +1,52 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Microsoft Excel",
+      "type": "n8n-nodes-base.microsoftExcel",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "filters": {},
+        "operation": "getAll"
+      },
+      "credentials": {
+        "microsoftExcelOAuth2Api": "ms-oauth-creds"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Microsoft Excel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Get all Excel workbooks",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/566",
+    "scraped_at": "2025-08-20 21:10:51",
+    "workflow_id": "5aff3107-08bc-57c4-94a9-4c626711d485"
+  },
+  "_filename": "Get_all_Excel_workbooks.json"
+}

@@ -1,0 +1,57 @@
+{
+  "nodes": [
+    {
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        650,
+        300
+      ],
+      "parameters": {
+        "toList": [
+          "recipient@email.com"
+        ],
+        "message": "=Workflow: {{$json[\"workflow\"][\"name\"]}}\nError: {{$json[\"execution\"][\"error\"][\"message\"]}}\nLast node executed: {{$json[\"execution\"][\"lastNodeExecuted\"]}}\nExecution URL: {{$json[\"execution\"][\"url\"]}}\nStacktrace:\n{{$json[\"execution\"][\"error\"][\"stack\"]}}",
+        "subject": "=n8n Workflow Failure:  {{$json[\"workflow\"][\"name\"]}}",
+        "resource": "message",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "gmailOAuth2": "TBD"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Send email via Gmail on workflow error",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/696",
+    "scraped_at": "2025-08-20 21:56:46",
+    "workflow_id": "3928b3d2-2127-5e6c-a2c9-8dc27ef5c5b2"
+  },
+  "_filename": "Send_email_via_Gmail_on_workflow_error.json"
+}

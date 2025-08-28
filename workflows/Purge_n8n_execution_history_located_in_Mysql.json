@@ -1,0 +1,85 @@
+{
+  "id": "60",
+  "name": "n8n_mysql_purge_history_greater_than_10_days",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "MySQL",
+      "type": "n8n-nodes-base.mySql",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "query": "DELETE FROM execution_entity \nWHERE DATE(stoppedAt) < DATE_SUB(CURDATE(), INTERVAL 30 DAY)",
+        "operation": "executeQuery"
+      },
+      "credentials": {
+        "mySql": "n8n"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Cron",
+      "type": "n8n-nodes-base.cron",
+      "position": [
+        250,
+        460
+      ],
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "hour": 7
+            }
+          ]
+        }
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": true,
+  "settings": {},
+  "connections": {
+    "Cron": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Purge n8n execution history located in Mysql",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/700",
+    "scraped_at": "2025-08-20 22:54:28",
+    "workflow_id": "02201044-77e9-5e5b-aaeb-61ca6b327575"
+  },
+  "_filename": "Purge_n8n_execution_history_located_in_Mysql.json"
+}

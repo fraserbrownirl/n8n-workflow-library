@@ -1,0 +1,74 @@
+{
+  "nodes": [
+    {
+      "name": "Execute Command",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [
+        600,
+        350
+      ],
+      "parameters": {
+        "command": "echo \"{ \\\"value1\\\": true, \\\"value2\\\": 1 }\""
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        800,
+        450
+      ],
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{JSON.parse($node[\"Execute Command\"].data[\"stdout\"]).value1}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "To Flow Data",
+      "type": "n8n-nodes-base.functionItem",
+      "position": [
+        800,
+        250
+      ],
+      "parameters": {
+        "functionCode": "item = JSON.parse(item.stdout);\nreturn item;"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Execute Command": {
+      "main": [
+        [
+          {
+            "node": "To Flow Data",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Get execute command data and transfer to JSON",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/156",
+    "scraped_at": "2025-08-20 23:16:02",
+    "workflow_id": "3ac53b51-70c2-5292-a93b-d707fe5921fc"
+  },
+  "_filename": "Get_execute_command_data_and_transfer_to_JSON.json"
+}

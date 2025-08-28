@@ -1,0 +1,37 @@
+{
+  "id": "138",
+  "name": "Get new time entries from Toggl",
+  "nodes": [
+    {
+      "name": "Toggl",
+      "type": "n8n-nodes-base.togglTrigger",
+      "position": [
+        650,
+        250
+      ],
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {}
+          ]
+        }
+      },
+      "credentials": {
+        "togglApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Get new time entries from Toggl",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/517",
+    "scraped_at": "2025-08-21 00:41:20",
+    "workflow_id": "87bfd6c1-f8a9-576b-a96f-1572acf6ae88"
+  },
+  "_filename": "Get_new_time_entries_from_Toggl.json"
+}

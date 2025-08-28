@@ -1,0 +1,32 @@
+{
+  "id": "108",
+  "name": "Receive updates for events in Chargebee",
+  "nodes": [
+    {
+      "name": "Chargebee Trigger",
+      "type": "n8n-nodes-base.chargebeeTrigger",
+      "position": [
+        700,
+        250
+      ],
+      "parameters": {
+        "events": [
+          "*"
+        ]
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates for events in Chargebee",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/486",
+    "scraped_at": "2025-08-21 01:11:28",
+    "workflow_id": "988f6d85-3b63-5aa9-ad0c-cdf4ae888e00"
+  },
+  "_filename": "Receive_updates_for_events_in_Chargebee.json"
+}

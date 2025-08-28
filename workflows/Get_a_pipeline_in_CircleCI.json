@@ -1,0 +1,56 @@
+{
+  "id": "84",
+  "name": "Get a pipeline in CircleCI",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "CircleCI",
+      "type": "n8n-nodes-base.circleCi",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "vcs": "",
+        "projectSlug": ""
+      },
+      "credentials": {
+        "circleCiApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "CircleCI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Get a pipeline in CircleCI",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/454",
+    "scraped_at": "2025-08-21 00:39:36",
+    "workflow_id": "37742592-53ed-56e8-b935-fc5a16435d17"
+  },
+  "_filename": "Get_a_pipeline_in_CircleCI.json"
+}

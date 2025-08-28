@@ -1,0 +1,34 @@
+{
+  "id": "133",
+  "name": "Receive updates for specified tasks in Flow",
+  "nodes": [
+    {
+      "name": "Flow Trigger",
+      "type": "n8n-nodes-base.flowTrigger",
+      "position": [
+        650,
+        250
+      ],
+      "parameters": {
+        "taskIds": "",
+        "resource": "task"
+      },
+      "credentials": {
+        "flowApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates for specified tasks in Flow",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/508",
+    "scraped_at": "2025-08-21 01:23:16",
+    "workflow_id": "c5372961-151c-51e3-9995-fcde38690bc0"
+  },
+  "_filename": "Receive_updates_for_specified_tasks_in_Flow.json"
+}

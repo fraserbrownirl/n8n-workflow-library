@@ -1,0 +1,49 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Hacker News",
+      "type": "n8n-nodes-base.hackerNews",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "resource": "all",
+        "additionalFields": {}
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Hacker News",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Get articles from Hacker News",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/525",
+    "scraped_at": "2025-08-20 22:32:09",
+    "workflow_id": "eb08beaf-046e-54cf-89b6-f6e60380b0d1"
+  },
+  "_filename": "Get_articles_from_Hacker_News.json"
+}

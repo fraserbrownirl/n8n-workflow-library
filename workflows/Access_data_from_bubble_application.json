@@ -1,0 +1,57 @@
+{
+  "id": "15",
+  "name": "Bubble Data Access",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "url": "https://n8n-lessons.bubbleapps.io/version-test/api/1.1/obj/user",
+        "options": {},
+        "authentication": "headerAuth"
+      },
+      "credentials": {
+        "httpHeaderAuth": "Bubble n8n Lessons Token"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Access data from bubble application",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/879",
+    "scraped_at": "2025-08-21 01:05:54",
+    "workflow_id": "f4d7506f-4c79-5b5c-8e7a-b9a2850c1495"
+  },
+  "_filename": "Access_data_from_bubble_application.json"
+}

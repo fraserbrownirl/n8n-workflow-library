@@ -1,0 +1,112 @@
+{
+  "id": "64",
+  "name": "Upload a file and get a list of all the files in a bucket",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        390,
+        220
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        590,
+        220
+      ],
+      "parameters": {
+        "url": "https://n8n.io/n8n-logo.png",
+        "options": {},
+        "responseFormat": "file"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "S3",
+      "type": "n8n-nodes-base.s3",
+      "position": [
+        790,
+        220
+      ],
+      "parameters": {
+        "fileName": "={{$node[\"HTTP Request\"].binary.data.fileName}}",
+        "operation": "upload",
+        "bucketName": "n8n",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "s3": "s3-n8n"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "S",
+      "type": "n8n-nodes-base.s3",
+      "position": [
+        990,
+        220
+      ],
+      "parameters": {
+        "options": {},
+        "operation": "getAll",
+        "returnAll": true,
+        "bucketName": "n8n"
+      },
+      "credentials": {
+        "s3": "s3-n8n"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "S3": {
+      "main": [
+        [
+          {
+            "node": "S",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "S3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Manage files in S3",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/674",
+    "scraped_at": "2025-08-20 22:57:32",
+    "workflow_id": "986882d5-8909-571f-8df0-0428252338b2"
+  },
+  "_filename": "Manage_files_in_S3.json"
+}

@@ -1,0 +1,52 @@
+{
+  "name": "A workflow with the Twilio node",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Twilio",
+      "type": "n8n-nodes-base.twilio",
+      "position": [
+        430,
+        300
+      ],
+      "parameters": {},
+      "credentials": {
+        "twilioApi": ""
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Twilio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Send an SMSWhatsapp message with Twilio",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/401",
+    "scraped_at": "2025-08-20 21:37:09",
+    "workflow_id": "4439f87b-4c0b-559b-b06e-a732fdc86cee"
+  },
+  "_filename": "Send_an_SMSWhatsapp_message_with_Twilio.json"
+}

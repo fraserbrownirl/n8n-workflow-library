@@ -1,0 +1,94 @@
+{
+  "nodes": [
+    {
+      "name": "Calendly Trigger",
+      "type": "n8n-nodes-base.calendlyTrigger",
+      "position": [
+        490,
+        320
+      ],
+      "webhookId": "d932d43a-511e-4e54-9a8d-c8da6f6ab7c2",
+      "parameters": {
+        "events": [
+          "invitee.created"
+        ]
+      },
+      "credentials": {
+        "calendlyApi": "Calendly API Credentials"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Notion",
+      "type": "n8n-nodes-base.notion",
+      "position": [
+        690,
+        320
+      ],
+      "parameters": {
+        "blockUi": {
+          "blockValues": []
+        },
+        "resource": "databasePage",
+        "databaseId": "b40628ca-9000-4576-ab2c-4ed3c37e6ee4",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Name|title",
+              "title": "={{$json[\"payload\"][\"invitee\"][\"name\"]}}",
+              "peopleValue": [],
+              "relationValue": [
+                ""
+              ],
+              "multiSelectValue": []
+            },
+            {
+              "key": "Email|email",
+              "emailValue": "={{$json[\"payload\"][\"invitee\"][\"email\"]}}",
+              "peopleValue": [],
+              "relationValue": [
+                ""
+              ],
+              "multiSelectValue": []
+            },
+            {
+              "key": "Status|select",
+              "peopleValue": [],
+              "selectValue": "6ad3880b-260a-4d12-999f-5b605e096c1c",
+              "relationValue": [
+                ""
+              ],
+              "multiSelectValue": []
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "notionApi": "Notion API Credentials"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Calendly Trigger": {
+      "main": [
+        [
+          {
+            "node": "Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Add a new user to Notion database on Calendly invite creation",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/1088",
+    "scraped_at": "2025-08-20 23:52:51",
+    "workflow_id": "d5939845-cf71-5a34-bd86-fdb8451702a0"
+  },
+  "_filename": "Add_a_new_user_to_Notion_database_on_Calendly_invite_creation.json"
+}

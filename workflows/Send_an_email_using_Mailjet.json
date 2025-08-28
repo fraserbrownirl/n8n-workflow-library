@@ -1,0 +1,55 @@
+{
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Mailjet",
+      "type": "n8n-nodes-base.mailjet",
+      "position": [
+        450,
+        300
+      ],
+      "parameters": {
+        "text": "This is a test message",
+        "subject": "Sample Subject",
+        "toEmail": "user2@example.com",
+        "fromEmail": "user@example.com",
+        "additionalFields": {}
+      },
+      "credentials": {
+        "mailjetEmailApi": "mailjet creds"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Mailjet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Send an email using Mailjet",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/520",
+    "scraped_at": "2025-08-21 00:33:35",
+    "workflow_id": "b078c862-3474-5e85-b313-74aacdd945f4"
+  },
+  "_filename": "Send_an_email_using_Mailjet.json"
+}

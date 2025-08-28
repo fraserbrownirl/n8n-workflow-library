@@ -1,42 +1,64 @@
 {
   "meta": {
-    "instanceId": "efb474b59b0341d7791932605bd9ff04a6c7ed9941fdd53dc4a2e4b99a6f9439",
+    "instanceId": "ad0113c344ee237399e44e9f11798b05baeb83a6196d514a9ae9d2ad71c3b5c9",
     "templateCredsSetupCompleted": true
   },
   "nodes": [
     {
-      "id": "6e2a3e6b-c472-4694-a736-ec6eecb11de8",
-      "name": "Get many events",
-      "type": "n8n-nodes-base.microsoftOutlook",
+      "id": "b44bc1eb-78dd-4cf0-85d0-564a30b0e24b",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -380,
-        5400
+        -272,
+        176
       ],
-      "webhookId": "d780c4f4-ac9c-47d2-8e1f-6bbbd57a26d7",
       "parameters": {
-        "fields": [
-          "subject",
-          "start"
-        ],
-        "output": "fields",
-        "filters": {},
-        "resource": "event"
+        "color": 5,
+        "width": 600,
+        "height": 860,
+        "content": "### 0\ufe0f\u20e3 Prerequisites\n- **Google Sheets**\n  1. Open **Google Cloud Console** \u2192 create / select a project.  \n  2. Enable **Google Sheets API** under *APIs & Services*.  \n  3. Create an OAuth **Desktop** credential and connect it in n8n.  \n  4. Share the spreadsheet with the Google account linked to the credential.\n- **OpenAI**\n  1. Create a secret key at <https://platform.openai.com/account/api-keys>.  \n  2. In n8n \u2192 **Credentials** \u2192 **New** \u2192 choose **OpenAI API** and paste the key.\n- **Sample sheet to copy** (make your own copy and use its link)  \n  <https://docs.google.com/spreadsheets/d/15i9WIYpqc5lNd5T4VyM0RRptFPdi9doCbEEDn8QglN4/edit?usp=sharing>\n\n---\n\n### 1\ufe0f\u20e3 Trigger  \n**Manual Trigger** \u2013 lets you run on demand while learning.  \n*(Swap for a Schedule or Webhook once you automate.)*\n\n---\n\n### 2\ufe0f\u20e3 Read existing rows  \n- **Node:** `Get Rows from Google Sheets`  \n- Reads every row from **Sheet1** of your copied file.\n\n---"
       },
-      "credentials": {
-        "microsoftOutlookOAuth2Api": {
-          "id": "VmTDwKgAl78H8pek",
-          "name": "Microsoft Outlook account"
-        }
-      },
-      "typeVersion": 2
+      "typeVersion": 1
     },
     {
-      "id": "ed8f3389-1915-4918-b552-764384777ca2",
-      "name": "OpenAI Chat Model5",
+      "id": "df6378cb-73bb-437c-a7c6-cfd0f705721b",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        976,
+        176
+      ],
+      "parameters": {
+        "color": 4,
+        "width": 960,
+        "height": 860,
+        "content": "### 5\ufe0f\u20e3 Create a description with GPT-4o  \n1. **`OpenAI Chat Model`** \u2013 uses your OpenAI credential.  \n2. **`Write description`** (AI Agent) \u2013 prompt = the **Topic**.  \n3. **`Structured Output Parser`** \u2013 forces JSON like: `{ \"description\": \"\u2026\" }`.\n\n---\n\n### 6\ufe0f\u20e3 Update that same row  \n- **Node:** `Update Sheets data`  \n- Operation **update**.  \n- Matches on column **Email** to update the correct line.  \n- Writes the new **Description** cell returned by GPT-4o.\n\n---\n\n### 7\ufe0f\u20e3 Why this matters  \n- Demonstrates the three core Google Sheets operations: **read \u2192 append \u2192 update**.  \n- Shows how to enrich sheet data with an **AI step** and push the result right back.  \n- Sticky Notes provide inline docs so anyone opening the workflow understands the flow instantly.\n\n---"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "c6b35aa8-5313-4548-af40-e6d66440347e",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        352,
+        176
+      ],
+      "parameters": {
+        "color": 6,
+        "width": 600,
+        "height": 860,
+        "content": "### 3\ufe0f\u20e3 Generate a demo row  \n- **Node:** `Generate 1 Row of Data` (Set node)  \n- Pretends a form was submitted:  \n  - `Name`, `Email`, `Topic`, `Submitted = \"Yes\"`\n\n---\n\n### 4\ufe0f\u20e3 Append the new row  \n- **Node:** `Append Data to Google`  \n- Operation **append** \u2192 writes to the first empty line.\n\n---"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "b08ad9f7-40cf-4714-ac52-3746eca60b67",
+      "name": "OpenAI Chat Model4",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
-        880,
-        5420
+        1120,
+        784
       ],
       "parameters": {
         "model": {
@@ -48,177 +70,348 @@
       },
       "credentials": {
         "openAiApi": {
-          "id": "ghJTvay8CvwXDsXz",
-          "name": "OpenAi account"
+          "id": "4l6TDfLZVFS24g3X",
+          "name": "OpenAi account 4"
         }
       },
       "typeVersion": 1.2
     },
     {
-      "id": "a523d13f-653d-4a91-a672-b0bd5d558f27",
+      "id": "089e86af-2154-4a1c-9c4b-245e66ddb4d5",
+      "name": "Structured Output Parser3",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        1360,
+        832
+      ],
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"description\": \"description\"\n}"
+      },
+      "typeVersion": 1.2
+    },
+    {
+      "id": "3be017cc-04e0-4384-868b-e8169c2cd863",
       "name": "Run Workflow",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -580,
-        5400
+        -208,
+        896
       ],
       "parameters": {},
       "typeVersion": 1
     },
     {
-      "id": "16d77071-01f4-4839-bfc9-7b50009de7e8",
-      "name": "Sticky Note14",
-      "type": "n8n-nodes-base.stickyNote",
+      "id": "1ddd7bc9-6abe-4f2a-9de3-0f88c0109eda",
+      "name": "Get Rows from Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
       "position": [
-        -600,
-        4720
+        160,
+        736
       ],
       "parameters": {
-        "color": 5,
-        "width": 600,
-        "height": 860,
-        "content": "## 1\ufe0f\u20e3 Manual Trigger \u2014 *Run Workflow*\n| Why | Lets you click \u201cExecute\u201d in the n8n editor so you can test each change. |\n| --- | --- |\n\n---\n\n## 2\ufe0f\u20e3 Get Outlook Events \u2014 *Get many events*\n1. **Node type:** `Microsoft Outlook \u2192 Event \u2192 Get All`  \n2. **Fields selected:** `subject`, `start`  \n3. **API setup (inside this node):**  \n   - Click **Credentials \u25b8 Microsoft Outlook OAuth2 API**  \n   - If you haven\u2019t connected before:  \n     1. Choose **\u201cMicrosoft Outlook OAuth2 API\u201d \u2192 \u201cCreate New\u201d**.  \n     2. Sign in and grant the **Calendars.Read** permission.  \n     3. Save the credential (e.g., **\u201cMicrosoft Outlook account\u201d**).  \n4. **Output:** A list of events with the raw ISO start time.\n\n## 3\ufe0f\u20e3 Normalize Dates \u2014 *Convert to Date Format*  \n```js\n// Code node contents\nreturn $input.all().map(item => {\n  const startDateTime = new Date(item.json.start.dateTime);\n  const formattedDate = startDateTime.toISOString().split('T')[0]; // YYYY-MM-DD\n  return { json: { ...item.json, startDateFormatted: formattedDate } };\n});"
+        "options": {},
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gid=0",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15i9WIYpqc5lNd5T4VyM0RRptFPdi9doCbEEDn8QglN4/edit#gid=0",
+          "cachedResultName": "Sheet1"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "15i9WIYpqc5lNd5T4VyM0RRptFPdi9doCbEEDn8QglN4",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15i9WIYpqc5lNd5T4VyM0RRptFPdi9doCbEEDn8QglN4/edit?usp=drivesdk",
+          "cachedResultName": "Sample Data"
+        }
       },
-      "typeVersion": 1
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "pjyrlVJLjz2V3cf4",
+          "name": "Google Sheets account"
+        }
+      },
+      "typeVersion": 4.6
     },
     {
-      "id": "c5c6f208-79c3-4c35-ba37-55401cd35d44",
-      "name": "Sticky Note15",
-      "type": "n8n-nodes-base.stickyNote",
+      "id": "7b4b1b34-0d2a-4081-9cc1-811dedd66b97",
+      "name": "Generate 1 Row of Data",
+      "type": "n8n-nodes-base.set",
       "position": [
-        20,
-        4720
+        480,
+        864
       ],
       "parameters": {
-        "color": 6,
-        "width": 1300,
-        "height": 860,
-        "content": "### 4\ufe0f\u20e3 Filter the Events Down to *This* Week  \nAfter we\u2019ve normalised the `start` date-time into a simple `YYYY-MM-DD` string, we drop in a **Filter** node.  \nAdd one rule for every day you want to keep\u2014for example `2025-08-07` **or** `2025-08-08`. Rows that match any of those dates will continue through the workflow; everything else is quietly discarded.  \n\n*Why we\u2019re doing this:* we only want to summarise tomorrow\u2019s and the following day\u2019s meetings, not the entire calendar.\n\n---\n\n### 5\ufe0f\u20e3 Roll All Subjects Into a Single Item  \nNext comes an **Aggregate** node. Tell it to aggregate the `subject` field and choose the option *\u201cOnly aggregated fields.\u201d*  \nThe result is one clean item whose `subject` property is now a tidy list of every meeting title. It\u2019s far easier (and cheaper) to pass one prompt to GPT than dozens of small ones.\n\n---\n\n### 6\ufe0f\u20e3 Turn That List Into Plain Text  \nInsert a small **Code** node right after the aggregation:\n\n"
+        "options": {},
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9bceded1-6f62-48a8-8727-6a6a1998d5d3",
+              "name": "Name",
+              "type": "string",
+              "value": "Robert Breen"
+            },
+            {
+              "id": "038dac1c-919b-4a54-b3dd-aa5723bf1f1a",
+              "name": "Email",
+              "type": "string",
+              "value": "rbreen@ynteractive.com"
+            },
+            {
+              "id": "e55a71f6-66d9-4da2-9dbb-0c45539c76a9",
+              "name": "Topic",
+              "type": "string",
+              "value": "n8n workflows"
+            },
+            {
+              "id": "50999436-4b71-4ea8-b18a-bc193ab51ce9",
+              "name": "Submitted",
+              "type": "string",
+              "value": "Yes"
+            }
+          ]
+        }
       },
-      "typeVersion": 1
+      "typeVersion": 3.4
     },
     {
-      "id": "76f2b328-fd39-42a3-9497-56559b2ad89a",
-      "name": "Sticky Note16",
-      "type": "n8n-nodes-base.stickyNote",
+      "id": "a9b4a11b-fd45-46bf-b1d0-188954ef9b48",
+      "name": "Append Data to google",
+      "type": "n8n-nodes-base.googleSheets",
       "position": [
-        -600,
-        4540
+        752,
+        848
       ],
       "parameters": {
-        "width": 1920,
+        "columns": {
+          "value": {
+            "Name": "={{ $json.Name }}",
+            "Email": "={{ $json.Email }}",
+            "Topic": "={{ $json.Topic }}",
+            "Submitted": "={{ $json.Submitted }}"
+          },
+          "schema": [
+            {
+              "id": "Name",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "Name",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "Email",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Topic",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "Topic",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Submitted",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "Submitted",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {},
+        "operation": "append",
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gid=0",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15i9WIYpqc5lNd5T4VyM0RRptFPdi9doCbEEDn8QglN4/edit#gid=0",
+          "cachedResultName": "Sheet1"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "15i9WIYpqc5lNd5T4VyM0RRptFPdi9doCbEEDn8QglN4",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15i9WIYpqc5lNd5T4VyM0RRptFPdi9doCbEEDn8QglN4/edit?usp=drivesdk",
+          "cachedResultName": "Sample Data"
+        }
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "pjyrlVJLjz2V3cf4",
+          "name": "Google Sheets account"
+        }
+      },
+      "typeVersion": 4.6
+    },
+    {
+      "id": "f08ad7a6-05f9-4035-8c14-3082937a46b4",
+      "name": "Write description",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "onError": "continueRegularOutput",
+      "position": [
+        1232,
+        608
+      ],
+      "parameters": {
+        "text": "={{ $json.Topic }}",
+        "options": {
+          "systemMessage": "Take in the topic and write a description. "
+        },
+        "promptType": "define",
+        "hasOutputParser": true
+      },
+      "typeVersion": 2,
+      "alwaysOutputData": true
+    },
+    {
+      "id": "cef80a95-5ded-4ceb-95e3-21be33725d97",
+      "name": "Update Sheets data",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1712,
+        656
+      ],
+      "parameters": {
+        "columns": {
+          "value": {
+            "Email": "={{ $('Get Rows from Google Sheets').item.json.Email }}",
+            "Description": "={{ $json.output.description }}"
+          },
+          "schema": [
+            {
+              "id": "Name",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "Name",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "Email",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Topic",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "Topic",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Submitted",
+              "type": "string",
+              "display": true,
+              "required": false,
+              "displayName": "Submitted",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Description",
+              "type": "string",
+              "display": true,
+              "removed": false,
+              "required": false,
+              "displayName": "Description",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "type": "string",
+              "display": true,
+              "removed": true,
+              "readOnly": true,
+              "required": false,
+              "displayName": "row_number",
+              "defaultMatch": false,
+              "canBeUsedToMatch": true
+            }
+          ],
+          "mappingMode": "defineBelow",
+          "matchingColumns": [
+            "Email"
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {},
+        "operation": "update",
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gid=0",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15i9WIYpqc5lNd5T4VyM0RRptFPdi9doCbEEDn8QglN4/edit#gid=0",
+          "cachedResultName": "Sheet1"
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "15i9WIYpqc5lNd5T4VyM0RRptFPdi9doCbEEDn8QglN4",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15i9WIYpqc5lNd5T4VyM0RRptFPdi9doCbEEDn8QglN4/edit?usp=drivesdk",
+          "cachedResultName": "Sample Data"
+        }
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "HlBW2puZbuCCq8jJ",
+          "name": "Google Sheets account 3"
+        }
+      },
+      "typeVersion": 4.6
+    },
+    {
+      "id": "0f505760-f0f1-4519-b0c4-c8269569186b",
+      "name": "Sticky Note13",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -816,
+        -96
+      ],
+      "parameters": {
+        "width": 504,
         "content": "## \ud83d\udcec Need Help or Want to Customize This?\n\ud83d\udce7 [robert@ynteractive.com](mailto:robert@ynteractive.com)  \n\ud83d\udd17 [LinkedIn](https://www.linkedin.com/in/robert-breen-29429625/)"
       },
       "typeVersion": 1
     },
     {
-      "id": "a7f4764f-33d6-45f3-a906-c510656d3864",
-      "name": "Convert to Date Format",
-      "type": "n8n-nodes-base.code",
+      "id": "8d44204f-e79e-4c75-b125-579c7ae62f81",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -180,
-        5400
+        -816,
+        176
       ],
       "parameters": {
-        "jsCode": "return $input.all().map(item => {\n  const startDateTime = new Date(item.json.start.dateTime);\n  const formattedDate = startDateTime.toISOString().split('T')[0]; // 'YYYY-MM-DD'\n\n  return {\n    json: {\n      ...item.json,\n      startDateFormatted: formattedDate\n    }\n  };\n});\n"
-      },
-      "typeVersion": 2
-    },
-    {
-      "id": "f771d488-de87-4925-8385-0fc53c89563f",
-      "name": "Filter to This week",
-      "type": "n8n-nodes-base.filter",
-      "position": [
-        80,
-        5340
-      ],
-      "parameters": {
-        "options": {},
-        "conditions": {
-          "options": {
-            "version": 2,
-            "leftValue": "",
-            "caseSensitive": true,
-            "typeValidation": "strict"
-          },
-          "combinator": "or",
-          "conditions": [
-            {
-              "id": "cd7ab9cd-ec1a-4cd0-99e3-de5850128da8",
-              "operator": {
-                "name": "filter.operator.equals",
-                "type": "string",
-                "operation": "equals"
-              },
-              "leftValue": "={{ $json.startDateFormatted }}",
-              "rightValue": "2025-08-07"
-            },
-            {
-              "id": "4bcc5653-1067-47ed-aaf9-2362ef113cdb",
-              "operator": {
-                "name": "filter.operator.equals",
-                "type": "string",
-                "operation": "equals"
-              },
-              "leftValue": "={{ $json.startDateFormatted }}",
-              "rightValue": "2025-08-08"
-            }
-          ]
-        }
-      },
-      "typeVersion": 2.2
-    },
-    {
-      "id": "489fa514-8ca4-4bd6-b131-0d62500e0aa0",
-      "name": "Combine to one Field",
-      "type": "n8n-nodes-base.aggregate",
-      "position": [
-        300,
-        5440
-      ],
-      "parameters": {
-        "options": {},
-        "fieldsToAggregate": {
-          "fieldToAggregate": [
-            {
-              "fieldToAggregate": "subject"
-            }
-          ]
-        }
+        "width": 496,
+        "height": 848,
+        "content": "## \ud83c\udfa5 Watch This Tutorial\n\n[![Watch the video](https://img.youtube.com/vi/86mJa1aSb3Q/maxresdefault.jpg)](https://www.youtube.com/watch?v=86mJa1aSb3Q)\n\n\n## \ud83c\udf10 How to Connect Google Cloud to n8n\n\n[![Watch the video](https://img.youtube.com/vi/czxMethJv8s/maxresdefault.jpg)](https://www.youtube.com/watch?v=czxMethJv8s)\n"
       },
       "typeVersion": 1
-    },
-    {
-      "id": "08b33759-1de4-4135-9432-c30357abdb1d",
-      "name": "Convert objects to text",
-      "type": "n8n-nodes-base.code",
-      "position": [
-        480,
-        5340
-      ],
-      "parameters": {
-        "jsCode": "return [\n  {\n    json: {\n      text: items.map(item => JSON.stringify(item.json)).join('\\n'),\n    },\n  },\n];\n"
-      },
-      "typeVersion": 2
-    },
-    {
-      "id": "c4e3cdc9-4a3e-42ae-995c-a637cccd5023",
-      "name": "Summarize Weekly Events",
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "onError": "continueRegularOutput",
-      "position": [
-        800,
-        5200
-      ],
-      "parameters": {
-        "text": "={{ $json.text }}",
-        "options": {
-          "systemMessage": "Summarize the meetings I have this week. "
-        },
-        "promptType": "define"
-      },
-      "typeVersion": 2,
-      "alwaysOutputData": true
     }
   ],
   "pinData": {},
@@ -227,73 +420,67 @@
       "main": [
         [
           {
-            "node": "Get many events",
+            "node": "Get Rows from Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Generate 1 Row of Data",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get many events": {
+    "Write description": {
       "main": [
         [
           {
-            "node": "Convert to Date Format",
+            "node": "Update Sheets data",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "OpenAI Chat Model5": {
+    "OpenAI Chat Model4": {
       "ai_languageModel": [
         [
           {
-            "node": "Summarize Weekly Events",
+            "node": "Write description",
             "type": "ai_languageModel",
             "index": 0
           }
         ]
       ]
     },
-    "Filter to This week": {
+    "Generate 1 Row of Data": {
       "main": [
         [
           {
-            "node": "Combine to one Field",
+            "node": "Append Data to google",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Combine to one Field": {
-      "main": [
+    "Structured Output Parser3": {
+      "ai_outputParser": [
         [
           {
-            "node": "Convert objects to text",
-            "type": "main",
+            "node": "Write description",
+            "type": "ai_outputParser",
             "index": 0
           }
         ]
       ]
     },
-    "Convert to Date Format": {
+    "Get Rows from Google Sheets": {
       "main": [
         [
           {
-            "node": "Filter to This week",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Convert objects to text": {
-      "main": [
-        [
-          {
-            "node": "Summarize Weekly Events",
+            "node": "Write description",
             "type": "main",
             "index": 0
           }
@@ -303,9 +490,11 @@
   },
   "_metadata": {
     "name": "Create High-Converting Meta Ad Scripts with GPT & Gemini Using Performance Data",
-    "used_count": 15,
+    "used_count": 0,
     "popularity_score": 25,
-    "source_url": "https://n8n.io/workflows/7157",
-    "scraped_at": "2025-08-17 17:42:14"
-  }
+    "source_url": "https://n8n.io/workflows/7156",
+    "scraped_at": "2025-08-21 02:14:47",
+    "workflow_id": "89e9267c-3192-5df0-98e4-ca4c7bc870f3"
+  },
+  "_filename": "Create_High_Converting_Meta_Ad_Scripts_with_GPT_Gemini_Using_Performance_Data.json"
 }

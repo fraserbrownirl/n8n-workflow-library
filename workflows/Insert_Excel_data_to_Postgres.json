@@ -1,0 +1,75 @@
+{
+  "nodes": [
+    {
+      "name": "Read Binary File",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "position": [
+        450,
+        650
+      ],
+      "parameters": {
+        "filePath": "spreadsheet.xls"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Spreadsheet File1",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "position": [
+        600,
+        650
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Insert Rows1",
+      "type": "n8n-nodes-base.postgres",
+      "position": [
+        750,
+        650
+      ],
+      "parameters": {
+        "table": "product",
+        "columns": "name,ean"
+      },
+      "credentials": {
+        "postgres": "postgres"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Read Binary File": {
+      "main": [
+        [
+          {
+            "node": "Spreadsheet File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Spreadsheet File1": {
+      "main": [
+        [
+          {
+            "node": "Insert Rows1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Insert Excel data to Postgres",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/1",
+    "scraped_at": "2025-08-20 21:24:29",
+    "workflow_id": "758d75e7-4ea1-5404-8a23-0762f2a5a126"
+  },
+  "_filename": "Insert_Excel_data_to_Postgres.json"
+}

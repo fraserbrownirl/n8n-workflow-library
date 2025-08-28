@@ -1,0 +1,62 @@
+{
+  "id": "54",
+  "name": "CFP Selection 1",
+  "nodes": [
+    {
+      "name": "Typeform Trigger",
+      "type": "n8n-nodes-base.typeformTrigger",
+      "position": [
+        450,
+        250
+      ],
+      "parameters": {
+        "formId": ""
+      },
+      "credentials": {
+        "typeformApi": "Typeform"
+      },
+      "typeVersion": 1
+    },
+    {
+      "name": "Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "position": [
+        660,
+        250
+      ],
+      "parameters": {
+        "table": "",
+        "operation": "append",
+        "application": ""
+      },
+      "credentials": {
+        "airtableApi": "Airtable"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "Typeform Trigger": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Save Typeform survey results to Airtable",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/384",
+    "scraped_at": "2025-08-21 00:32:34",
+    "workflow_id": "88aaf636-337d-51ec-b09e-404eb4f6e06d"
+  },
+  "_filename": "Save_Typeform_survey_results_to_Airtable.json"
+}

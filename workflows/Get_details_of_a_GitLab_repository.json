@@ -1,0 +1,58 @@
+{
+  "id": "7",
+  "name": "6",
+  "nodes": [
+    {
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        440,
+        320
+      ],
+      "parameters": {},
+      "typeVersion": 1
+    },
+    {
+      "name": "Gitlab",
+      "type": "n8n-nodes-base.gitlab",
+      "position": [
+        780,
+        320
+      ],
+      "parameters": {
+        "owner": "shaligramshraddha",
+        "resource": "repository",
+        "operation": "get",
+        "repository": "trial"
+      },
+      "credentials": {
+        "gitlabApi": "new"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "active": false,
+  "settings": {},
+  "connections": {
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Gitlab",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "_metadata": {
+    "name": "Get details of a GitLab repository",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/465",
+    "scraped_at": "2025-08-20 22:24:16",
+    "workflow_id": "0785c317-e264-5a1d-baa3-7f9e66ff09a8"
+  },
+  "_filename": "Get_details_of_a_GitLab_repository.json"
+}

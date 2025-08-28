@@ -1,0 +1,30 @@
+{
+  "nodes": [
+    {
+      "name": "Acuity Scheduling Trigger",
+      "type": "n8n-nodes-base.acuitySchedulingTrigger",
+      "position": [
+        880,
+        400
+      ],
+      "webhookId": "b326732d-9473-469f-a421-dd823d26b945",
+      "parameters": {
+        "event": "appointment.scheduled"
+      },
+      "credentials": {
+        "acuitySchedulingApi": "acuity_creds"
+      },
+      "typeVersion": 1
+    }
+  ],
+  "connections": {},
+  "_metadata": {
+    "name": "Receive updates on appointments via Acuity Scheduling",
+    "used_count": 0,
+    "popularity_score": 25,
+    "source_url": "https://n8n.io/workflows/533",
+    "scraped_at": "2025-08-20 23:57:38",
+    "workflow_id": "6f6be353-f94b-51c8-807a-e3f0a7f68882"
+  },
+  "_filename": "Receive_updates_on_appointments_via_Acuity_Scheduling.json"
+}
